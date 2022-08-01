@@ -1,5 +1,7 @@
 format: jb-book
-root: "intro"
+root: "introduction"
+defaults:
+  numbered: true
 chapters:
 - file: "Class Activation Maps for Semantic Segmentation"
 - file: "Class Activation Maps for Object Detection With Faster RCNN"
