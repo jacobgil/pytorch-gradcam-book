@@ -1,0 +1,1013 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Tutorial: Class Activation Maps for Object Detection with Faster RCNN &#8212; Advanced AI explainability with pytorch-gradcam</title>
+    
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
+
+    
+  <link rel="stylesheet"
+    href="../_static/vendor/fontawesome/5.13.0/css/all.min.css">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" href="../_static/styles/sphinx-book-theme.css?digest=5115cc725059bd94278eecd172e13a965bf8f5a9" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/design-style.b7bb847fb20b106c3d81b95245e65545.min.css" />
+    
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=1999514e3f237ded88cf">
+
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/clipboard.min.js"></script>
+    <script src="../_static/copybutton.js"></script>
+    <script src="../_static/scripts/sphinx-book-theme.js?digest=9c920249402e914e316237a7dbc6769907cce411"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../_static/togglebutton.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
+    <script src="../_static/design-tabs.js"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
+const thebe_selector = ".thebe,.cell"
+const thebe_selector_input = "pre"
+const thebe_selector_output = ".output, .cell_output"
+</script>
+    <script async="async" src="../_static/sphinx-thebe.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="docsearch:language" content="None">
+    
+
+    <!-- Google Analytics -->
+    
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="60">
+<!-- Checkboxes to toggle the left sidebar -->
+<input type="checkbox" class="sidebar-toggle" name="__navigation" id="__navigation" aria-label="Toggle navigation sidebar">
+<label class="overlay overlay-navbar" for="__navigation">
+    <div class="visually-hidden">Toggle navigation sidebar</div>
+</label>
+<!-- Checkboxes to toggle the in-page toc -->
+<input type="checkbox" class="sidebar-toggle" name="__page-toc" id="__page-toc" aria-label="Toggle in-page Table of Contents">
+<label class="overlay overlay-pagetoc" for="__page-toc">
+    <div class="visually-hidden">Toggle in-page Table of Contents</div>
+</label>
+<!-- Headers at the top -->
+<div class="announcement header-item noprint"></div>
+<div class="header header-item noprint"></div>
+
+    
+    <div class="container-fluid" id="banner"></div>
+
+    
+
+    <div class="container-xl">
+      <div class="row">
+          
+<!-- Sidebar -->
+<div class="bd-sidebar noprint" id="site-navigation">
+    <div class="bd-sidebar__content">
+        <div class="bd-sidebar__top"><div class="navbar-brand-box">
+    <a class="navbar-brand text-wrap" href="../index.html">
+      
+        <!-- `logo` is deprecated in Sphinx 4.0, so remove this when we stop supporting 3 -->
+        
+      
+      
+      <img src="_static/https://github.com/jacobgil/pytorch-grad-cam/blob/feature/activation_summaries/examples/both_detection.png?raw=true" class="logo" alt="logo">
+      
+      
+      <h1 class="site-logo" id="site-title">Advanced AI explainability with pytorch-gradcam</h1>
+      
+    </a>
+</div><form class="bd-search d-flex align-items-center" action="../search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" >
+</form><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../intro.html">
+                    Advanced AI explainability for pytorch
+                </a>
+            </li>
+        </ul>
+        <ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../Class%20Activation%20Maps%20for%20Semantic%20Segmentation.html">
+   Tutorial: Class Activation Maps for Semantic Segmentation
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../Class%20Activation%20Maps%20for%20Object%20Detection%20With%20Faster%20RCNN.html">
+   Tutorial: Class Activation Maps for Object Detection with Faster RCNN
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../EigenCAM%20for%20YOLO5.html">
+   EigenCAM for YOLO5
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../Pixel%20Attribution%20for%20embeddings.html">
+   Tutorial: Concept Activation Maps
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../CAM%20Metrics%20And%20Tuning%20Tutorial.html">
+   <em>
+    May the best explanation win
+   </em>
+   :
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../vision_transformers.html">
+   How does it work with Vision Transformers
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../Deep%20Feature%20Factorizations.html">
+   Deep Feature Factorizations for better model explainability
+  </a>
+ </li>
+</ul>
+
+    </div>
+</nav></div>
+        <div class="bd-sidebar__bottom">
+             <!-- To handle the deprecated key -->
+            
+            <div class="navbar_extra_footer">
+            Powered by <a href="https://jupyterbook.org">Jupyter Book</a>
+            </div>
+            
+        </div>
+    </div>
+    <div id="rtd-footer-container"></div>
+</div>
+
+
+          
+
+
+          
+<!-- A tiny helper pixel to detect if we've scrolled -->
+<div class="sbt-scroll-pixel-helper"></div>
+<!-- Main content -->
+<div class="col py-0 content-container">
+    
+    <div class="header-article row sticky-top noprint">
+        
+
+
+
+<div class="col py-1 d-flex header-article-main">
+    <div class="header-article__left">
+        
+        <label for="__navigation"
+  class="headerbtn"
+  data-toggle="tooltip"
+data-placement="right"
+title="Toggle navigation"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-bars"></i>
+  </span>
+
+</label>
+
+        
+    </div>
+    <div class="header-article__right">
+<div class="menu-dropdown menu-dropdown-launch-buttons">
+  <button class="headerbtn menu-dropdown__trigger"
+      aria-label="Launch interactive content">
+      <i class="fas fa-rocket"></i>
+  </button>
+  <div class="menu-dropdown__content">
+    <ul>
+      <li>
+        <a href="https://mybinder.org/v2/gh/executablebooks/jupyter-book/master?urlpath=tree/tutorials/Class Activation Maps for Object Detection With Faster RCNN.ipynb"
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Launch on Binder"
+>
+  
+
+<span class="headerbtn__icon-container">
+  
+    <img src="../_static/images/logo_binder.svg">
+  </span>
+<span class="headerbtn__text-container">Binder</span>
+</a>
+
+      </li>
+      
+    </ul>
+  </div>
+</div>
+
+<button onclick="toggleFullScreen()"
+  class="headerbtn"
+  data-toggle="tooltip"
+data-placement="bottom"
+title="Fullscreen mode"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+<div class="menu-dropdown menu-dropdown-download-buttons">
+  <button class="headerbtn menu-dropdown__trigger"
+      aria-label="Download this page">
+      <i class="fas fa-download"></i>
+  </button>
+  <div class="menu-dropdown__content">
+    <ul>
+      <li>
+        <a href="../_sources/tutorials/Class Activation Maps for Object Detection With Faster RCNN.ipynb"
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Download source file"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="headerbtn__text-container">.ipynb</span>
+</a>
+
+      </li>
+      
+      <li>
+        
+<button onclick="printPdf(this)"
+  class="headerbtn"
+  data-toggle="tooltip"
+data-placement="left"
+title="Print to PDF"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="headerbtn__text-container">.pdf</span>
+</button>
+
+      </li>
+      
+    </ul>
+  </div>
+</div>
+<label for="__page-toc"
+  class="headerbtn headerbtn-page-toc"
+  
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-list"></i>
+  </span>
+
+</label>
+
+    </div>
+</div>
+
+<!-- Table of contents -->
+<div class="col-md-3 bd-toc show noprint">
+    <div class="tocsection onthispage pt-5 pb-3">
+        <i class="fas fa-list"></i> Contents
+    </div>
+    <nav id="bd-toc-nav" aria-label="Page">
+        <ul class="visible nav section-nav flex-column">
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#">
+   Tutorial: Class Activation Maps for Object Detection with Faster RCNN
+  </a>
+  <ul class="visible nav section-nav flex-column">
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#this-is-too-long-just-show-me-some-code">
+     This is too long, just show me some code !
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#introduction">
+   Introduction
+  </a>
+  <ul class="visible nav section-nav flex-column">
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#why-is-it-more-difficult-computing-cams-for-object-detection">
+     Why is it more difficult computing CAMs for object detection?
+    </a>
+   </li>
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#gradient-free-methods-to-the-rescue">
+     Gradient Free Methods to the rescue!
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#what-faster-rcnn-layer-should-we-target">
+   What faster-rcnn layer should we target?
+  </a>
+  <ul class="visible nav section-nav flex-column">
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#problem-the-output-from-model-backbone-is-in-a-very-custom-format">
+     Problem: The output from model.backbone is in a very custom format
+    </a>
+   </li>
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#what-target-are-the-class-activation-maps-created-for">
+     What target are the Class Activation Maps created for?
+    </a>
+    <ul class="nav section-nav flex-column">
+     <li class="toc-h3 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#we-can-measure-how-the-detected-objects-correspond-with-the-original-detections-in-both-coordinates-and-score">
+       We can measure how the detected objects correspond with the original detections in both coordinates and score
+      </a>
+     </li>
+    </ul>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#optional-renormalizing-the-cams-inside-every-bounding-box">
+   Optional: Renormalizing the CAMs inside every bounding box
+  </a>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#advanced-more-class-descrimination-with-ablation-cam">
+   Advanced: More class descrimination with Ablation CAM
+  </a>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#defining-a-custom-ablation-layer">
+   Defining a custom Ablation Layer
+  </a>
+  <ul class="visible nav section-nav flex-column">
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#making-it-fast-by-skipping-some-channels">
+     Making it fast by skipping some channels
+    </a>
+   </li>
+  </ul>
+ </li>
+</ul>
+
+    </nav>
+</div>
+    </div>
+    <div class="article row">
+        <div class="col pl-md-3 pl-lg-5 content-container">
+            <!-- Table of contents that is only displayed when printing the page -->
+            <div id="jb-print-docs-body" class="onlyprint">
+                <h1>Tutorial: Class Activation Maps for Object Detection with Faster RCNN</h1>
+                <!-- Table of contents -->
+                <div id="print-main-content">
+                    <div id="jb-print-toc">
+                        
+                        <div>
+                            <h2> Contents </h2>
+                        </div>
+                        <nav aria-label="Page">
+                            <ul class="visible nav section-nav flex-column">
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#">
+   Tutorial: Class Activation Maps for Object Detection with Faster RCNN
+  </a>
+  <ul class="visible nav section-nav flex-column">
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#this-is-too-long-just-show-me-some-code">
+     This is too long, just show me some code !
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#introduction">
+   Introduction
+  </a>
+  <ul class="visible nav section-nav flex-column">
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#why-is-it-more-difficult-computing-cams-for-object-detection">
+     Why is it more difficult computing CAMs for object detection?
+    </a>
+   </li>
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#gradient-free-methods-to-the-rescue">
+     Gradient Free Methods to the rescue!
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#what-faster-rcnn-layer-should-we-target">
+   What faster-rcnn layer should we target?
+  </a>
+  <ul class="visible nav section-nav flex-column">
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#problem-the-output-from-model-backbone-is-in-a-very-custom-format">
+     Problem: The output from model.backbone is in a very custom format
+    </a>
+   </li>
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#what-target-are-the-class-activation-maps-created-for">
+     What target are the Class Activation Maps created for?
+    </a>
+    <ul class="nav section-nav flex-column">
+     <li class="toc-h3 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#we-can-measure-how-the-detected-objects-correspond-with-the-original-detections-in-both-coordinates-and-score">
+       We can measure how the detected objects correspond with the original detections in both coordinates and score
+      </a>
+     </li>
+    </ul>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#optional-renormalizing-the-cams-inside-every-bounding-box">
+   Optional: Renormalizing the CAMs inside every bounding box
+  </a>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#advanced-more-class-descrimination-with-ablation-cam">
+   Advanced: More class descrimination with Ablation CAM
+  </a>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#defining-a-custom-ablation-layer">
+   Defining a custom Ablation Layer
+  </a>
+  <ul class="visible nav section-nav flex-column">
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#making-it-fast-by-skipping-some-channels">
+     Making it fast by skipping some channels
+    </a>
+   </li>
+  </ul>
+ </li>
+</ul>
+
+                        </nav>
+                    </div>
+                </div>
+            </div>
+            <main id="main-content" role="main">
+                
+              <div>
+                
+  <div class="tex2jax_ignore mathjax_ignore section" id="tutorial-class-activation-maps-for-object-detection-with-faster-rcnn">
+<h1>Tutorial: Class Activation Maps for Object Detection with Faster RCNN<a class="headerlink" href="#tutorial-class-activation-maps-for-object-detection-with-faster-rcnn" title="Permalink to this headline">#</a></h1>
+<p><img alt="image.png" src="https://raw.githubusercontent.com/jacobgil/pytorch-grad-cam/master/examples/both_detection.png" /></p>
+<p>In this tutorial we’re going to see how to apply CAM methods for Object Detection,
+using faster-rcnn from torchvision as an example.</p>
+<div class="section" id="this-is-too-long-just-show-me-some-code">
+<h2>This is too long, just show me some code !<a class="headerlink" href="#this-is-too-long-just-show-me-some-code" title="Permalink to this headline">#</a></h2>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">pytorch_grad_cam</span> <span class="kn">import</span> <span class="n">AblationCAM</span><span class="p">,</span> <span class="n">EigenCAM</span>
+<span class="kn">from</span> <span class="nn">pytorch_grad_cam.ablation_layer</span> <span class="kn">import</span> <span class="n">AblationLayerFasterRCNN</span>
+<span class="kn">from</span> <span class="nn">pytorch_grad_cam.utils.model_targets</span> <span class="kn">import</span> <span class="n">FasterRCNNBoxScoreTarget</span>
+<span class="kn">from</span> <span class="nn">pytorch_grad_cam.utils.reshape_transforms</span> <span class="kn">import</span> <span class="n">fasterrcnn_reshape_transform</span>
+<span class="kn">from</span> <span class="nn">pytorch_grad_cam.utils.image</span> <span class="kn">import</span> <span class="n">show_cam_on_image</span><span class="p">,</span> <span class="n">scale_accross_batch_and_channels</span><span class="p">,</span> <span class="n">scale_cam_image</span>
+
+<span class="n">targets</span> <span class="o">=</span> <span class="p">[</span><span class="n">FasterRCNNBoxScoreTarget</span><span class="p">(</span><span class="n">labels</span><span class="o">=</span><span class="n">labels</span><span class="p">,</span> <span class="n">bounding_boxes</span><span class="o">=</span><span class="n">boxes</span><span class="p">)]</span>
+<span class="n">target_layers</span> <span class="o">=</span> <span class="p">[</span><span class="n">model</span><span class="o">.</span><span class="n">backbone</span><span class="p">]</span>
+<span class="n">cam</span> <span class="o">=</span> <span class="n">AblationCAM</span><span class="p">(</span><span class="n">model</span><span class="p">,</span>
+                  <span class="n">target_layers</span><span class="p">,</span> 
+                  <span class="n">use_cuda</span><span class="o">=</span><span class="n">torch</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">cuda</span><span class="o">.</span><span class="n">is_available</span><span class="p">(),</span> 
+                  <span class="n">reshape_transform</span><span class="o">=</span><span class="n">fasterrcnn_reshape_transform</span><span class="p">,</span>
+                  <span class="n">ablation_layer</span><span class="o">=</span><span class="n">AblationLayerFasterRCNN</span><span class="p">(),</span>
+                  <span class="n">ratio_channels_to_ablate</span><span class="o">=</span><span class="mf">1.0</span><span class="p">)</span>
+
+<span class="c1"># or a very fast alternative:</span>
+
+<span class="n">cam</span> <span class="o">=</span> <span class="n">EigenCAM</span><span class="p">(</span><span class="n">model</span><span class="p">,</span>
+              <span class="n">target_layers</span><span class="p">,</span> 
+              <span class="n">use_cuda</span><span class="o">=</span><span class="n">torch</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">cuda</span><span class="o">.</span><span class="n">is_available</span><span class="p">(),</span> 
+              <span class="n">reshape_transform</span><span class="o">=</span><span class="n">fasterrcnn_reshape_transform</span><span class="p">)</span>
+
+</pre></div>
+</div>
+</div>
+</div>
+<div class="tex2jax_ignore mathjax_ignore section" id="introduction">
+<h1>Introduction<a class="headerlink" href="#introduction" title="Permalink to this headline">#</a></h1>
+<div class="section" id="why-is-it-more-difficult-computing-cams-for-object-detection">
+<h2>Why is it more difficult computing CAMs for object detection?<a class="headerlink" href="#why-is-it-more-difficult-computing-cams-for-object-detection" title="Permalink to this headline">#</a></h2>
+<p>Object detection packages typically do a lot of processing on the results before they output it:
+they create dictionaries with the bounding boxes, labels and scores, do an argmax on the scores to find the highest scoring category, etc.</p>
+<p>Because of this, typically the outputs from object detection package are not differentiable
+(and it’s a common request for the maintainers of those in order to support CAMs).</p>
+<p>This means that if we need to compute gradients, there is no “generic” way of doing that, we would have to dive into the code of those packages and do something custom each time, if it’s possible at all.</p>
+<p>That’s not so good for us, since we want to be able to work with existing object detection packages..</p>
+<p>CAM methods can be divided into two groups:</p>
+<ul class="simple">
+<li><p>Those that need gradients: GradCAM, GradCAM++, LayerCAM, etc.</p></li>
+<li><p>Those that are “gradient free”: AblationCAM, ScoreCAM, and EigenCAM.</p></li>
+</ul>
+</div>
+<div class="section" id="gradient-free-methods-to-the-rescue">
+<h2>Gradient Free Methods to the rescue!<a class="headerlink" href="#gradient-free-methods-to-the-rescue" title="Permalink to this headline">#</a></h2>
+<p>Luckily, we have “Gradient Free Methods”, and we can use them for many more use cases compared to “gradient” methods.</p>
+<p>We’re going to use the next methods here for object detection:</p>
+<ul class="simple">
+<li><p>EigenCAM: this method is extremely fast, but doesn’t have good enough class discribination (that’s less of an issue for object detection, though).</p></li>
+<li><p>AblationCAM: A state of the art method, but slower.</p></li>
+<li><p>We’re going to see how we can potentially make AblationCAM much faster by controlling the parameter ratio_channels_to_ablate.</p></li>
+</ul>
+<p>Along the way, we’re going to use two important concepts in the grad-cam package:</p>
+<ul class="simple">
+<li><p>Writing a custom “reshape” transform to aggregate the activations saved inside faster-rccnn feature pyramid network.
+<strong>This is the most important part</strong> - you can use this as a starting point for other object detection networks.</p></li>
+<li><p>Writing a custom “target” function for generating CAMs that maximize something about the bounding boxes: like their score, or their intersection over union with the original bounding boxes.</p></li>
+</ul>
+<p>Lets get started!</p>
+<p>Lets import the packages we’re going to use, define the category names, and a function to run the model and gets the predictions.
+Nothing here is related to Class Activation Maps, yet.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">warnings</span>
+<span class="n">warnings</span><span class="o">.</span><span class="n">filterwarnings</span><span class="p">(</span><span class="s1">&#39;ignore&#39;</span><span class="p">)</span>
+<span class="n">warnings</span><span class="o">.</span><span class="n">simplefilter</span><span class="p">(</span><span class="s1">&#39;ignore&#39;</span><span class="p">)</span>
+<span class="kn">import</span> <span class="nn">cv2</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">torch</span>
+<span class="kn">import</span> <span class="nn">torchvision</span>
+<span class="kn">from</span> <span class="nn">pytorch_grad_cam</span> <span class="kn">import</span> <span class="n">AblationCAM</span><span class="p">,</span> <span class="n">EigenCAM</span>
+<span class="kn">from</span> <span class="nn">pytorch_grad_cam.ablation_layer</span> <span class="kn">import</span> <span class="n">AblationLayerFasterRCNN</span>
+<span class="kn">from</span> <span class="nn">pytorch_grad_cam.utils.model_targets</span> <span class="kn">import</span> <span class="n">FasterRCNNBoxScoreTarget</span>
+<span class="kn">from</span> <span class="nn">pytorch_grad_cam.utils.reshape_transforms</span> <span class="kn">import</span> <span class="n">fasterrcnn_reshape_transform</span>
+<span class="kn">from</span> <span class="nn">pytorch_grad_cam.utils.image</span> <span class="kn">import</span> <span class="n">show_cam_on_image</span><span class="p">,</span> <span class="n">scale_accross_batch_and_channels</span><span class="p">,</span> <span class="n">scale_cam_image</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">predict</span><span class="p">(</span><span class="n">input_tensor</span><span class="p">,</span> <span class="n">model</span><span class="p">,</span> <span class="n">device</span><span class="p">,</span> <span class="n">detection_threshold</span><span class="p">):</span>
+    <span class="n">outputs</span> <span class="o">=</span> <span class="n">model</span><span class="p">(</span><span class="n">input_tensor</span><span class="p">)</span>
+    <span class="n">pred_classes</span> <span class="o">=</span> <span class="p">[</span><span class="n">coco_names</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">outputs</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="s1">&#39;labels&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">cpu</span><span class="p">()</span><span class="o">.</span><span class="n">numpy</span><span class="p">()]</span>
+    <span class="n">pred_labels</span> <span class="o">=</span> <span class="n">outputs</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="s1">&#39;labels&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">cpu</span><span class="p">()</span><span class="o">.</span><span class="n">numpy</span><span class="p">()</span>
+    <span class="n">pred_scores</span> <span class="o">=</span> <span class="n">outputs</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="s1">&#39;scores&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">detach</span><span class="p">()</span><span class="o">.</span><span class="n">cpu</span><span class="p">()</span><span class="o">.</span><span class="n">numpy</span><span class="p">()</span>
+    <span class="n">pred_bboxes</span> <span class="o">=</span> <span class="n">outputs</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="s1">&#39;boxes&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">detach</span><span class="p">()</span><span class="o">.</span><span class="n">cpu</span><span class="p">()</span><span class="o">.</span><span class="n">numpy</span><span class="p">()</span>
+    
+    <span class="n">boxes</span><span class="p">,</span> <span class="n">classes</span><span class="p">,</span> <span class="n">labels</span><span class="p">,</span> <span class="n">indices</span> <span class="o">=</span> <span class="p">[],</span> <span class="p">[],</span> <span class="p">[],</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">index</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">pred_scores</span><span class="p">)):</span>
+        <span class="k">if</span> <span class="n">pred_scores</span><span class="p">[</span><span class="n">index</span><span class="p">]</span> <span class="o">&gt;=</span> <span class="n">detection_threshold</span><span class="p">:</span>
+            <span class="n">boxes</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">pred_bboxes</span><span class="p">[</span><span class="n">index</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">int32</span><span class="p">))</span>
+            <span class="n">classes</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">pred_classes</span><span class="p">[</span><span class="n">index</span><span class="p">])</span>
+            <span class="n">labels</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">pred_labels</span><span class="p">[</span><span class="n">index</span><span class="p">])</span>
+            <span class="n">indices</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">index</span><span class="p">)</span>
+    <span class="n">boxes</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">int32</span><span class="p">(</span><span class="n">boxes</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">boxes</span><span class="p">,</span> <span class="n">classes</span><span class="p">,</span> <span class="n">labels</span><span class="p">,</span> <span class="n">indices</span>
+
+<span class="k">def</span> <span class="nf">draw_boxes</span><span class="p">(</span><span class="n">boxes</span><span class="p">,</span> <span class="n">labels</span><span class="p">,</span> <span class="n">classes</span><span class="p">,</span> <span class="n">image</span><span class="p">):</span>
+    <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">box</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">boxes</span><span class="p">):</span>
+        <span class="n">color</span> <span class="o">=</span> <span class="n">COLORS</span><span class="p">[</span><span class="n">labels</span><span class="p">[</span><span class="n">i</span><span class="p">]]</span>
+        <span class="n">cv2</span><span class="o">.</span><span class="n">rectangle</span><span class="p">(</span>
+            <span class="n">image</span><span class="p">,</span>
+            <span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">box</span><span class="p">[</span><span class="mi">0</span><span class="p">]),</span> <span class="nb">int</span><span class="p">(</span><span class="n">box</span><span class="p">[</span><span class="mi">1</span><span class="p">])),</span>
+            <span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">box</span><span class="p">[</span><span class="mi">2</span><span class="p">]),</span> <span class="nb">int</span><span class="p">(</span><span class="n">box</span><span class="p">[</span><span class="mi">3</span><span class="p">])),</span>
+            <span class="n">color</span><span class="p">,</span> <span class="mi">2</span>
+        <span class="p">)</span>
+        <span class="n">cv2</span><span class="o">.</span><span class="n">putText</span><span class="p">(</span><span class="n">image</span><span class="p">,</span> <span class="n">classes</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">box</span><span class="p">[</span><span class="mi">0</span><span class="p">]),</span> <span class="nb">int</span><span class="p">(</span><span class="n">box</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">-</span> <span class="mi">5</span><span class="p">)),</span>
+                    <span class="n">cv2</span><span class="o">.</span><span class="n">FONT_HERSHEY_SIMPLEX</span><span class="p">,</span> <span class="mf">0.8</span><span class="p">,</span> <span class="n">color</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span>
+                    <span class="n">lineType</span><span class="o">=</span><span class="n">cv2</span><span class="o">.</span><span class="n">LINE_AA</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">image</span>
+
+<span class="n">coco_names</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;__background__&#39;</span><span class="p">,</span> <span class="s1">&#39;person&#39;</span><span class="p">,</span> <span class="s1">&#39;bicycle&#39;</span><span class="p">,</span> <span class="s1">&#39;car&#39;</span><span class="p">,</span> <span class="s1">&#39;motorcycle&#39;</span><span class="p">,</span> <span class="s1">&#39;airplane&#39;</span><span class="p">,</span> \
+              <span class="s1">&#39;bus&#39;</span><span class="p">,</span> <span class="s1">&#39;train&#39;</span><span class="p">,</span> <span class="s1">&#39;truck&#39;</span><span class="p">,</span> <span class="s1">&#39;boat&#39;</span><span class="p">,</span> <span class="s1">&#39;traffic light&#39;</span><span class="p">,</span> <span class="s1">&#39;fire hydrant&#39;</span><span class="p">,</span> <span class="s1">&#39;N/A&#39;</span><span class="p">,</span> 
+              <span class="s1">&#39;stop sign&#39;</span><span class="p">,</span> <span class="s1">&#39;parking meter&#39;</span><span class="p">,</span> <span class="s1">&#39;bench&#39;</span><span class="p">,</span> <span class="s1">&#39;bird&#39;</span><span class="p">,</span> <span class="s1">&#39;cat&#39;</span><span class="p">,</span> <span class="s1">&#39;dog&#39;</span><span class="p">,</span> <span class="s1">&#39;horse&#39;</span><span class="p">,</span> <span class="s1">&#39;sheep&#39;</span><span class="p">,</span> 
+              <span class="s1">&#39;cow&#39;</span><span class="p">,</span> <span class="s1">&#39;elephant&#39;</span><span class="p">,</span> <span class="s1">&#39;bear&#39;</span><span class="p">,</span> <span class="s1">&#39;zebra&#39;</span><span class="p">,</span> <span class="s1">&#39;giraffe&#39;</span><span class="p">,</span> <span class="s1">&#39;N/A&#39;</span><span class="p">,</span> <span class="s1">&#39;backpack&#39;</span><span class="p">,</span> <span class="s1">&#39;umbrella&#39;</span><span class="p">,</span>
+              <span class="s1">&#39;N/A&#39;</span><span class="p">,</span> <span class="s1">&#39;N/A&#39;</span><span class="p">,</span> <span class="s1">&#39;handbag&#39;</span><span class="p">,</span> <span class="s1">&#39;tie&#39;</span><span class="p">,</span> <span class="s1">&#39;suitcase&#39;</span><span class="p">,</span> <span class="s1">&#39;frisbee&#39;</span><span class="p">,</span> <span class="s1">&#39;skis&#39;</span><span class="p">,</span> <span class="s1">&#39;snowboard&#39;</span><span class="p">,</span>
+              <span class="s1">&#39;sports ball&#39;</span><span class="p">,</span> <span class="s1">&#39;kite&#39;</span><span class="p">,</span> <span class="s1">&#39;baseball bat&#39;</span><span class="p">,</span> <span class="s1">&#39;baseball glove&#39;</span><span class="p">,</span> <span class="s1">&#39;skateboard&#39;</span><span class="p">,</span>
+              <span class="s1">&#39;surfboard&#39;</span><span class="p">,</span> <span class="s1">&#39;tennis racket&#39;</span><span class="p">,</span> <span class="s1">&#39;bottle&#39;</span><span class="p">,</span> <span class="s1">&#39;N/A&#39;</span><span class="p">,</span> <span class="s1">&#39;wine glass&#39;</span><span class="p">,</span> <span class="s1">&#39;cup&#39;</span><span class="p">,</span> <span class="s1">&#39;fork&#39;</span><span class="p">,</span>
+              <span class="s1">&#39;knife&#39;</span><span class="p">,</span> <span class="s1">&#39;spoon&#39;</span><span class="p">,</span> <span class="s1">&#39;bowl&#39;</span><span class="p">,</span> <span class="s1">&#39;banana&#39;</span><span class="p">,</span> <span class="s1">&#39;apple&#39;</span><span class="p">,</span> <span class="s1">&#39;sandwich&#39;</span><span class="p">,</span> <span class="s1">&#39;orange&#39;</span><span class="p">,</span>
+              <span class="s1">&#39;broccoli&#39;</span><span class="p">,</span> <span class="s1">&#39;carrot&#39;</span><span class="p">,</span> <span class="s1">&#39;hot dog&#39;</span><span class="p">,</span> <span class="s1">&#39;pizza&#39;</span><span class="p">,</span> <span class="s1">&#39;donut&#39;</span><span class="p">,</span> <span class="s1">&#39;cake&#39;</span><span class="p">,</span> <span class="s1">&#39;chair&#39;</span><span class="p">,</span> <span class="s1">&#39;couch&#39;</span><span class="p">,</span>
+              <span class="s1">&#39;potted plant&#39;</span><span class="p">,</span> <span class="s1">&#39;bed&#39;</span><span class="p">,</span> <span class="s1">&#39;N/A&#39;</span><span class="p">,</span> <span class="s1">&#39;dining table&#39;</span><span class="p">,</span> <span class="s1">&#39;N/A&#39;</span><span class="p">,</span> <span class="s1">&#39;N/A&#39;</span><span class="p">,</span> <span class="s1">&#39;toilet&#39;</span><span class="p">,</span>
+              <span class="s1">&#39;N/A&#39;</span><span class="p">,</span> <span class="s1">&#39;tv&#39;</span><span class="p">,</span> <span class="s1">&#39;laptop&#39;</span><span class="p">,</span> <span class="s1">&#39;mouse&#39;</span><span class="p">,</span> <span class="s1">&#39;remote&#39;</span><span class="p">,</span> <span class="s1">&#39;keyboard&#39;</span><span class="p">,</span> <span class="s1">&#39;cell phone&#39;</span><span class="p">,</span> <span class="s1">&#39;microwave&#39;</span><span class="p">,</span>
+              <span class="s1">&#39;oven&#39;</span><span class="p">,</span> <span class="s1">&#39;toaster&#39;</span><span class="p">,</span> <span class="s1">&#39;sink&#39;</span><span class="p">,</span> <span class="s1">&#39;refrigerator&#39;</span><span class="p">,</span> <span class="s1">&#39;N/A&#39;</span><span class="p">,</span> <span class="s1">&#39;book&#39;</span><span class="p">,</span> <span class="s1">&#39;clock&#39;</span><span class="p">,</span> <span class="s1">&#39;vase&#39;</span><span class="p">,</span>
+              <span class="s1">&#39;scissors&#39;</span><span class="p">,</span> <span class="s1">&#39;teddy bear&#39;</span><span class="p">,</span> <span class="s1">&#39;hair drier&#39;</span><span class="p">,</span> <span class="s1">&#39;toothbrush&#39;</span><span class="p">]</span>
+
+
+<span class="c1"># This will help us create a different color for each class</span>
+<span class="n">COLORS</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">uniform</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">255</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">coco_names</span><span class="p">),</span> <span class="mi">3</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Now we’re going to define the model, read an image, and run the prediction once so we get the detected objects.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">requests</span>
+<span class="kn">import</span> <span class="nn">torchvision</span>
+<span class="kn">from</span> <span class="nn">PIL</span> <span class="kn">import</span> <span class="n">Image</span>
+<span class="n">image_url</span> <span class="o">=</span> <span class="s2">&quot;https://raw.githubusercontent.com/jacobgil/pytorch-grad-cam/master/examples/both.png&quot;</span>
+<span class="n">image</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">Image</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">image_url</span><span class="p">,</span> <span class="n">stream</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span><span class="o">.</span><span class="n">raw</span><span class="p">))</span>
+<span class="n">image_float_np</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">float32</span><span class="p">(</span><span class="n">image</span><span class="p">)</span> <span class="o">/</span> <span class="mi">255</span>
+<span class="c1"># define the torchvision image transforms</span>
+<span class="n">transform</span> <span class="o">=</span> <span class="n">torchvision</span><span class="o">.</span><span class="n">transforms</span><span class="o">.</span><span class="n">Compose</span><span class="p">([</span>
+    <span class="n">torchvision</span><span class="o">.</span><span class="n">transforms</span><span class="o">.</span><span class="n">ToTensor</span><span class="p">(),</span>
+<span class="p">])</span>
+
+<span class="n">input_tensor</span> <span class="o">=</span> <span class="n">transform</span><span class="p">(</span><span class="n">image</span><span class="p">)</span>
+<span class="n">device</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">device</span><span class="p">(</span><span class="s1">&#39;cuda&#39;</span> <span class="k">if</span> <span class="n">torch</span><span class="o">.</span><span class="n">cuda</span><span class="o">.</span><span class="n">is_available</span><span class="p">()</span> <span class="k">else</span> <span class="s1">&#39;cpu&#39;</span><span class="p">)</span>
+<span class="n">input_tensor</span> <span class="o">=</span> <span class="n">input_tensor</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="n">device</span><span class="p">)</span>
+<span class="c1"># Add a batch dimension:</span>
+<span class="n">input_tensor</span> <span class="o">=</span> <span class="n">input_tensor</span><span class="o">.</span><span class="n">unsqueeze</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+
+<span class="n">model</span> <span class="o">=</span> <span class="n">torchvision</span><span class="o">.</span><span class="n">models</span><span class="o">.</span><span class="n">detection</span><span class="o">.</span><span class="n">fasterrcnn_resnet50_fpn</span><span class="p">(</span><span class="n">pretrained</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">model</span><span class="o">.</span><span class="n">eval</span><span class="p">()</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="n">device</span><span class="p">)</span>
+
+<span class="c1"># Run the model and display the detections</span>
+<span class="n">boxes</span><span class="p">,</span> <span class="n">classes</span><span class="p">,</span> <span class="n">labels</span><span class="p">,</span> <span class="n">indices</span> <span class="o">=</span> <span class="n">predict</span><span class="p">(</span><span class="n">input_tensor</span><span class="p">,</span> <span class="n">model</span><span class="p">,</span> <span class="n">device</span><span class="p">,</span> <span class="mf">0.9</span><span class="p">)</span>
+<span class="n">image</span> <span class="o">=</span> <span class="n">draw_boxes</span><span class="p">(</span><span class="n">boxes</span><span class="p">,</span> <span class="n">labels</span><span class="p">,</span> <span class="n">classes</span><span class="p">,</span> <span class="n">image</span><span class="p">)</span>
+
+<span class="c1"># Show the image:</span>
+<span class="n">Image</span><span class="o">.</span><span class="n">fromarray</span><span class="p">(</span><span class="n">image</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/Class Activation Maps for Object Detection With Faster RCNN_4_01.png" src="../_images/Class Activation Maps for Object Detection With Faster RCNN_4_01.png" />
+</div>
+</div>
+</div>
+</div>
+<div class="tex2jax_ignore mathjax_ignore section" id="what-faster-rcnn-layer-should-we-target">
+<h1>What faster-rcnn layer should we target?<a class="headerlink" href="#what-faster-rcnn-layer-should-we-target" title="Permalink to this headline">#</a></h1>
+<p>The first part of faster-rcnn, is the Feature Pyramid Network (FPN) backbone: model.backbone.
+This part is what computes the meaningful activations, and we are going to work with these.</p>
+<p>The rest of the network extract features from here and then predicts bounding boxes, but everything is based on the features computed from the FPN.</p>
+<div class="section" id="problem-the-output-from-model-backbone-is-in-a-very-custom-format">
+<h2>Problem: The output from model.backbone is in a very custom format<a class="headerlink" href="#problem-the-output-from-model-backbone-is-in-a-very-custom-format" title="Permalink to this headline">#</a></h2>
+<p>The backbone outputs 5 different tensors with different spatial sizes, from the FPN.
+They are stored as an Ordered Dict.</p>
+<p>Our goal here is to aggregate these image tensors, assign them weights, and then aggregate everything.</p>
+<p>To do that, we’re going to need to write a custom function that takes these tensors with different sizes, resizes them to a common shape, and concatenates them:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">fasterrcnn_reshape_transform</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+    <span class="n">target_size</span> <span class="o">=</span> <span class="n">x</span><span class="p">[</span><span class="s1">&#39;pool&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">size</span><span class="p">()[</span><span class="o">-</span><span class="mi">2</span> <span class="p">:</span> <span class="p">]</span>
+    <span class="n">activations</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">x</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+        <span class="n">activations</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">functional</span><span class="o">.</span><span class="n">interpolate</span><span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">value</span><span class="p">),</span> <span class="n">target_size</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s1">&#39;bilinear&#39;</span><span class="p">))</span>
+    <span class="n">activations</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">cat</span><span class="p">(</span><span class="n">activations</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">activations</span>
+</pre></div>
+</div>
+<p>One more thing - notice that we’re taking torch.abs(value) on the activations.</p>
+<p>This is one way object detection differs quite a lot from the usual classification networks that have ReLU non linearities. The FPN activations are un-bounded and can have negative values as well.</p>
+</div>
+<div class="section" id="what-target-are-the-class-activation-maps-created-for">
+<h2>What target are the Class Activation Maps created for?<a class="headerlink" href="#what-target-are-the-class-activation-maps-created-for" title="Permalink to this headline">#</a></h2>
+<p>Remember that in the case of classification, we create the CAM for a specific category.
+For example, if we want to see which activations respond to “Cat”, we could use the 281 image-net category.
+And the CAM is computed for that target, with ClassifierOutputTarget(281).</p>
+<p>We’re going to define something like that for object detection as well.
+In the case of object detection, the output of the model are bounding boxes and their categories.
+Unfortunately, faster-rcnn doesn’t return us scores for all of the categories, it just returns the highest scoring category, so we’re going to be limitted to that.</p>
+<p>Now the target isn’t just limitted to the classification score, it can also be something about the bounding boxes boordinates:</p>
+<ul class="simple">
+<li><p>Maybe we want to find the activations that correspond to the category of the bounding boxes.</p></li>
+<li><p>Maybe we want to find the activations that correspond to the coordinates of the bounding boxes, or some property of them, like their width or height.</p></li>
+<li><p>Maybe a combination of both the category and a property of the bounding box coordinates.</p></li>
+</ul>
+<div class="section" id="we-can-measure-how-the-detected-objects-correspond-with-the-original-detections-in-both-coordinates-and-score">
+<h3>We can measure how the detected objects correspond with the original detections in both coordinates and score<a class="headerlink" href="#we-can-measure-how-the-detected-objects-correspond-with-the-original-detections-in-both-coordinates-and-score" title="Permalink to this headline">#</a></h3>
+<p>We have an output from the model.
+We need to assign it some score, so we can highlight the parts of the image that maximize that score.
+We can check how the model output corresponds with the original detections:</p>
+<ol class="simple">
+<li><p>For every bounding box from the original detections, find the detection that overlaps with it the most.</p>
+<ul class="simple">
+<li><p>Check if the IOU of the detection with the original detection is high enough - if not, assign a score of 0 to the box.</p></li>
+<li><p>Check if the category is still the same as in the original detection - if not, assign a score of 0 to the box.</p></li>
+<li><p>Find the classification score.</p></li>
+<li><p>box_score = IOU + classification_score.</p></li>
+</ul>
+</li>
+<li><p>target = sum(box_scores)</p></li>
+</ol>
+<p>Lets look at that (defined in pytorch_grad_cam.utils.model_targets.FasterRCNNBoxScoreTarget):</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">FasterRCNNBoxScoreTarget</span><span class="p">:</span>
+	<span class="sd">&quot;&quot;&quot; For every original detected bounding box specified in &quot;bounding boxes&quot;,</span>
+<span class="sd">		assign a score on how the current bounding boxes match it,</span>
+<span class="sd">			1. In IOU</span>
+<span class="sd">			2. In the classification score.</span>
+<span class="sd">		If there is not a large enough overlap, or the category changed,</span>
+<span class="sd">		assign a score of 0.</span>
+
+<span class="sd">		The total score is the sum of all the box scores.</span>
+<span class="sd">	&quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">labels</span><span class="p">,</span> <span class="n">bounding_boxes</span><span class="p">,</span> <span class="n">iou_threshold</span><span class="o">=</span><span class="mf">0.5</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">labels</span> <span class="o">=</span> <span class="n">labels</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">bounding_boxes</span> <span class="o">=</span> <span class="n">bounding_boxes</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">iou_threshold</span> <span class="o">=</span> <span class="n">iou_threshold</span>
+
+    <span class="k">def</span> <span class="fm">__call__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">model_outputs</span><span class="p">):</span>
+        <span class="n">output</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">Tensor</span><span class="p">([</span><span class="mi">0</span><span class="p">])</span>
+        <span class="k">if</span> <span class="n">torch</span><span class="o">.</span><span class="n">cuda</span><span class="o">.</span><span class="n">is_available</span><span class="p">():</span>
+            <span class="n">output</span> <span class="o">=</span> <span class="n">output</span><span class="o">.</span><span class="n">cuda</span><span class="p">()</span>
+
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">model_outputs</span><span class="p">[</span><span class="s2">&quot;boxes&quot;</span><span class="p">])</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">output</span>
+
+        <span class="k">for</span> <span class="n">box</span><span class="p">,</span> <span class="n">label</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">bounding_boxes</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">labels</span><span class="p">):</span>
+            <span class="n">box</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">Tensor</span><span class="p">(</span><span class="n">box</span><span class="p">[</span><span class="kc">None</span><span class="p">,</span> <span class="p">:])</span>
+            <span class="k">if</span> <span class="n">torch</span><span class="o">.</span><span class="n">cuda</span><span class="o">.</span><span class="n">is_available</span><span class="p">():</span>
+                <span class="n">box</span> <span class="o">=</span> <span class="n">box</span><span class="o">.</span><span class="n">cuda</span><span class="p">()</span>
+
+            <span class="n">ious</span> <span class="o">=</span> <span class="n">torchvision</span><span class="o">.</span><span class="n">ops</span><span class="o">.</span><span class="n">box_iou</span><span class="p">(</span><span class="n">box</span><span class="p">,</span> <span class="n">model_outputs</span><span class="p">[</span><span class="s2">&quot;boxes&quot;</span><span class="p">])</span>
+            <span class="n">index</span> <span class="o">=</span> <span class="n">ious</span><span class="o">.</span><span class="n">argmax</span><span class="p">()</span>
+            <span class="k">if</span> <span class="n">ious</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="n">index</span><span class="p">]</span> <span class="o">&gt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">iou_threshold</span> <span class="ow">and</span> <span class="n">model_outputs</span><span class="p">[</span><span class="s2">&quot;labels&quot;</span><span class="p">][</span><span class="n">index</span><span class="p">]</span> <span class="o">==</span> <span class="n">label</span><span class="p">:</span>
+                <span class="n">score</span> <span class="o">=</span> <span class="n">ious</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="n">index</span><span class="p">]</span> <span class="o">+</span> <span class="n">model_outputs</span><span class="p">[</span><span class="s2">&quot;scores&quot;</span><span class="p">][</span><span class="n">index</span><span class="p">]</span>
+                <span class="n">output</span> <span class="o">=</span> <span class="n">output</span> <span class="o">+</span> <span class="n">score</span>
+        <span class="k">return</span> <span class="n">output</span>
+</pre></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">target_layers</span> <span class="o">=</span> <span class="p">[</span><span class="n">model</span><span class="o">.</span><span class="n">backbone</span><span class="p">]</span>
+<span class="n">targets</span> <span class="o">=</span> <span class="p">[</span><span class="n">FasterRCNNBoxScoreTarget</span><span class="p">(</span><span class="n">labels</span><span class="o">=</span><span class="n">labels</span><span class="p">,</span> <span class="n">bounding_boxes</span><span class="o">=</span><span class="n">boxes</span><span class="p">)]</span>
+<span class="n">cam</span> <span class="o">=</span> <span class="n">EigenCAM</span><span class="p">(</span><span class="n">model</span><span class="p">,</span>
+               <span class="n">target_layers</span><span class="p">,</span> 
+               <span class="n">use_cuda</span><span class="o">=</span><span class="n">torch</span><span class="o">.</span><span class="n">cuda</span><span class="o">.</span><span class="n">is_available</span><span class="p">(),</span>
+               <span class="n">reshape_transform</span><span class="o">=</span><span class="n">fasterrcnn_reshape_transform</span><span class="p">)</span>
+
+<span class="n">grayscale_cam</span> <span class="o">=</span> <span class="n">cam</span><span class="p">(</span><span class="n">input_tensor</span><span class="p">,</span> <span class="n">targets</span><span class="o">=</span><span class="n">targets</span><span class="p">)</span>
+<span class="c1"># Take the first image in the batch:</span>
+<span class="n">grayscale_cam</span> <span class="o">=</span> <span class="n">grayscale_cam</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="p">:]</span>
+<span class="n">cam_image</span> <span class="o">=</span> <span class="n">show_cam_on_image</span><span class="p">(</span><span class="n">image_float_np</span><span class="p">,</span> <span class="n">grayscale_cam</span><span class="p">,</span> <span class="n">use_rgb</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="c1"># And lets draw the boxes again:</span>
+<span class="n">image_with_bounding_boxes</span> <span class="o">=</span> <span class="n">draw_boxes</span><span class="p">(</span><span class="n">boxes</span><span class="p">,</span> <span class="n">labels</span><span class="p">,</span> <span class="n">classes</span><span class="p">,</span> <span class="n">cam_image</span><span class="p">)</span>
+<span class="n">Image</span><span class="o">.</span><span class="n">fromarray</span><span class="p">(</span><span class="n">image_with_bounding_boxes</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/Class Activation Maps for Object Detection With Faster RCNN_6_01.png" src="../_images/Class Activation Maps for Object Detection With Faster RCNN_6_01.png" />
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="tex2jax_ignore mathjax_ignore section" id="optional-renormalizing-the-cams-inside-every-bounding-box">
+<h1>Optional: Renormalizing the CAMs inside every bounding box<a class="headerlink" href="#optional-renormalizing-the-cams-inside-every-bounding-box" title="Permalink to this headline">#</a></h1>
+<p>This shows us the CAM computed accross the entire image, normalized to be between 0 and 1, using even pixels that are outside the boxes.
+We can re-normalize the CAM inside every bounding box, and take the maximum value in the overlaps between the boxes.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">renormalize_cam_in_bounding_boxes</span><span class="p">(</span><span class="n">boxes</span><span class="p">,</span> <span class="n">image_float_np</span><span class="p">,</span> <span class="n">grayscale_cam</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Normalize the CAM to be in the range [0, 1] </span>
+<span class="sd">    inside every bounding boxes, and zero outside of the bounding boxes. &quot;&quot;&quot;</span>
+    <span class="n">renormalized_cam</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">grayscale_cam</span><span class="o">.</span><span class="n">shape</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">float32</span><span class="p">)</span>
+    <span class="n">images</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">x1</span><span class="p">,</span> <span class="n">y1</span><span class="p">,</span> <span class="n">x2</span><span class="p">,</span> <span class="n">y2</span> <span class="ow">in</span> <span class="n">boxes</span><span class="p">:</span>
+        <span class="n">img</span> <span class="o">=</span> <span class="n">renormalized_cam</span> <span class="o">*</span> <span class="mi">0</span>
+        <span class="n">img</span><span class="p">[</span><span class="n">y1</span><span class="p">:</span><span class="n">y2</span><span class="p">,</span> <span class="n">x1</span><span class="p">:</span><span class="n">x2</span><span class="p">]</span> <span class="o">=</span> <span class="n">scale_cam_image</span><span class="p">(</span><span class="n">grayscale_cam</span><span class="p">[</span><span class="n">y1</span><span class="p">:</span><span class="n">y2</span><span class="p">,</span> <span class="n">x1</span><span class="p">:</span><span class="n">x2</span><span class="p">]</span><span class="o">.</span><span class="n">copy</span><span class="p">())</span>    
+        <span class="n">images</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">img</span><span class="p">)</span>
+    
+    <span class="n">renormalized_cam</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">float32</span><span class="p">(</span><span class="n">images</span><span class="p">),</span> <span class="n">axis</span> <span class="o">=</span> <span class="mi">0</span><span class="p">)</span>
+    <span class="n">renormalized_cam</span> <span class="o">=</span> <span class="n">scale_cam_image</span><span class="p">(</span><span class="n">renormalized_cam</span><span class="p">)</span>
+    <span class="n">eigencam_image_renormalized</span> <span class="o">=</span> <span class="n">show_cam_on_image</span><span class="p">(</span><span class="n">image_float_np</span><span class="p">,</span> <span class="n">renormalized_cam</span><span class="p">,</span> <span class="n">use_rgb</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">image_with_bounding_boxes</span> <span class="o">=</span> <span class="n">draw_boxes</span><span class="p">(</span><span class="n">boxes</span><span class="p">,</span> <span class="n">labels</span><span class="p">,</span> <span class="n">classes</span><span class="p">,</span> <span class="n">eigencam_image_renormalized</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">image_with_bounding_boxes</span>
+
+<span class="n">Image</span><span class="o">.</span><span class="n">fromarray</span><span class="p">(</span><span class="n">renormalize_cam_in_bounding_boxes</span><span class="p">(</span><span class="n">boxes</span><span class="p">,</span> <span class="n">image_float_np</span><span class="p">,</span> <span class="n">grayscale_cam</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/Class Activation Maps for Object Detection With Faster RCNN_8_01.png" src="../_images/Class Activation Maps for Object Detection With Faster RCNN_8_01.png" />
+</div>
+</div>
+</div>
+<div class="tex2jax_ignore mathjax_ignore section" id="advanced-more-class-descrimination-with-ablation-cam">
+<h1>Advanced: More class descrimination with Ablation CAM<a class="headerlink" href="#advanced-more-class-descrimination-with-ablation-cam" title="Permalink to this headline">#</a></h1>
+<p>A good property of a CAM method is that it should give us class descrimination - it should be able to highlight only the parts that correspond with a specific category, and not those of other categories.</p>
+<p>In the previous section we defined the target.. but we cheated.
+EigenCAM doesn’t actually know how to use the target - the result from it will be constant regardless of the target.</p>
+<p>EigenCAM returns the first principle component of the activations, and that will most the time correspond with the dominant object.
+The common case is that inside a bounding box, you’re going to have a single object.
+What happens if you have several different objects that you want to distinguish between?</p>
+<p>To get that kind of “class descrimination”, we can use Ablation-CAM.</p>
+<ul class="simple">
+<li><p>Disclaimer: The EigenCAM that we used above is extremely fast since it requires only one forward pass, and in the common case that should be good enough, so you probably can just use it for object detection *</p></li>
+</ul>
+<p>Ablation-CAM will “ablate” activations and measure how the output changes. If the output drops a lot, it means that activation is important and should get a higher weight.</p>
+</div>
+<div class="tex2jax_ignore mathjax_ignore section" id="defining-a-custom-ablation-layer">
+<h1>Defining a custom Ablation Layer<a class="headerlink" href="#defining-a-custom-ablation-layer" title="Permalink to this headline">#</a></h1>
+<p>For a custom use case, like we have here, we will have to define our own Ablation layer.
+We have “AblationLayerFasterRCNN” defined in pytorch_grad_cam.ablation_layer, but lets go over it.</p>
+<p>An ablation layer needs to implement two methods:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">set_next_batch</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">input_batch_index</span><span class="p">,</span> <span class="n">activations</span><span class="p">,</span> <span class="n">num_channels_to_ablate</span><span class="p">)</span>
+<span class="k">def</span> <span class="fm">__call__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">)</span>
+</pre></div>
+</div>
+<ul class="simple">
+<li><p>set_next_batch gets the activations saved in the target layer, those that should get ablated.
+It extracts the next batch member from the activations (we’re running this method on an input tensor of shape Batch x 3 x Height x Width),
+and it needs to repeat it num_channels_to_ablate times.</p></li>
+</ul>
+<p>The ablation layer needs that because it’s going to take each of those num_channels_to_ablate and ablate it, in a batch of size num_channels_to_ablate, to make it faster.
+There is an outer loop that does this for every input image in the original batch.</p>
+<ul class="simple">
+<li><p><strong>call</strong>(self, x) is what does the actual ablation.</p></li>
+</ul>
+<p>self.indices contains the next group of indices that should be ablated.</p>
+<p>In the case of the FPN network in Faster-RCNN, remember we have a spatial pyramid stored in an Ordered dict.
+5 spatial layers total (the ‘0’, ‘1’, ‘2’, ‘3’ and ‘pool’ keys), each has 256 activations, so a total of 5 * 256 activations/
+Remember that when we stored the activations for the CAM, we stacked them on top of each other.
+So we need to be able to translate between an index, to the actual layer it corresponds to so we can ablate it.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">AblationLayerFasterRCNN</span><span class="p">(</span><span class="n">AblationLayer</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">AblationLayerFasterRCNN</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
+
+        <span class="k">def</span> <span class="nf">set_next_batch</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">input_batch_index</span><span class="p">,</span> <span class="n">activations</span><span class="p">,</span> <span class="n">num_channels_to_ablate</span><span class="p">):</span>
+            <span class="sd">&quot;&quot;&quot; Extract the next batch member from activations,</span>
+<span class="sd">                and repeat it num_channels_to_ablate times.</span>
+<span class="sd">            &quot;&quot;&quot;</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">activations</span> <span class="o">=</span> <span class="n">OrderedDict</span><span class="p">()</span>
+            <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">activations</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+                <span class="n">fpn_activation</span> <span class="o">=</span> <span class="n">value</span><span class="p">[</span><span class="n">input_batch_index</span><span class="p">,</span> <span class="p">:,</span> <span class="p">:,</span> <span class="p">:]</span><span class="o">.</span><span class="n">clone</span><span class="p">()</span><span class="o">.</span><span class="n">unsqueeze</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">activations</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="n">fpn_activation</span><span class="o">.</span><span class="n">repeat</span><span class="p">(</span><span class="n">num_channels_to_ablate</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="fm">__call__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Go over the activation indices to be ablated, stored in self.indices.</span>
+<span class="sd">            Map between every activation index to the tensor in the Ordered Dict from the</span>
+<span class="sd">            FPN layer.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">result</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">activations</span>
+        <span class="n">layers</span> <span class="o">=</span> <span class="p">{</span><span class="mi">0</span><span class="p">:</span> <span class="s1">&#39;0&#39;</span><span class="p">,</span> <span class="mi">1</span><span class="p">:</span> <span class="s1">&#39;1&#39;</span><span class="p">,</span> <span class="mi">2</span><span class="p">:</span> <span class="s1">&#39;2&#39;</span><span class="p">,</span> <span class="mi">3</span><span class="p">:</span> <span class="s1">&#39;3&#39;</span><span class="p">,</span> <span class="mi">4</span><span class="p">:</span> <span class="s1">&#39;pool&#39;</span><span class="p">}</span>
+        <span class="n">num_channels_to_ablate</span> <span class="o">=</span> <span class="n">result</span><span class="p">[</span><span class="s1">&#39;pool&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">size</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">num_channels_to_ablate</span><span class="p">):</span>
+            <span class="n">pyramid_layer</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">indices</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">/</span><span class="mi">256</span><span class="p">)</span>
+            <span class="n">index_in_pyramid_layer</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">indices</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">%</span> <span class="mi">256</span><span class="p">)</span>
+            <span class="n">result</span><span class="p">[</span><span class="n">layers</span><span class="p">[</span><span class="n">pyramid_layer</span><span class="p">]][</span><span class="n">i</span><span class="p">,</span> <span class="n">index_in_pyramid_layer</span><span class="p">,</span> <span class="p">:,</span> <span class="p">:]</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1000</span>
+        <span class="k">return</span> <span class="n">result</span>
+</pre></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">pytorch_grad_cam</span> <span class="kn">import</span> <span class="n">AblationCAM</span>
+<span class="kn">from</span> <span class="nn">pytorch_grad_cam.ablation_layer</span> <span class="kn">import</span> <span class="n">AblationLayerFasterRCNN</span>
+<span class="n">cam</span> <span class="o">=</span> <span class="n">AblationCAM</span><span class="p">(</span><span class="n">model</span><span class="p">,</span>
+               <span class="n">target_layers</span><span class="p">,</span> 
+               <span class="n">use_cuda</span><span class="o">=</span><span class="n">torch</span><span class="o">.</span><span class="n">cuda</span><span class="o">.</span><span class="n">is_available</span><span class="p">(),</span> 
+               <span class="n">reshape_transform</span><span class="o">=</span><span class="n">fasterrcnn_reshape_transform</span><span class="p">,</span>
+               <span class="n">ablation_layer</span><span class="o">=</span><span class="n">AblationLayerFasterRCNN</span><span class="p">())</span>
+
+<span class="n">grayscale_cam</span> <span class="o">=</span> <span class="n">cam</span><span class="p">(</span><span class="n">input_tensor</span><span class="p">,</span> <span class="n">targets</span><span class="o">=</span><span class="n">targets</span><span class="p">)[</span><span class="mi">0</span><span class="p">,</span> <span class="p">:]</span>
+<span class="n">Image</span><span class="o">.</span><span class="n">fromarray</span><span class="p">(</span><span class="n">renormalize_cam_in_bounding_boxes</span><span class="p">(</span><span class="n">boxes</span><span class="p">,</span> <span class="n">image_float_np</span><span class="p">,</span> <span class="n">grayscale_cam</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>100%|███████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████| 40/40 [00:31&lt;00:00,  1.26it/s]
+</pre></div>
+</div>
+<img alt="../_images/Class Activation Maps for Object Detection With Faster RCNN_10_11.png" src="../_images/Class Activation Maps for Object Detection With Faster RCNN_10_11.png" />
+</div>
+</div>
+<div class="section" id="making-it-fast-by-skipping-some-channels">
+<h2>Making it fast by skipping some channels<a class="headerlink" href="#making-it-fast-by-skipping-some-channels" title="Permalink to this headline">#</a></h2>
+<p>We’re almost done.
+AblationCAM is slow since it has to do many forward passes (in our case: 5 x 256 passes).
+However some of the channels can be skipped, for example if their empty.
+We have an experimental parameter ratio_channels_to_ablate that controls how many of the channels should be ablated.
+It compes the first Principle Component (like in EigenCAM) and then thresholds it with a low threshold to get a binary mask,
+and then measures the overlap of every activation with that binary mask.</p>
+<p>Lets check how the output looks when we ablate only 10% and then 1% of the channels, resulting in an x10 and x100 speedup:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">ratio_channels_to_ablate</span> <span class="o">=</span> <span class="mf">0.1</span>
+<span class="n">cam</span> <span class="o">=</span> <span class="n">AblationCAM</span><span class="p">(</span><span class="n">model</span><span class="p">,</span>
+               <span class="n">target_layers</span><span class="p">,</span> 
+               <span class="n">use_cuda</span><span class="o">=</span><span class="n">torch</span><span class="o">.</span><span class="n">cuda</span><span class="o">.</span><span class="n">is_available</span><span class="p">(),</span> 
+               <span class="n">reshape_transform</span><span class="o">=</span><span class="n">fasterrcnn_reshape_transform</span><span class="p">,</span>
+               <span class="n">ablation_layer</span><span class="o">=</span><span class="n">AblationLayerFasterRCNN</span><span class="p">(),</span>
+               <span class="n">ratio_channels_to_ablate</span><span class="o">=</span><span class="n">ratio_channels_to_ablate</span><span class="p">)</span>
+
+<span class="n">grayscale_cam</span> <span class="o">=</span> <span class="n">cam</span><span class="p">(</span><span class="n">input_tensor</span><span class="p">,</span> <span class="n">targets</span><span class="o">=</span><span class="n">targets</span><span class="p">)[</span><span class="mi">0</span><span class="p">,</span> <span class="p">:]</span>
+<span class="n">Image</span><span class="o">.</span><span class="n">fromarray</span><span class="p">(</span><span class="n">renormalize_cam_in_bounding_boxes</span><span class="p">(</span><span class="n">boxes</span><span class="p">,</span> <span class="n">image_float_np</span><span class="p">,</span> <span class="n">grayscale_cam</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>100%|█████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████| 8/8 [00:06&lt;00:00,  1.27it/s]
+</pre></div>
+</div>
+<img alt="../_images/Class Activation Maps for Object Detection With Faster RCNN_12_11.png" src="../_images/Class Activation Maps for Object Detection With Faster RCNN_12_11.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">ratio_channels_to_ablate</span> <span class="o">=</span> <span class="mf">0.01</span>
+<span class="n">cam</span> <span class="o">=</span> <span class="n">AblationCAM</span><span class="p">(</span><span class="n">model</span><span class="p">,</span>
+               <span class="n">target_layers</span><span class="p">,</span> 
+               <span class="n">use_cuda</span><span class="o">=</span><span class="n">torch</span><span class="o">.</span><span class="n">cuda</span><span class="o">.</span><span class="n">is_available</span><span class="p">(),</span> 
+               <span class="n">reshape_transform</span><span class="o">=</span><span class="n">fasterrcnn_reshape_transform</span><span class="p">,</span>
+               <span class="n">ablation_layer</span><span class="o">=</span><span class="n">AblationLayerFasterRCNN</span><span class="p">(),</span>
+               <span class="n">ratio_channels_to_ablate</span><span class="o">=</span><span class="n">ratio_channels_to_ablate</span><span class="p">)</span>
+
+<span class="n">grayscale_cam</span> <span class="o">=</span> <span class="n">cam</span><span class="p">(</span><span class="n">input_tensor</span><span class="p">,</span> <span class="n">targets</span><span class="o">=</span><span class="n">targets</span><span class="p">)[</span><span class="mi">0</span><span class="p">,</span> <span class="p">:]</span>
+<span class="n">Image</span><span class="o">.</span><span class="n">fromarray</span><span class="p">(</span><span class="n">renormalize_cam_in_bounding_boxes</span><span class="p">(</span><span class="n">boxes</span><span class="p">,</span> <span class="n">image_float_np</span><span class="p">,</span> <span class="n">grayscale_cam</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>100%|█████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████| 1/1 [00:00&lt;00:00,  1.45it/s]
+</pre></div>
+</div>
+<img alt="../_images/Class Activation Maps for Object Detection With Faster RCNN_13_11.png" src="../_images/Class Activation Maps for Object Detection With Faster RCNN_13_11.png" />
+</div>
+</div>
+</div>
+</div>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            kernelName: "python3",
+            path: "./tutorials"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+              </div>
+              
+            </main>
+            <footer class="footer-article noprint">
+                
+    <!-- Previous / next buttons -->
+<div class='prev-next-area'>
+</div>
+            </footer>
+        </div>
+    </div>
+    <div class="footer-content row">
+        <footer class="col footer"><p>
+  
+    By Jacob Gildenblat<br/>
+  
+      &copy; Copyright 2022.<br/>
+</p>
+        </footer>
+    </div>
+    
+</div>
+
+
+      </div>
+    </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../_static/scripts/pydata-sphinx-theme.js?digest=1999514e3f237ded88cf"></script>
+
+
+  </body>
+</html>

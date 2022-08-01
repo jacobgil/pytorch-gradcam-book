@@ -1,0 +1,670 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Deep Feature Factorizations for better model explainability &#8212; Advanced AI explainability with pytorch-gradcam</title>
+    
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
+
+    
+  <link rel="stylesheet"
+    href="../_static/vendor/fontawesome/5.13.0/css/all.min.css">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" href="../_static/styles/sphinx-book-theme.css?digest=5115cc725059bd94278eecd172e13a965bf8f5a9" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/design-style.b7bb847fb20b106c3d81b95245e65545.min.css" />
+    
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=1999514e3f237ded88cf">
+
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/clipboard.min.js"></script>
+    <script src="../_static/copybutton.js"></script>
+    <script src="../_static/scripts/sphinx-book-theme.js?digest=9c920249402e914e316237a7dbc6769907cce411"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../_static/togglebutton.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
+    <script src="../_static/design-tabs.js"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
+const thebe_selector = ".thebe,.cell"
+const thebe_selector_input = "pre"
+const thebe_selector_output = ".output, .cell_output"
+</script>
+    <script async="async" src="../_static/sphinx-thebe.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="docsearch:language" content="None">
+    
+
+    <!-- Google Analytics -->
+    
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="60">
+<!-- Checkboxes to toggle the left sidebar -->
+<input type="checkbox" class="sidebar-toggle" name="__navigation" id="__navigation" aria-label="Toggle navigation sidebar">
+<label class="overlay overlay-navbar" for="__navigation">
+    <div class="visually-hidden">Toggle navigation sidebar</div>
+</label>
+<!-- Checkboxes to toggle the in-page toc -->
+<input type="checkbox" class="sidebar-toggle" name="__page-toc" id="__page-toc" aria-label="Toggle in-page Table of Contents">
+<label class="overlay overlay-pagetoc" for="__page-toc">
+    <div class="visually-hidden">Toggle in-page Table of Contents</div>
+</label>
+<!-- Headers at the top -->
+<div class="announcement header-item noprint"></div>
+<div class="header header-item noprint"></div>
+
+    
+    <div class="container-fluid" id="banner"></div>
+
+    
+
+    <div class="container-xl">
+      <div class="row">
+          
+<!-- Sidebar -->
+<div class="bd-sidebar noprint" id="site-navigation">
+    <div class="bd-sidebar__content">
+        <div class="bd-sidebar__top"><div class="navbar-brand-box">
+    <a class="navbar-brand text-wrap" href="../index.html">
+      
+        <!-- `logo` is deprecated in Sphinx 4.0, so remove this when we stop supporting 3 -->
+        
+      
+      
+      <img src="_static/https://github.com/jacobgil/pytorch-grad-cam/blob/feature/activation_summaries/examples/both_detection.png?raw=true" class="logo" alt="logo">
+      
+      
+      <h1 class="site-logo" id="site-title">Advanced AI explainability with pytorch-gradcam</h1>
+      
+    </a>
+</div><form class="bd-search d-flex align-items-center" action="../search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" >
+</form><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../intro.html">
+                    Advanced AI explainability for pytorch
+                </a>
+            </li>
+        </ul>
+        <ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../Class%20Activation%20Maps%20for%20Semantic%20Segmentation.html">
+   Tutorial: Class Activation Maps for Semantic Segmentation
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../Class%20Activation%20Maps%20for%20Object%20Detection%20With%20Faster%20RCNN.html">
+   Tutorial: Class Activation Maps for Object Detection with Faster RCNN
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../EigenCAM%20for%20YOLO5.html">
+   EigenCAM for YOLO5
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../Pixel%20Attribution%20for%20embeddings.html">
+   Tutorial: Concept Activation Maps
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../CAM%20Metrics%20And%20Tuning%20Tutorial.html">
+   <em>
+    May the best explanation win
+   </em>
+   :
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../vision_transformers.html">
+   How does it work with Vision Transformers
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../Deep%20Feature%20Factorizations.html">
+   Deep Feature Factorizations for better model explainability
+  </a>
+ </li>
+</ul>
+
+    </div>
+</nav></div>
+        <div class="bd-sidebar__bottom">
+             <!-- To handle the deprecated key -->
+            
+            <div class="navbar_extra_footer">
+            Powered by <a href="https://jupyterbook.org">Jupyter Book</a>
+            </div>
+            
+        </div>
+    </div>
+    <div id="rtd-footer-container"></div>
+</div>
+
+
+          
+
+
+          
+<!-- A tiny helper pixel to detect if we've scrolled -->
+<div class="sbt-scroll-pixel-helper"></div>
+<!-- Main content -->
+<div class="col py-0 content-container">
+    
+    <div class="header-article row sticky-top noprint">
+        
+
+
+
+<div class="col py-1 d-flex header-article-main">
+    <div class="header-article__left">
+        
+        <label for="__navigation"
+  class="headerbtn"
+  data-toggle="tooltip"
+data-placement="right"
+title="Toggle navigation"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-bars"></i>
+  </span>
+
+</label>
+
+        
+    </div>
+    <div class="header-article__right">
+<div class="menu-dropdown menu-dropdown-launch-buttons">
+  <button class="headerbtn menu-dropdown__trigger"
+      aria-label="Launch interactive content">
+      <i class="fas fa-rocket"></i>
+  </button>
+  <div class="menu-dropdown__content">
+    <ul>
+      <li>
+        <a href="https://mybinder.org/v2/gh/executablebooks/jupyter-book/master?urlpath=tree/tutorials/Deep Feature Factorizations.ipynb"
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Launch on Binder"
+>
+  
+
+<span class="headerbtn__icon-container">
+  
+    <img src="../_static/images/logo_binder.svg">
+  </span>
+<span class="headerbtn__text-container">Binder</span>
+</a>
+
+      </li>
+      
+    </ul>
+  </div>
+</div>
+
+<button onclick="toggleFullScreen()"
+  class="headerbtn"
+  data-toggle="tooltip"
+data-placement="bottom"
+title="Fullscreen mode"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+<div class="menu-dropdown menu-dropdown-download-buttons">
+  <button class="headerbtn menu-dropdown__trigger"
+      aria-label="Download this page">
+      <i class="fas fa-download"></i>
+  </button>
+  <div class="menu-dropdown__content">
+    <ul>
+      <li>
+        <a href="../_sources/tutorials/Deep Feature Factorizations.ipynb"
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Download source file"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="headerbtn__text-container">.ipynb</span>
+</a>
+
+      </li>
+      
+      <li>
+        
+<button onclick="printPdf(this)"
+  class="headerbtn"
+  data-toggle="tooltip"
+data-placement="left"
+title="Print to PDF"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="headerbtn__text-container">.pdf</span>
+</button>
+
+      </li>
+      
+    </ul>
+  </div>
+</div>
+<label for="__page-toc"
+  class="headerbtn headerbtn-page-toc"
+  
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-list"></i>
+  </span>
+
+</label>
+
+    </div>
+</div>
+
+<!-- Table of contents -->
+<div class="col-md-3 bd-toc show noprint">
+    <div class="tocsection onthispage pt-5 pb-3">
+        <i class="fas fa-list"></i> Contents
+    </div>
+    <nav id="bd-toc-nav" aria-label="Page">
+        <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#just-show-me-some-code">
+   Just show me some code
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#background-what-could-be-improved-in-methods-like-grad-cam">
+   Background: what could be improved in methods like Grad-CAM
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#deep-feature-factorization-for-concept-discovery">
+   Deep Feature Factorization For Concept Discovery
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#how-do-we-connect-these-concepts-with-the-output-of-the-network">
+   How do we connect these concepts with the output of the network ?
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#how-can-we-pack-the-concepts-to-create-a-single-visualization">
+   How can we pack the concepts to create a single visualization
+  </a>
+ </li>
+</ul>
+
+    </nav>
+</div>
+    </div>
+    <div class="article row">
+        <div class="col pl-md-3 pl-lg-5 content-container">
+            <!-- Table of contents that is only displayed when printing the page -->
+            <div id="jb-print-docs-body" class="onlyprint">
+                <h1>Deep Feature Factorizations for better model explainability</h1>
+                <!-- Table of contents -->
+                <div id="print-main-content">
+                    <div id="jb-print-toc">
+                        
+                        <div>
+                            <h2> Contents </h2>
+                        </div>
+                        <nav aria-label="Page">
+                            <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#just-show-me-some-code">
+   Just show me some code
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#background-what-could-be-improved-in-methods-like-grad-cam">
+   Background: what could be improved in methods like Grad-CAM
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#deep-feature-factorization-for-concept-discovery">
+   Deep Feature Factorization For Concept Discovery
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#how-do-we-connect-these-concepts-with-the-output-of-the-network">
+   How do we connect these concepts with the output of the network ?
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#how-can-we-pack-the-concepts-to-create-a-single-visualization">
+   How can we pack the concepts to create a single visualization
+  </a>
+ </li>
+</ul>
+
+                        </nav>
+                    </div>
+                </div>
+            </div>
+            <main id="main-content" role="main">
+                
+              <div>
+                
+  <div class="tex2jax_ignore mathjax_ignore section" id="deep-feature-factorizations-for-better-model-explainability">
+<h1>Deep Feature Factorizations for better model explainability<a class="headerlink" href="#deep-feature-factorizations-for-better-model-explainability" title="Permalink to this headline">#</a></h1>
+<p><img alt="" src="https://github.com/jacobgil/pytorch-grad-cam/blob/master/examples/dff1.png?raw=true" /></p>
+<p>In this tutorial we will see how a method called “Deep Feature Factorizations” can be used for creating insightfull visualizations about what the models see inside images.
+The pytorch-gradcam package provides an implementation of this method and some additions that make this a very useful tool.</p>
+<p>Usually explainability methods answer questions like “Where does the model see a cat in the image” ?</p>
+<p>Here instead we will get a much more detailed glimpse into the model, and ask it:
+“Show me all the different concepts you found inside the image, and how they are classified”.</p>
+<p>We will go over the motivations for this, problems with previous methods, and hopefully get a tool that solves these problems.</p>
+<div class="section" id="just-show-me-some-code">
+<h2>Just show me some code<a class="headerlink" href="#just-show-me-some-code" title="Permalink to this headline">#</a></h2>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">pytorch_grad_cam</span> <span class="kn">import</span> <span class="n">DeepFeatureFactorization</span>
+<span class="kn">from</span> <span class="nn">pytorch_grad_cam.utils.image</span> <span class="kn">import</span> <span class="n">show_factorization_on_image</span>
+<span class="n">dff</span> <span class="o">=</span> <span class="n">DeepFeatureFactorization</span><span class="p">(</span><span class="n">model</span><span class="o">=</span><span class="n">model</span><span class="p">,</span> <span class="n">target_layer</span><span class="o">=</span><span class="n">model</span><span class="o">.</span><span class="n">layer4</span><span class="p">,</span> <span class="n">computation_on_concepts</span><span class="o">=</span><span class="n">model</span><span class="o">.</span><span class="n">fc</span><span class="p">)</span>
+<span class="n">concepts</span><span class="p">,</span> <span class="n">batch_explanations</span><span class="p">,</span> <span class="n">concept_scores</span> <span class="o">=</span> <span class="n">dff</span><span class="p">(</span><span class="n">input_tensor</span><span class="p">,</span> <span class="n">n_components</span><span class="p">)</span>
+<span class="n">visualization</span> <span class="o">=</span> <span class="n">show_factorization_on_image</span><span class="p">(</span><span class="n">rgb_img_float</span><span class="p">,</span> 
+                                            <span class="n">batch_explanations</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span>
+                                            <span class="n">image_weight</span><span class="o">=</span><span class="mf">0.3</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="background-what-could-be-improved-in-methods-like-grad-cam">
+<h2>Background: what could be improved in methods like Grad-CAM<a class="headerlink" href="#background-what-could-be-improved-in-methods-like-grad-cam" title="Permalink to this headline">#</a></h2>
+<p>Most of the explainability methods like Grad-CAM, find an explanation that correspond with a target function.
+In the case of classification, the target function is usually the score of one of the categories.</p>
+<p>The heatmap is computed in a way that’s connected to the network output, with the aim that pixels that get higher values in the attribution, would correspond with a higher output in the target function.</p>
+<p>You tell the explainability method: “I want to get a heatmap of the model internal activations that corresponds with the cat category”</p>
+<p>In return you get this:</p>
+<p><img alt="" src="https://github.com/jacobgil/pytorch-grad-cam/blob/master/examples/cat.jpg?raw=true" /></p>
+<p>The different methods use the internal feature representations from the network, so they “open up the black box” and give as a glimpse inside the mechanics of the model. This is great.</p>
+<p>But this visualization still leaves some things to be desired:</p>
+<ul class="simple">
+<li><p><strong>What are the internal concepts the model finds, if any:</strong></p></li>
+</ul>
+<p>Does the network just see the cat head and body together? Or maybe it detects them as different concepts ?
+We heard that neural networks are able to identify high level features like ears, eyes, faces and legs.
+But we’re never actually able to see this in the model explanations.</p>
+<ul class="simple">
+<li><p><strong>Could it be that the body of the cat also pulls the output towards other categories as well?</strong></p></li>
+</ul>
+<p>Just because it contributes to a higher output for one category, doesn’t mean it doesn’t contribute to other categories as well.
+For example, there are many different types of cats.
+To take this into account when we’re interpreting the heatmaps, we would have to carefully look at all the heatmaps and keep track of them.</p>
+<ul class="simple">
+<li><p><strong>What about the other objects in the image ?</strong></p></li>
+</ul>
+<p>We typically create a heatmap for a specific category target. In the case of image-net we have 1,000 categories,
+so we can’t display 1,000 heatmaps or overlay them together, that would be too much information.
+Maybe we could detect the top scoring categories for the image and create heatmaps only for them.
+But what if one of the objects was detected and then the model just wasn’t very confident about it - assigning it a low score relative to the other objects.
+We would never know about it.</p>
+<ul class="simple">
+<li><p><strong>How do we merge all the visualizations into a single image:</strong>
+In terms of the visualization itself, if we have 10 heatmaps for 10 categories, we would need to look at 10 different images.
+And some of the pixels could get high values in several heatmaps, for example different categories of cats.
+This is a lot of information to unpack and not very effecient.</p></li>
+</ul>
+<p>Could we think of a way to create just one visualization that summerizes what the model does for an image ?</p>
+</div>
+<div class="section" id="deep-feature-factorization-for-concept-discovery">
+<h2>Deep Feature Factorization For Concept Discovery<a class="headerlink" href="#deep-feature-factorization-for-concept-discovery" title="Permalink to this headline">#</a></h2>
+<p>We will use the ideas in the paper <a class="reference external" href="https://arxiv.org/abs/1806.10206">Deep Feature Factorization For Concept Discovery by Edo Collins, Radhakrishna Achanta, Sabine Süsstrunk</a> from 2018.</p>
+<p>The idea is to factorize the activations from the model into different concepts using Non Negative Matrix Factorization (or from now on- NMF), and for every pixel compute how it corresponds with each of the concepts:</p>
+<ul>
+<li><p>Turn the small 2D images in activations into 1D vectors, by reshaping the activations from a tensor of shape Batch, Channels, Height , Width,
+to a tensor with the shape Channels x (Batch x Height x Width)
+<em>Reminder: the activations are typcically non-negative since they are often after a ReLU gate.</em></p></li>
+<li><p>Compute the NMF of V, for some number of components N.</p>
+<p>This gives us V = WH.</p>
+<p>W is a matrix with the shape channels x N.</p>
+<p>H is a matrix with the shape N x (Batch x Height x Width).</p>
+</li>
+<li><p>W can be thought of as the feature representations of the detected concepts.</p></li>
+<li><p>H (after reshaping it back to 2D activations) contains how the pixels corresponds with the different concepts.</p></li>
+</ul>
+<p>If we input a batch of several images, concepts that repeat accross the images will be computed.
+This gives us a way of automatically discovering concepts in a dataset, and performing tasks like co-localization, further detailed in the paper.</p>
+<p>However for our purposes now we will use a batch size of 1: we just want to detect the concepts detected in a single image.</p>
+</div>
+<div class="section" id="how-do-we-connect-these-concepts-with-the-output-of-the-network">
+<h2>How do we connect these concepts with the output of the network ?<a class="headerlink" href="#how-do-we-connect-these-concepts-with-the-output-of-the-network" title="Permalink to this headline">#</a></h2>
+<p>If we use the activations from the last convolutional layer, just before they are transformerd to a 1D vector (for example by averaging) in a network like Resnet50 for example,
+we could just run the remaining of the network on the concepts and classify each concept.
+In resnet50 this would mean just running the fully connected layer, model.fc, on the concepts, which is quite simple.</p>
+<p>If we’re using the activations from an earlier layer, it’s a bit less trivial.
+One way could be potentially to unpack the concepts to 2D tensors by weighting them in every pixel according to the heatmap.
+Another way would be to use only the concept heatmaps but the not the concept embeddings: we could follow the approach of <a class="reference external" href="https://github.com/jacobgil/pytorch-grad-cam/blob/master/tutorials/CAM%20Metrics%20And%20Tuning%20Tutorial.ipynb">this tutorial</a>, ablate the pixels in the heatmap for example by blurring them, and see how the network output chagnes.
+If one of the concept heatmap causes a large drop in the cat category score when we blur it - it means it’s connected with the cat category.</p>
+<p>But we’re in luck here - using the last CNN layer is the most common way for creating the model explanations.</p>
+</div>
+<div class="section" id="how-can-we-pack-the-concepts-to-create-a-single-visualization">
+<h2>How can we pack the concepts to create a single visualization<a class="headerlink" href="#how-can-we-pack-the-concepts-to-create-a-single-visualization" title="Permalink to this headline">#</a></h2>
+<p>We can assign a different color for every concept, and modulate the intensity based on the heatmap.
+Then since we have unique colors, we can combine all the masks back into a single image.
+But we have a problem - the same pixel can have non zero values from different concepts.
+The strategy we will use here will be just to keep the concept that got a higher value in the normalized heatmap, meaning it’s more important for it.</p>
+<p>For every concept we will also show a legend with informative properties of these concepts: the categories that they score highest for.</p>
+<p>To get started, lets load are model, and prepare input tensors.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">warnings</span>
+<span class="n">warnings</span><span class="o">.</span><span class="n">filterwarnings</span><span class="p">(</span><span class="s1">&#39;ignore&#39;</span><span class="p">)</span>
+<span class="kn">from</span> <span class="nn">PIL</span> <span class="kn">import</span> <span class="n">Image</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">requests</span>
+<span class="kn">import</span> <span class="nn">cv2</span>
+<span class="kn">import</span> <span class="nn">json</span>
+<span class="kn">import</span> <span class="nn">torch</span>
+<span class="kn">from</span> <span class="nn">pytorch_grad_cam</span> <span class="kn">import</span> <span class="n">DeepFeatureFactorization</span>
+<span class="kn">from</span> <span class="nn">pytorch_grad_cam.utils.image</span> <span class="kn">import</span> <span class="n">show_cam_on_image</span><span class="p">,</span> <span class="n">preprocess_image</span><span class="p">,</span> <span class="n">deprocess_image</span>
+<span class="kn">from</span> <span class="nn">pytorch_grad_cam</span> <span class="kn">import</span> <span class="n">GradCAM</span>
+<span class="kn">from</span> <span class="nn">torchvision.models</span> <span class="kn">import</span> <span class="n">resnet50</span>
+
+<span class="k">def</span> <span class="nf">get_image_from_url</span><span class="p">(</span><span class="n">url</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;A function that gets a URL of an image, </span>
+<span class="sd">    and returns a numpy image and a preprocessed</span>
+<span class="sd">    torch tensor ready to pass to the model &quot;&quot;&quot;</span>
+
+    <span class="n">img</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">Image</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">stream</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span><span class="o">.</span><span class="n">raw</span><span class="p">))</span>
+    <span class="n">rgb_img_float</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">float32</span><span class="p">(</span><span class="n">img</span><span class="p">)</span> <span class="o">/</span> <span class="mi">255</span>
+    <span class="n">input_tensor</span> <span class="o">=</span> <span class="n">preprocess_image</span><span class="p">(</span><span class="n">rgb_img_float</span><span class="p">,</span>
+                                   <span class="n">mean</span><span class="o">=</span><span class="p">[</span><span class="mf">0.485</span><span class="p">,</span> <span class="mf">0.456</span><span class="p">,</span> <span class="mf">0.406</span><span class="p">],</span>
+                                   <span class="n">std</span><span class="o">=</span><span class="p">[</span><span class="mf">0.229</span><span class="p">,</span> <span class="mf">0.224</span><span class="p">,</span> <span class="mf">0.225</span><span class="p">])</span>
+    <span class="k">return</span> <span class="n">img</span><span class="p">,</span> <span class="n">rgb_img_float</span><span class="p">,</span> <span class="n">input_tensor</span>
+
+<span class="k">def</span> <span class="nf">create_labels</span><span class="p">(</span><span class="n">concept_scores</span><span class="p">,</span> <span class="n">top_k</span><span class="o">=</span><span class="mi">2</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot; Create a list with the image-net category names of the top scoring categories&quot;&quot;&quot;</span>
+    <span class="n">imagenet_categories_url</span> <span class="o">=</span> \
+        <span class="s2">&quot;https://gist.githubusercontent.com/yrevar/942d3a0ac09ec9e5eb3a/raw/238f720ff059c1f82f368259d1ca4ffa5dd8f9f5/imagenet1000_clsidx_to_labels.txt&quot;</span>
+    <span class="n">labels</span> <span class="o">=</span> <span class="nb">eval</span><span class="p">(</span><span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">imagenet_categories_url</span><span class="p">)</span><span class="o">.</span><span class="n">text</span><span class="p">)</span>
+    <span class="n">concept_categories</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">argsort</span><span class="p">(</span><span class="n">concept_scores</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)[:,</span> <span class="p">::</span><span class="o">-</span><span class="mi">1</span><span class="p">][:,</span> <span class="p">:</span><span class="n">top_k</span><span class="p">]</span>
+    <span class="n">concept_labels_topk</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">concept_index</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">concept_categories</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]):</span>
+        <span class="n">categories</span> <span class="o">=</span> <span class="n">concept_categories</span><span class="p">[</span><span class="n">concept_index</span><span class="p">,</span> <span class="p">:]</span>    
+        <span class="n">concept_labels</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">category</span> <span class="ow">in</span> <span class="n">categories</span><span class="p">:</span>
+            <span class="n">score</span> <span class="o">=</span> <span class="n">concept_scores</span><span class="p">[</span><span class="n">concept_index</span><span class="p">,</span> <span class="n">category</span><span class="p">]</span>
+            <span class="n">label</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">labels</span><span class="p">[</span><span class="n">category</span><span class="p">]</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;,&#39;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span><span class="si">}</span><span class="s2">:</span><span class="si">{</span><span class="n">score</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">&quot;</span>
+            <span class="n">concept_labels</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">label</span><span class="p">)</span>
+        <span class="n">concept_labels_topk</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">concept_labels</span><span class="p">))</span>
+    <span class="k">return</span> <span class="n">concept_labels_topk</span>
+
+<span class="n">model</span> <span class="o">=</span> <span class="n">resnet50</span><span class="p">(</span><span class="n">pretrained</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">model</span><span class="o">.</span><span class="n">eval</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Loaded model&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Loaded model
+</pre></div>
+</div>
+</div>
+</div>
+<p>Now we can just run the DeepFeatureFactorization method on an image using a DeepFeatureFactorization object, then visualize them on top of the image with show_factorization_on_image:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">pytorch_grad_cam.utils.image</span> <span class="kn">import</span> <span class="n">show_factorization_on_image</span>
+
+<span class="k">def</span> <span class="nf">visualize_image</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">img_url</span><span class="p">,</span> <span class="n">n_components</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">top_k</span><span class="o">=</span><span class="mi">2</span><span class="p">):</span>
+    <span class="n">img</span><span class="p">,</span> <span class="n">rgb_img_float</span><span class="p">,</span> <span class="n">input_tensor</span> <span class="o">=</span> <span class="n">get_image_from_url</span><span class="p">(</span><span class="n">img_url</span><span class="p">)</span>
+    <span class="n">classifier</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">fc</span>
+    <span class="n">dff</span> <span class="o">=</span> <span class="n">DeepFeatureFactorization</span><span class="p">(</span><span class="n">model</span><span class="o">=</span><span class="n">model</span><span class="p">,</span> <span class="n">target_layer</span><span class="o">=</span><span class="n">model</span><span class="o">.</span><span class="n">layer4</span><span class="p">,</span> <span class="n">computation_on_concepts</span><span class="o">=</span><span class="n">classifier</span><span class="p">)</span>
+    <span class="n">concepts</span><span class="p">,</span> <span class="n">batch_explanations</span><span class="p">,</span> <span class="n">concept_outputs</span> <span class="o">=</span> <span class="n">dff</span><span class="p">(</span><span class="n">input_tensor</span><span class="p">,</span> <span class="n">n_components</span><span class="p">)</span>
+    
+    <span class="n">concept_outputs</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">softmax</span><span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">from_numpy</span><span class="p">(</span><span class="n">concept_outputs</span><span class="p">),</span> <span class="n">axis</span><span class="o">=-</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">numpy</span><span class="p">()</span>    
+    <span class="n">concept_label_strings</span> <span class="o">=</span> <span class="n">create_labels</span><span class="p">(</span><span class="n">concept_outputs</span><span class="p">,</span> <span class="n">top_k</span><span class="o">=</span><span class="n">top_k</span><span class="p">)</span>
+    <span class="n">visualization</span> <span class="o">=</span> <span class="n">show_factorization_on_image</span><span class="p">(</span><span class="n">rgb_img_float</span><span class="p">,</span> 
+                                                <span class="n">batch_explanations</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span>
+                                                <span class="n">image_weight</span><span class="o">=</span><span class="mf">0.3</span><span class="p">,</span>
+                                                <span class="n">concept_labels</span><span class="o">=</span><span class="n">concept_label_strings</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">hstack</span><span class="p">((</span><span class="n">img</span><span class="p">,</span> <span class="n">visualization</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">display</span><span class="p">(</span><span class="n">Image</span><span class="o">.</span><span class="n">fromarray</span><span class="p">(</span><span class="n">visualize_image</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> 
+                                        <span class="s2">&quot;https://github.com/jacobgil/pytorch-grad-cam/blob/master/examples/both.png?raw=true&quot;</span><span class="p">)))</span>
+<span class="n">display</span><span class="p">(</span><span class="n">Image</span><span class="o">.</span><span class="n">fromarray</span><span class="p">(</span><span class="n">visualize_image</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> 
+                                        <span class="s2">&quot;https://upload.wikimedia.org/wikipedia/commons/f/f1/Puppies_</span><span class="si">%284984818141%</span><span class="s2">29.jpg&quot;</span><span class="p">)))</span>
+<span class="n">display</span><span class="p">(</span><span class="n">Image</span><span class="o">.</span><span class="n">fromarray</span><span class="p">(</span><span class="n">visualize_image</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> 
+                                        <span class="s2">&quot;https://th.bing.com/th/id/R.94b33a074b9ceeb27b1c7fba0f66db74?rik=wN27mvigyFlXGg&amp;riu=http</span><span class="si">%3a%2f%2f</span><span class="s2">images5.fanpop.com</span><span class="si">%2f</span><span class="s2">image</span><span class="si">%2f</span><span class="s2">photos</span><span class="si">%2f</span><span class="s2">31400000</span><span class="si">%2f</span><span class="s2">Bear-Wallpaper-bears-31446777-1600-1200.jpg&amp;ehk=oD0JPpRVTZZ6yizZtGQtnsBGK2pAap2xv3sU3A4bIMc</span><span class="si">%3d</span><span class="s2">&amp;risl=&amp;pid=ImgRaw&amp;r=0&quot;</span><span class="p">)))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/Deep Feature Factorizations_4_01.png" src="../_images/Deep Feature Factorizations_4_01.png" />
+<img alt="../_images/Deep Feature Factorizations_4_11.png" src="../_images/Deep Feature Factorizations_4_11.png" />
+<img alt="../_images/Deep Feature Factorizations_4_21.png" src="../_images/Deep Feature Factorizations_4_21.png" />
+</div>
+</div>
+<p>Notice how we get a separation between different concepts even inside the same object.</p>
+<p>For example in the first image, the head and the body of dog and cat are seperate.</p>
+<p>In the second image we get a separation between the faces and the bodies of the puppies.</p>
+<p>There is a trade-off here with the number of components N.</p>
+<p>If we chose it to be too small, different concepts will be merged together:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">display</span><span class="p">(</span><span class="n">Image</span><span class="o">.</span><span class="n">fromarray</span><span class="p">(</span><span class="n">visualize_image</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> 
+                                        <span class="s2">&quot;https://th.bing.com/th/id/R.94b33a074b9ceeb27b1c7fba0f66db74?rik=wN27mvigyFlXGg&amp;riu=http</span><span class="si">%3a%2f%2f</span><span class="s2">images5.fanpop.com</span><span class="si">%2f</span><span class="s2">image</span><span class="si">%2f</span><span class="s2">photos</span><span class="si">%2f</span><span class="s2">31400000</span><span class="si">%2f</span><span class="s2">Bear-Wallpaper-bears-31446777-1600-1200.jpg&amp;ehk=oD0JPpRVTZZ6yizZtGQtnsBGK2pAap2xv3sU3A4bIMc</span><span class="si">%3d</span><span class="s2">&amp;risl=&amp;pid=ImgRaw&amp;r=0&quot;</span><span class="p">,</span>
+                                       <span class="n">n_components</span><span class="o">=</span><span class="mi">2</span><span class="p">)))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/Deep Feature Factorizations_6_01.png" src="../_images/Deep Feature Factorizations_6_01.png" />
+</div>
+</div>
+<p>If we chose it to be too large, we will get an over-segmentation, with too many isoteric concepts, making it difficult to folow.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">display</span><span class="p">(</span><span class="n">Image</span><span class="o">.</span><span class="n">fromarray</span><span class="p">(</span><span class="n">visualize_image</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> 
+                                        <span class="s2">&quot;https://th.bing.com/th/id/R.94b33a074b9ceeb27b1c7fba0f66db74?rik=wN27mvigyFlXGg&amp;riu=http</span><span class="si">%3a%2f%2f</span><span class="s2">images5.fanpop.com</span><span class="si">%2f</span><span class="s2">image</span><span class="si">%2f</span><span class="s2">photos</span><span class="si">%2f</span><span class="s2">31400000</span><span class="si">%2f</span><span class="s2">Bear-Wallpaper-bears-31446777-1600-1200.jpg&amp;ehk=oD0JPpRVTZZ6yizZtGQtnsBGK2pAap2xv3sU3A4bIMc</span><span class="si">%3d</span><span class="s2">&amp;risl=&amp;pid=ImgRaw&amp;r=0&quot;</span><span class="p">,</span>
+                                        <span class="n">n_components</span><span class="o">=</span><span class="mi">10</span><span class="p">)))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/Deep Feature Factorizations_8_01.png" src="../_images/Deep Feature Factorizations_8_01.png" />
+</div>
+</div>
+</div>
+</div>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            kernelName: "python3",
+            path: "./tutorials"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+              </div>
+              
+            </main>
+            <footer class="footer-article noprint">
+                
+    <!-- Previous / next buttons -->
+<div class='prev-next-area'>
+</div>
+            </footer>
+        </div>
+    </div>
+    <div class="footer-content row">
+        <footer class="col footer"><p>
+  
+    By Jacob Gildenblat<br/>
+  
+      &copy; Copyright 2022.<br/>
+</p>
+        </footer>
+    </div>
+    
+</div>
+
+
+      </div>
+    </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../_static/scripts/pydata-sphinx-theme.js?digest=1999514e3f237ded88cf"></script>
+
+
+  </body>
+</html>
