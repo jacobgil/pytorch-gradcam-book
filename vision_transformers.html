@@ -5,7 +5,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>15. How does it work with Vision Transformers &#8212; Advanced AI explainability with pytorch-gradcam</title>
+    <title>How does it work with Vision Transformers &#8212; Advanced AI explainability with pytorch-gradcam</title>
     
   <!-- Loaded before other Sphinx assets -->
   <link href="_static/styles/theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
@@ -51,8 +51,8 @@ const thebe_selector_output = ".output, .cell_output"
     <script async="async" src="_static/sphinx-thebe.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="17. Deep Feature Factorizations for better model explainability" href="Deep%20Feature%20Factorizations.html" />
-    <link rel="prev" title="10. May the best explanation win:" href="CAM%20Metrics%20And%20Tuning%20Tutorial.html" />
+    <link rel="next" title="Deep Feature Factorizations for better model explainability" href="Deep%20Feature%20Factorizations.html" />
+    <link rel="prev" title="May the best explanation win:" href="CAM%20Metrics%20And%20Tuning%20Tutorial.html" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="docsearch:language" content="None">
     
@@ -115,27 +115,26 @@ const thebe_selector_output = ".output, .cell_output"
         <ul class="current nav bd-sidenav">
  <li class="toctree-l1">
   <a class="reference internal" href="Class%20Activation%20Maps%20for%20Semantic%20Segmentation.html">
-   1. Tutorial: Class Activation Maps for Semantic Segmentation
+   Tutorial: Class Activation Maps for Semantic Segmentation
   </a>
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="Class%20Activation%20Maps%20for%20Object%20Detection%20With%20Faster%20RCNN.html">
-   2. Tutorial: Class Activation Maps for Object Detection with Faster RCNN
+   Tutorial: Class Activation Maps for Object Detection with Faster RCNN
   </a>
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="EigenCAM%20for%20YOLO5.html">
-   8. EigenCAM for YOLO5
+   EigenCAM for YOLO5
   </a>
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="Pixel%20Attribution%20for%20embeddings.html">
-   9. Tutorial: Concept Activation Maps
+   Tutorial: Concept Activation Maps
   </a>
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="CAM%20Metrics%20And%20Tuning%20Tutorial.html">
-   10.
    <em>
     May the best explanation win
    </em>
@@ -144,12 +143,12 @@ const thebe_selector_output = ".output, .cell_output"
  </li>
  <li class="toctree-l1 current active">
   <a class="current reference internal" href="#">
-   15. How does it work with Vision Transformers
+   How does it work with Vision Transformers
   </a>
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="Deep%20Feature%20Factorizations.html">
-   17. Deep Feature Factorizations for better model explainability
+   Deep Feature Factorizations for better model explainability
   </a>
  </li>
 </ul>
@@ -286,24 +285,24 @@ title="Print to PDF"
         <ul class="visible nav section-nav flex-column">
  <li class="toc-h1 nav-item toc-entry">
   <a class="reference internal nav-link" href="#">
-   15. How does it work with Vision Transformers
+   How does it work with Vision Transformers
   </a>
   <ul class="visible nav section-nav flex-column">
    <li class="toc-h2 nav-item toc-entry">
     <a class="reference internal nav-link" href="#which-target-layer-should-we-chose-for-vision-transformers">
-     15.1. Which target_layer should we chose for Vision Transformers?
+     Which target_layer should we chose for Vision Transformers?
     </a>
    </li>
   </ul>
  </li>
  <li class="toc-h1 nav-item toc-entry">
   <a class="reference internal nav-link" href="#how-does-it-work-with-swin-transformers">
-   16. How does it work with Swin Transformers
+   How does it work with Swin Transformers
   </a>
   <ul class="visible nav section-nav flex-column">
    <li class="toc-h2 nav-item toc-entry">
     <a class="reference internal nav-link" href="#which-target-layer-should-we-chose-for-swin-transformers">
-     16.1. Which target_layer should we chose for Swin Transformers?
+     Which target_layer should we chose for Swin Transformers?
     </a>
    </li>
   </ul>
@@ -329,24 +328,24 @@ title="Print to PDF"
                             <ul class="visible nav section-nav flex-column">
  <li class="toc-h1 nav-item toc-entry">
   <a class="reference internal nav-link" href="#">
-   15. How does it work with Vision Transformers
+   How does it work with Vision Transformers
   </a>
   <ul class="visible nav section-nav flex-column">
    <li class="toc-h2 nav-item toc-entry">
     <a class="reference internal nav-link" href="#which-target-layer-should-we-chose-for-vision-transformers">
-     15.1. Which target_layer should we chose for Vision Transformers?
+     Which target_layer should we chose for Vision Transformers?
     </a>
    </li>
   </ul>
  </li>
  <li class="toc-h1 nav-item toc-entry">
   <a class="reference internal nav-link" href="#how-does-it-work-with-swin-transformers">
-   16. How does it work with Swin Transformers
+   How does it work with Swin Transformers
   </a>
   <ul class="visible nav section-nav flex-column">
    <li class="toc-h2 nav-item toc-entry">
     <a class="reference internal nav-link" href="#which-target-layer-should-we-chose-for-swin-transformers">
-     16.1. Which target_layer should we chose for Swin Transformers?
+     Which target_layer should we chose for Swin Transformers?
     </a>
    </li>
   </ul>
@@ -362,7 +361,7 @@ title="Print to PDF"
               <div>
                 
   <div class="tex2jax_ignore mathjax_ignore section" id="how-does-it-work-with-vision-transformers">
-<h1><span class="section-number">15. </span>How does it work with Vision Transformers<a class="headerlink" href="#how-does-it-work-with-vision-transformers" title="Permalink to this headline">#</a></h1>
+<h1>How does it work with Vision Transformers<a class="headerlink" href="#how-does-it-work-with-vision-transformers" title="Permalink to this headline">#</a></h1>
 <p><em>See <span class="xref myst">usage_examples/vit_example.py</span></em></p>
 <p>In ViT the output of the layers are typically BATCH x 197 x 192.
 In the dimension with 197, the first element represents the class token, and the rest represent the 14x14 patches in the image.
@@ -384,7 +383,7 @@ we can pass the CAM constructor a reshape_transform function.</p>
 </pre></div>
 </div>
 <div class="section" id="which-target-layer-should-we-chose-for-vision-transformers">
-<h2><span class="section-number">15.1. </span>Which target_layer should we chose for Vision Transformers?<a class="headerlink" href="#which-target-layer-should-we-chose-for-vision-transformers" title="Permalink to this headline">#</a></h2>
+<h2>Which target_layer should we chose for Vision Transformers?<a class="headerlink" href="#which-target-layer-should-we-chose-for-vision-transformers" title="Permalink to this headline">#</a></h2>
 <p>Since the final classification is done on the class token computed in the last attention block,
 the output will not be affected by the 14x14 channels in the last layer.
 The gradient of the output with respect to them, will be 0!</p>
@@ -396,7 +395,7 @@ The gradient of the output with respect to them, will be 0!</p>
 </div>
 <hr class="docutils" />
 <div class="tex2jax_ignore mathjax_ignore section" id="how-does-it-work-with-swin-transformers">
-<h1><span class="section-number">16. </span>How does it work with Swin Transformers<a class="headerlink" href="#how-does-it-work-with-swin-transformers" title="Permalink to this headline">#</a></h1>
+<h1>How does it work with Swin Transformers<a class="headerlink" href="#how-does-it-work-with-swin-transformers" title="Permalink to this headline">#</a></h1>
 <p><em>See <span class="xref myst">usage_examples/swinT_example.py</span></em></p>
 <p>In Swin transformer base the output of the layers are typically BATCH x 49 x 1024.
 We can treat the last 49 elements as a 7x7 spatial image, with 1024 channels.</p>
@@ -417,7 +416,7 @@ we can pass the CAM constructor a reshape_transform function.</p>
 </pre></div>
 </div>
 <div class="section" id="which-target-layer-should-we-chose-for-swin-transformers">
-<h2><span class="section-number">16.1. </span>Which target_layer should we chose for Swin Transformers?<a class="headerlink" href="#which-target-layer-should-we-chose-for-swin-transformers" title="Permalink to this headline">#</a></h2>
+<h2>Which target_layer should we chose for Swin Transformers?<a class="headerlink" href="#which-target-layer-should-we-chose-for-swin-transformers" title="Permalink to this headline">#</a></h2>
 <p>Since the swin transformer is different from ViT, it does not contains <code class="docutils literal notranslate"><span class="pre">cls_token</span></code> as present in ViT,
 therefore we will use all the 7x7 images we get from the last block of the last layer.</p>
 <p>We should chose any layer before the final attention block, for example:</p>
@@ -458,13 +457,13 @@ therefore we will use all the 7x7 images we get from the last block of the last 
         <i class="fas fa-angle-left"></i>
         <div class="prev-next-info">
             <p class="prev-next-subtitle">previous</p>
-            <p class="prev-next-title"><span class="section-number">10. </span><em>May the best explanation win</em>:</p>
+            <p class="prev-next-title"><em>May the best explanation win</em>:</p>
         </div>
     </a>
     <a class='right-next' id="next-link" href="Deep%20Feature%20Factorizations.html" title="next page">
     <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title"><span class="section-number">17. </span>Deep Feature Factorizations for better model explainability</p>
+        <p class="prev-next-title">Deep Feature Factorizations for better model explainability</p>
     </div>
     <i class="fas fa-angle-right"></i>
     </a>

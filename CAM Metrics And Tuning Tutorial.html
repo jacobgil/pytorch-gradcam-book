@@ -5,7 +5,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>10. May the best explanation win: &#8212; Advanced AI explainability with pytorch-gradcam</title>
+    <title>May the best explanation win: &#8212; Advanced AI explainability with pytorch-gradcam</title>
     
   <!-- Loaded before other Sphinx assets -->
   <link href="_static/styles/theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
@@ -51,8 +51,8 @@ const thebe_selector_output = ".output, .cell_output"
     <script async="async" src="_static/sphinx-thebe.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="15. How does it work with Vision Transformers" href="vision_transformers.html" />
-    <link rel="prev" title="9. Tutorial: Concept Activation Maps" href="Pixel%20Attribution%20for%20embeddings.html" />
+    <link rel="next" title="How does it work with Vision Transformers" href="vision_transformers.html" />
+    <link rel="prev" title="Tutorial: Concept Activation Maps" href="Pixel%20Attribution%20for%20embeddings.html" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="docsearch:language" content="None">
     
@@ -115,27 +115,26 @@ const thebe_selector_output = ".output, .cell_output"
         <ul class="current nav bd-sidenav">
  <li class="toctree-l1">
   <a class="reference internal" href="Class%20Activation%20Maps%20for%20Semantic%20Segmentation.html">
-   1. Tutorial: Class Activation Maps for Semantic Segmentation
+   Tutorial: Class Activation Maps for Semantic Segmentation
   </a>
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="Class%20Activation%20Maps%20for%20Object%20Detection%20With%20Faster%20RCNN.html">
-   2. Tutorial: Class Activation Maps for Object Detection with Faster RCNN
+   Tutorial: Class Activation Maps for Object Detection with Faster RCNN
   </a>
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="EigenCAM%20for%20YOLO5.html">
-   8. EigenCAM for YOLO5
+   EigenCAM for YOLO5
   </a>
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="Pixel%20Attribution%20for%20embeddings.html">
-   9. Tutorial: Concept Activation Maps
+   Tutorial: Concept Activation Maps
   </a>
  </li>
  <li class="toctree-l1 current active">
   <a class="current reference internal" href="#">
-   10.
    <em>
     May the best explanation win
    </em>
@@ -144,12 +143,12 @@ const thebe_selector_output = ".output, .cell_output"
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="vision_transformers.html">
-   15. How does it work with Vision Transformers
+   How does it work with Vision Transformers
   </a>
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="Deep%20Feature%20Factorizations.html">
-   17. Deep Feature Factorizations for better model explainability
+   Deep Feature Factorizations for better model explainability
   </a>
  </li>
 </ul>
@@ -315,7 +314,6 @@ title="Print to PDF"
         <ul class="visible nav section-nav flex-column">
  <li class="toc-h1 nav-item toc-entry">
   <a class="reference internal nav-link" href="#">
-   10.
    <em>
     May the best explanation win
    </em>
@@ -324,22 +322,22 @@ title="Print to PDF"
  </li>
  <li class="toc-h1 nav-item toc-entry">
   <a class="reference internal nav-link" href="#a-tutorial-on-benchmarking-and-tuning-model-explanations">
-   11. A tutorial on benchmarking and tuning model explanations
+   A tutorial on benchmarking and tuning model explanations
   </a>
   <ul class="visible nav section-nav flex-column">
    <li class="toc-h2 nav-item toc-entry">
     <a class="reference internal nav-link" href="#evaluating-the-explanations-by-using-them-for-localization">
-     11.1. Evaluating the explanations by using them for localization
+     Evaluating the explanations by using them for localization
     </a>
    </li>
    <li class="toc-h2 nav-item toc-entry">
     <a class="reference internal nav-link" href="#evaluating-the-explanations-by-using-them-to-pertubate-the-image-and-predicting-again">
-     11.2. Evaluating the explanations by using them to pertubate the image and predicting again
+     Evaluating the explanations by using them to pertubate the image and predicting again
     </a>
     <ul class="nav section-nav flex-column">
      <li class="toc-h3 nav-item toc-entry">
       <a class="reference internal nav-link" href="#side-comment-metric-reproducability-and-small-implementation-details">
-       11.2.1. Side comment: Metric reproducability and small implementation details
+       Side comment: Metric reproducability and small implementation details
       </a>
      </li>
     </ul>
@@ -348,24 +346,24 @@ title="Print to PDF"
  </li>
  <li class="toc-h1 nav-item toc-entry">
   <a class="reference internal nav-link" href="#we-deleted-important-parts-how-come-it-became-more-confident">
-   12. We deleted important parts, how come it became more confident ?
+   We deleted important parts, how come it became more confident ?
   </a>
   <ul class="visible nav section-nav flex-column">
    <li class="toc-h2 nav-item toc-entry">
     <a class="reference internal nav-link" href="#remove-and-retrain-roar">
-     12.1. Remove and Retrain (ROAR)
+     Remove and Retrain (ROAR)
     </a>
    </li>
   </ul>
  </li>
  <li class="toc-h1 nav-item toc-entry">
   <a class="reference internal nav-link" href="#sanity-checks-for-saliency-metrics">
-   13. Sanity Checks for Saliency Metrics
+   Sanity Checks for Saliency Metrics
   </a>
  </li>
  <li class="toc-h1 nav-item toc-entry">
   <a class="reference internal nav-link" href="#road-remove-and-debias">
-   14. ROAD: Remove and Debias
+   ROAD: Remove and Debias
   </a>
  </li>
 </ul>
@@ -389,7 +387,6 @@ title="Print to PDF"
                             <ul class="visible nav section-nav flex-column">
  <li class="toc-h1 nav-item toc-entry">
   <a class="reference internal nav-link" href="#">
-   10.
    <em>
     May the best explanation win
    </em>
@@ -398,22 +395,22 @@ title="Print to PDF"
  </li>
  <li class="toc-h1 nav-item toc-entry">
   <a class="reference internal nav-link" href="#a-tutorial-on-benchmarking-and-tuning-model-explanations">
-   11. A tutorial on benchmarking and tuning model explanations
+   A tutorial on benchmarking and tuning model explanations
   </a>
   <ul class="visible nav section-nav flex-column">
    <li class="toc-h2 nav-item toc-entry">
     <a class="reference internal nav-link" href="#evaluating-the-explanations-by-using-them-for-localization">
-     11.1. Evaluating the explanations by using them for localization
+     Evaluating the explanations by using them for localization
     </a>
    </li>
    <li class="toc-h2 nav-item toc-entry">
     <a class="reference internal nav-link" href="#evaluating-the-explanations-by-using-them-to-pertubate-the-image-and-predicting-again">
-     11.2. Evaluating the explanations by using them to pertubate the image and predicting again
+     Evaluating the explanations by using them to pertubate the image and predicting again
     </a>
     <ul class="nav section-nav flex-column">
      <li class="toc-h3 nav-item toc-entry">
       <a class="reference internal nav-link" href="#side-comment-metric-reproducability-and-small-implementation-details">
-       11.2.1. Side comment: Metric reproducability and small implementation details
+       Side comment: Metric reproducability and small implementation details
       </a>
      </li>
     </ul>
@@ -422,24 +419,24 @@ title="Print to PDF"
  </li>
  <li class="toc-h1 nav-item toc-entry">
   <a class="reference internal nav-link" href="#we-deleted-important-parts-how-come-it-became-more-confident">
-   12. We deleted important parts, how come it became more confident ?
+   We deleted important parts, how come it became more confident ?
   </a>
   <ul class="visible nav section-nav flex-column">
    <li class="toc-h2 nav-item toc-entry">
     <a class="reference internal nav-link" href="#remove-and-retrain-roar">
-     12.1. Remove and Retrain (ROAR)
+     Remove and Retrain (ROAR)
     </a>
    </li>
   </ul>
  </li>
  <li class="toc-h1 nav-item toc-entry">
   <a class="reference internal nav-link" href="#sanity-checks-for-saliency-metrics">
-   13. Sanity Checks for Saliency Metrics
+   Sanity Checks for Saliency Metrics
   </a>
  </li>
  <li class="toc-h1 nav-item toc-entry">
   <a class="reference internal nav-link" href="#road-remove-and-debias">
-   14. ROAD: Remove and Debias
+   ROAD: Remove and Debias
   </a>
  </li>
 </ul>
@@ -453,10 +450,10 @@ title="Print to PDF"
               <div>
                 
   <div class="tex2jax_ignore mathjax_ignore section" id="may-the-best-explanation-win">
-<h1><span class="section-number">10. </span><em>May the best explanation win</em>:<a class="headerlink" href="#may-the-best-explanation-win" title="Permalink to this headline">#</a></h1>
+<h1><em>May the best explanation win</em>:<a class="headerlink" href="#may-the-best-explanation-win" title="Permalink to this headline">#</a></h1>
 </div>
 <div class="tex2jax_ignore mathjax_ignore section" id="a-tutorial-on-benchmarking-and-tuning-model-explanations">
-<h1><span class="section-number">11. </span>A tutorial on benchmarking and tuning model explanations<a class="headerlink" href="#a-tutorial-on-benchmarking-and-tuning-model-explanations" title="Permalink to this headline">#</a></h1>
+<h1>A tutorial on benchmarking and tuning model explanations<a class="headerlink" href="#a-tutorial-on-benchmarking-and-tuning-model-explanations" title="Permalink to this headline">#</a></h1>
 <p>Which metrics can we use to benchmark different pixel attribution techniques ?</p>
 <p>How can we measure if a model explanation is good or bad?</p>
 <p>What kind of problems do metrics for model explanatiosn have that we should be aware of ?</p>
@@ -468,7 +465,7 @@ title="Print to PDF"
 <li><p>See examples of how to use these metrics to get better explanations for your images.</p></li>
 </ul>
 <div class="section" id="evaluating-the-explanations-by-using-them-for-localization">
-<h2><span class="section-number">11.1. </span>Evaluating the explanations by using them for localization<a class="headerlink" href="#evaluating-the-explanations-by-using-them-for-localization" title="Permalink to this headline">#</a></h2>
+<h2>Evaluating the explanations by using them for localization<a class="headerlink" href="#evaluating-the-explanations-by-using-them-for-localization" title="Permalink to this headline">#</a></h2>
 <p>In 2016 we had the first explainability methods comming out - Class Activation Maps for Networks with Global Averge Pooling (<a class="reference external" href="https://arxiv.org/abs/1512.04150v1">https://arxiv.org/abs/1512.04150v1</a>) and then soon after GradCAM (<a class="reference external" href="https://arxiv.org/abs/1610.02391">https://arxiv.org/abs/1610.02391</a>).</p>
 <p>The CAM paper suggested evaluating the explanations by extracting bounding boxes out of them, and comparing to the bounding boxes in the ILSVRC dataset (a subset of Imagenet that has bounding box annotations).
 The reasoning here is that if the explanation is good, and correct, it will probably overlap with the actual object.</p>
@@ -486,7 +483,7 @@ That’s actually a bit better, but still is a limitted metric.</p>
 <p>The Score-CAM paper (<a class="reference external" href="https://arxiv.org/abs/1910.01279">https://arxiv.org/abs/1910.01279</a>) suggested evaluating with localization by measuring the total sum of CAM pixels inside the bounding box.</p>
 </div>
 <div class="section" id="evaluating-the-explanations-by-using-them-to-pertubate-the-image-and-predicting-again">
-<h2><span class="section-number">11.2. </span>Evaluating the explanations by using them to pertubate the image and predicting again<a class="headerlink" href="#evaluating-the-explanations-by-using-them-to-pertubate-the-image-and-predicting-again" title="Permalink to this headline">#</a></h2>
+<h2>Evaluating the explanations by using them to pertubate the image and predicting again<a class="headerlink" href="#evaluating-the-explanations-by-using-them-to-pertubate-the-image-and-predicting-again" title="Permalink to this headline">#</a></h2>
 <p>Then came the GradCAM++ paper and offered some metrics that are still widely used.</p>
 <p>You multiply the image (before image-net normalization) by the explanation. Only regions that score high will still be visible.
 <img alt="image-2.png" src="_images/multimage.png" />
@@ -502,7 +499,7 @@ The confidence is assumed to drop a bit since we’re removing details.</p></li>
 I’m not sure, I suspect that would be better.</p>
 <p>This is a way of measuring the “fidelity” or “faithfulness” of the explanation. We want a good explanation to reflect the actual regions that the model is using.</p>
 <div class="section" id="side-comment-metric-reproducability-and-small-implementation-details">
-<h3><span class="section-number">11.2.1. </span>Side comment: Metric reproducability and small implementation details<a class="headerlink" href="#side-comment-metric-reproducability-and-small-implementation-details" title="Permalink to this headline">#</a></h3>
+<h3>Side comment: Metric reproducability and small implementation details<a class="headerlink" href="#side-comment-metric-reproducability-and-small-implementation-details" title="Permalink to this headline">#</a></h3>
 <p>In the GradCAM++ paper image above the masked images are black, so it looks like they are multiplying the original image,
 before the image-net normalization.</p>
 <p>I’m pretty sure that most of the methods that came after that, multiplied the tensor in the input to the model, after image-net normalization.</p>
@@ -628,7 +625,7 @@ The visualization of the pertubated image for the metric:
 </div>
 </div>
 <div class="tex2jax_ignore mathjax_ignore section" id="we-deleted-important-parts-how-come-it-became-more-confident">
-<h1><span class="section-number">12. </span>We deleted important parts, how come it became more confident ?<a class="headerlink" href="#we-deleted-important-parts-how-come-it-became-more-confident" title="Permalink to this headline">#</a></h1>
+<h1>We deleted important parts, how come it became more confident ?<a class="headerlink" href="#we-deleted-important-parts-how-come-it-became-more-confident" title="Permalink to this headline">#</a></h1>
 <p>When we pertubate the supposedly impotant parts, the model actually becomes more confident than before.
 Maybe the CAM explanation wasn’t telling us the whole story in the first place, and there are other parts that were important as well that is was missing.
 This shows us the importance of using complementory metrics, and how these metrics can contradict each other.</p>
@@ -660,7 +657,7 @@ The visualization of the pertubated image for the metric:
 </div>
 <p>But the image above doesn’t look quite natural, does it ?</p>
 <div class="section" id="remove-and-retrain-roar">
-<h2><span class="section-number">12.1. </span>Remove and Retrain (ROAR)<a class="headerlink" href="#remove-and-retrain-roar" title="Permalink to this headline">#</a></h2>
+<h2>Remove and Retrain (ROAR)<a class="headerlink" href="#remove-and-retrain-roar" title="Permalink to this headline">#</a></h2>
 <p><a class="reference external" href="https://arxiv.org/abs/1806.10758">https://arxiv.org/abs/1806.10758</a></p>
 <p>When you pertubate the image by modifying the highest scoring regions, and the confidence decreases:</p>
 <ul class="simple">
@@ -711,7 +708,7 @@ For many users this won’t be a practical approach. Altough if the stakes are h
 </div>
 </div>
 <div class="tex2jax_ignore mathjax_ignore section" id="sanity-checks-for-saliency-metrics">
-<h1><span class="section-number">13. </span>Sanity Checks for Saliency Metrics<a class="headerlink" href="#sanity-checks-for-saliency-metrics" title="Permalink to this headline">#</a></h1>
+<h1>Sanity Checks for Saliency Metrics<a class="headerlink" href="#sanity-checks-for-saliency-metrics" title="Permalink to this headline">#</a></h1>
 <p><a class="reference external" href="https://arxiv.org/abs/1912.01451">https://arxiv.org/abs/1912.01451</a></p>
 <p>This paper introduces a metric called “Area Over the Perturbation Curve” - AOPC, which is the average confidence drop over different removal percentiles.
 (We will later call that MostRelevantFirstAverage or LeastRelevantFirstAverage since I think it’s a bit more explicit and clear, but it’s the same).</p>
@@ -730,7 +727,7 @@ For the same image, it’s difficult to know in advance what explanation strateg
 <p>This means that going forward, we will need a combination of metrics, will need take in mind the imputation strategy, and will definately need to look at every image individually.</p>
 </div>
 <div class="tex2jax_ignore mathjax_ignore section" id="road-remove-and-debias">
-<h1><span class="section-number">14. </span>ROAD: Remove and Debias<a class="headerlink" href="#road-remove-and-debias" title="Permalink to this headline">#</a></h1>
+<h1>ROAD: Remove and Debias<a class="headerlink" href="#road-remove-and-debias" title="Permalink to this headline">#</a></h1>
 <p><a class="reference external" href="https://arxiv.org/abs/2202.00449">https://arxiv.org/abs/2202.00449</a></p>
 <p>The claim in this paper is that the perbutbated image (they use the term “imputed image”) itself is leaking data.
 Even the previous ROAR method can suffer from that.
@@ -1007,13 +1004,13 @@ In any case we need to be suspicious about the results and double check them aga
         <i class="fas fa-angle-left"></i>
         <div class="prev-next-info">
             <p class="prev-next-subtitle">previous</p>
-            <p class="prev-next-title"><span class="section-number">9. </span>Tutorial: Concept Activation Maps</p>
+            <p class="prev-next-title">Tutorial: Concept Activation Maps</p>
         </div>
     </a>
     <a class='right-next' id="next-link" href="vision_transformers.html" title="next page">
     <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title"><span class="section-number">15. </span>How does it work with Vision Transformers</p>
+        <p class="prev-next-title">How does it work with Vision Transformers</p>
     </div>
     <i class="fas fa-angle-right"></i>
     </a>

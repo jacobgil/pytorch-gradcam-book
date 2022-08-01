@@ -5,7 +5,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>17. Deep Feature Factorizations for better model explainability &#8212; Advanced AI explainability with pytorch-gradcam</title>
+    <title>Deep Feature Factorizations for better model explainability &#8212; Advanced AI explainability with pytorch-gradcam</title>
     
   <!-- Loaded before other Sphinx assets -->
   <link href="_static/styles/theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
@@ -51,7 +51,7 @@ const thebe_selector_output = ".output, .cell_output"
     <script async="async" src="_static/sphinx-thebe.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="prev" title="15. How does it work with Vision Transformers" href="vision_transformers.html" />
+    <link rel="prev" title="How does it work with Vision Transformers" href="vision_transformers.html" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="docsearch:language" content="None">
     
@@ -114,27 +114,26 @@ const thebe_selector_output = ".output, .cell_output"
         <ul class="current nav bd-sidenav">
  <li class="toctree-l1">
   <a class="reference internal" href="Class%20Activation%20Maps%20for%20Semantic%20Segmentation.html">
-   1. Tutorial: Class Activation Maps for Semantic Segmentation
+   Tutorial: Class Activation Maps for Semantic Segmentation
   </a>
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="Class%20Activation%20Maps%20for%20Object%20Detection%20With%20Faster%20RCNN.html">
-   2. Tutorial: Class Activation Maps for Object Detection with Faster RCNN
+   Tutorial: Class Activation Maps for Object Detection with Faster RCNN
   </a>
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="EigenCAM%20for%20YOLO5.html">
-   8. EigenCAM for YOLO5
+   EigenCAM for YOLO5
   </a>
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="Pixel%20Attribution%20for%20embeddings.html">
-   9. Tutorial: Concept Activation Maps
+   Tutorial: Concept Activation Maps
   </a>
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="CAM%20Metrics%20And%20Tuning%20Tutorial.html">
-   10.
    <em>
     May the best explanation win
    </em>
@@ -143,12 +142,12 @@ const thebe_selector_output = ".output, .cell_output"
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="vision_transformers.html">
-   15. How does it work with Vision Transformers
+   How does it work with Vision Transformers
   </a>
  </li>
  <li class="toctree-l1 current active">
   <a class="current reference internal" href="#">
-   17. Deep Feature Factorizations for better model explainability
+   Deep Feature Factorizations for better model explainability
   </a>
  </li>
 </ul>
@@ -314,27 +313,27 @@ title="Print to PDF"
         <ul class="visible nav section-nav flex-column">
  <li class="toc-h2 nav-item toc-entry">
   <a class="reference internal nav-link" href="#just-show-me-some-code">
-   17.1. Just show me some code
+   Just show me some code
   </a>
  </li>
  <li class="toc-h2 nav-item toc-entry">
   <a class="reference internal nav-link" href="#background-what-could-be-improved-in-methods-like-grad-cam">
-   17.2. Background: what could be improved in methods like Grad-CAM
+   Background: what could be improved in methods like Grad-CAM
   </a>
  </li>
  <li class="toc-h2 nav-item toc-entry">
   <a class="reference internal nav-link" href="#deep-feature-factorization-for-concept-discovery">
-   17.3. Deep Feature Factorization For Concept Discovery
+   Deep Feature Factorization For Concept Discovery
   </a>
  </li>
  <li class="toc-h2 nav-item toc-entry">
   <a class="reference internal nav-link" href="#how-do-we-connect-these-concepts-with-the-output-of-the-network">
-   17.4. How do we connect these concepts with the output of the network ?
+   How do we connect these concepts with the output of the network ?
   </a>
  </li>
  <li class="toc-h2 nav-item toc-entry">
   <a class="reference internal nav-link" href="#how-can-we-pack-the-concepts-to-create-a-single-visualization">
-   17.5. How can we pack the concepts to create a single visualization
+   How can we pack the concepts to create a single visualization
   </a>
  </li>
 </ul>
@@ -358,27 +357,27 @@ title="Print to PDF"
                             <ul class="visible nav section-nav flex-column">
  <li class="toc-h2 nav-item toc-entry">
   <a class="reference internal nav-link" href="#just-show-me-some-code">
-   17.1. Just show me some code
+   Just show me some code
   </a>
  </li>
  <li class="toc-h2 nav-item toc-entry">
   <a class="reference internal nav-link" href="#background-what-could-be-improved-in-methods-like-grad-cam">
-   17.2. Background: what could be improved in methods like Grad-CAM
+   Background: what could be improved in methods like Grad-CAM
   </a>
  </li>
  <li class="toc-h2 nav-item toc-entry">
   <a class="reference internal nav-link" href="#deep-feature-factorization-for-concept-discovery">
-   17.3. Deep Feature Factorization For Concept Discovery
+   Deep Feature Factorization For Concept Discovery
   </a>
  </li>
  <li class="toc-h2 nav-item toc-entry">
   <a class="reference internal nav-link" href="#how-do-we-connect-these-concepts-with-the-output-of-the-network">
-   17.4. How do we connect these concepts with the output of the network ?
+   How do we connect these concepts with the output of the network ?
   </a>
  </li>
  <li class="toc-h2 nav-item toc-entry">
   <a class="reference internal nav-link" href="#how-can-we-pack-the-concepts-to-create-a-single-visualization">
-   17.5. How can we pack the concepts to create a single visualization
+   How can we pack the concepts to create a single visualization
   </a>
  </li>
 </ul>
@@ -392,7 +391,7 @@ title="Print to PDF"
               <div>
                 
   <div class="tex2jax_ignore mathjax_ignore section" id="deep-feature-factorizations-for-better-model-explainability">
-<h1><span class="section-number">17. </span>Deep Feature Factorizations for better model explainability<a class="headerlink" href="#deep-feature-factorizations-for-better-model-explainability" title="Permalink to this headline">#</a></h1>
+<h1>Deep Feature Factorizations for better model explainability<a class="headerlink" href="#deep-feature-factorizations-for-better-model-explainability" title="Permalink to this headline">#</a></h1>
 <p><img alt="" src="https://github.com/jacobgil/pytorch-grad-cam/blob/master/examples/dff1.png?raw=true" /></p>
 <p>In this tutorial we will see how a method called “Deep Feature Factorizations” can be used for creating insightfull visualizations about what the models see inside images.
 The pytorch-gradcam package provides an implementation of this method and some additions that make this a very useful tool.</p>
@@ -401,7 +400,7 @@ The pytorch-gradcam package provides an implementation of this method and some a
 “Show me all the different concepts you found inside the image, and how they are classified”.</p>
 <p>We will go over the motivations for this, problems with previous methods, and hopefully get a tool that solves these problems.</p>
 <div class="section" id="just-show-me-some-code">
-<h2><span class="section-number">17.1. </span>Just show me some code<a class="headerlink" href="#just-show-me-some-code" title="Permalink to this headline">#</a></h2>
+<h2>Just show me some code<a class="headerlink" href="#just-show-me-some-code" title="Permalink to this headline">#</a></h2>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">pytorch_grad_cam</span> <span class="kn">import</span> <span class="n">DeepFeatureFactorization</span>
 <span class="kn">from</span> <span class="nn">pytorch_grad_cam.utils.image</span> <span class="kn">import</span> <span class="n">show_factorization_on_image</span>
 <span class="n">dff</span> <span class="o">=</span> <span class="n">DeepFeatureFactorization</span><span class="p">(</span><span class="n">model</span><span class="o">=</span><span class="n">model</span><span class="p">,</span> <span class="n">target_layer</span><span class="o">=</span><span class="n">model</span><span class="o">.</span><span class="n">layer4</span><span class="p">,</span> <span class="n">computation_on_concepts</span><span class="o">=</span><span class="n">model</span><span class="o">.</span><span class="n">fc</span><span class="p">)</span>
@@ -413,7 +412,7 @@ The pytorch-gradcam package provides an implementation of this method and some a
 </div>
 </div>
 <div class="section" id="background-what-could-be-improved-in-methods-like-grad-cam">
-<h2><span class="section-number">17.2. </span>Background: what could be improved in methods like Grad-CAM<a class="headerlink" href="#background-what-could-be-improved-in-methods-like-grad-cam" title="Permalink to this headline">#</a></h2>
+<h2>Background: what could be improved in methods like Grad-CAM<a class="headerlink" href="#background-what-could-be-improved-in-methods-like-grad-cam" title="Permalink to this headline">#</a></h2>
 <p>Most of the explainability methods like Grad-CAM, find an explanation that correspond with a target function.
 In the case of classification, the target function is usually the score of one of the categories.</p>
 <p>The heatmap is computed in a way that’s connected to the network output, with the aim that pixels that get higher values in the attribution, would correspond with a higher output in the target function.</p>
@@ -451,7 +450,7 @@ This is a lot of information to unpack and not very effecient.</p></li>
 <p>Could we think of a way to create just one visualization that summerizes what the model does for an image ?</p>
 </div>
 <div class="section" id="deep-feature-factorization-for-concept-discovery">
-<h2><span class="section-number">17.3. </span>Deep Feature Factorization For Concept Discovery<a class="headerlink" href="#deep-feature-factorization-for-concept-discovery" title="Permalink to this headline">#</a></h2>
+<h2>Deep Feature Factorization For Concept Discovery<a class="headerlink" href="#deep-feature-factorization-for-concept-discovery" title="Permalink to this headline">#</a></h2>
 <p>We will use the ideas in the paper <a class="reference external" href="https://arxiv.org/abs/1806.10206">Deep Feature Factorization For Concept Discovery by Edo Collins, Radhakrishna Achanta, Sabine Süsstrunk</a> from 2018.</p>
 <p>The idea is to factorize the activations from the model into different concepts using Non Negative Matrix Factorization (or from now on- NMF), and for every pixel compute how it corresponds with each of the concepts:</p>
 <ul>
@@ -471,7 +470,7 @@ This gives us a way of automatically discovering concepts in a dataset, and perf
 <p>However for our purposes now we will use a batch size of 1: we just want to detect the concepts detected in a single image.</p>
 </div>
 <div class="section" id="how-do-we-connect-these-concepts-with-the-output-of-the-network">
-<h2><span class="section-number">17.4. </span>How do we connect these concepts with the output of the network ?<a class="headerlink" href="#how-do-we-connect-these-concepts-with-the-output-of-the-network" title="Permalink to this headline">#</a></h2>
+<h2>How do we connect these concepts with the output of the network ?<a class="headerlink" href="#how-do-we-connect-these-concepts-with-the-output-of-the-network" title="Permalink to this headline">#</a></h2>
 <p>If we use the activations from the last convolutional layer, just before they are transformerd to a 1D vector (for example by averaging) in a network like Resnet50 for example,
 we could just run the remaining of the network on the concepts and classify each concept.
 In resnet50 this would mean just running the fully connected layer, model.fc, on the concepts, which is quite simple.</p>
@@ -482,7 +481,7 @@ If one of the concept heatmap causes a large drop in the cat category score when
 <p>But we’re in luck here - using the last CNN layer is the most common way for creating the model explanations.</p>
 </div>
 <div class="section" id="how-can-we-pack-the-concepts-to-create-a-single-visualization">
-<h2><span class="section-number">17.5. </span>How can we pack the concepts to create a single visualization<a class="headerlink" href="#how-can-we-pack-the-concepts-to-create-a-single-visualization" title="Permalink to this headline">#</a></h2>
+<h2>How can we pack the concepts to create a single visualization<a class="headerlink" href="#how-can-we-pack-the-concepts-to-create-a-single-visualization" title="Permalink to this headline">#</a></h2>
 <p>We can assign a different color for every concept, and modulate the intensity based on the heatmap.
 Then since we have unique colors, we can combine all the masks back into a single image.
 But we have a problem - the same pixel can have non zero values from different concepts.
@@ -648,7 +647,7 @@ The strategy we will use here will be just to keep the concept that got a higher
         <i class="fas fa-angle-left"></i>
         <div class="prev-next-info">
             <p class="prev-next-subtitle">previous</p>
-            <p class="prev-next-title"><span class="section-number">15. </span>How does it work with Vision Transformers</p>
+            <p class="prev-next-title">How does it work with Vision Transformers</p>
         </div>
     </a>
 </div>

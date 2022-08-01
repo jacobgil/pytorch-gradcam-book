@@ -5,7 +5,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>2. Tutorial: Class Activation Maps for Object Detection with Faster RCNN &#8212; Advanced AI explainability with pytorch-gradcam</title>
+    <title>Tutorial: Class Activation Maps for Object Detection with Faster RCNN &#8212; Advanced AI explainability with pytorch-gradcam</title>
     
   <!-- Loaded before other Sphinx assets -->
   <link href="_static/styles/theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
@@ -51,8 +51,8 @@ const thebe_selector_output = ".output, .cell_output"
     <script async="async" src="_static/sphinx-thebe.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="8. EigenCAM for YOLO5" href="EigenCAM%20for%20YOLO5.html" />
-    <link rel="prev" title="1. Tutorial: Class Activation Maps for Semantic Segmentation" href="Class%20Activation%20Maps%20for%20Semantic%20Segmentation.html" />
+    <link rel="next" title="EigenCAM for YOLO5" href="EigenCAM%20for%20YOLO5.html" />
+    <link rel="prev" title="Tutorial: Class Activation Maps for Semantic Segmentation" href="Class%20Activation%20Maps%20for%20Semantic%20Segmentation.html" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="docsearch:language" content="None">
     
@@ -115,27 +115,26 @@ const thebe_selector_output = ".output, .cell_output"
         <ul class="current nav bd-sidenav">
  <li class="toctree-l1">
   <a class="reference internal" href="Class%20Activation%20Maps%20for%20Semantic%20Segmentation.html">
-   1. Tutorial: Class Activation Maps for Semantic Segmentation
+   Tutorial: Class Activation Maps for Semantic Segmentation
   </a>
  </li>
  <li class="toctree-l1 current active">
   <a class="current reference internal" href="#">
-   2. Tutorial: Class Activation Maps for Object Detection with Faster RCNN
+   Tutorial: Class Activation Maps for Object Detection with Faster RCNN
   </a>
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="EigenCAM%20for%20YOLO5.html">
-   8. EigenCAM for YOLO5
+   EigenCAM for YOLO5
   </a>
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="Pixel%20Attribution%20for%20embeddings.html">
-   9. Tutorial: Concept Activation Maps
+   Tutorial: Concept Activation Maps
   </a>
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="CAM%20Metrics%20And%20Tuning%20Tutorial.html">
-   10.
    <em>
     May the best explanation win
    </em>
@@ -144,12 +143,12 @@ const thebe_selector_output = ".output, .cell_output"
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="vision_transformers.html">
-   15. How does it work with Vision Transformers
+   How does it work with Vision Transformers
   </a>
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="Deep%20Feature%20Factorizations.html">
-   17. Deep Feature Factorizations for better model explainability
+   Deep Feature Factorizations for better model explainability
   </a>
  </li>
 </ul>
@@ -315,51 +314,51 @@ title="Print to PDF"
         <ul class="visible nav section-nav flex-column">
  <li class="toc-h1 nav-item toc-entry">
   <a class="reference internal nav-link" href="#">
-   2. Tutorial: Class Activation Maps for Object Detection with Faster RCNN
+   Tutorial: Class Activation Maps for Object Detection with Faster RCNN
   </a>
   <ul class="visible nav section-nav flex-column">
    <li class="toc-h2 nav-item toc-entry">
     <a class="reference internal nav-link" href="#this-is-too-long-just-show-me-some-code">
-     2.1. This is too long, just show me some code !
+     This is too long, just show me some code !
     </a>
    </li>
   </ul>
  </li>
  <li class="toc-h1 nav-item toc-entry">
   <a class="reference internal nav-link" href="#introduction">
-   3. Introduction
+   Introduction
   </a>
   <ul class="visible nav section-nav flex-column">
    <li class="toc-h2 nav-item toc-entry">
     <a class="reference internal nav-link" href="#why-is-it-more-difficult-computing-cams-for-object-detection">
-     3.1. Why is it more difficult computing CAMs for object detection?
+     Why is it more difficult computing CAMs for object detection?
     </a>
    </li>
    <li class="toc-h2 nav-item toc-entry">
     <a class="reference internal nav-link" href="#gradient-free-methods-to-the-rescue">
-     3.2. Gradient Free Methods to the rescue!
+     Gradient Free Methods to the rescue!
     </a>
    </li>
   </ul>
  </li>
  <li class="toc-h1 nav-item toc-entry">
   <a class="reference internal nav-link" href="#what-faster-rcnn-layer-should-we-target">
-   4. What faster-rcnn layer should we target?
+   What faster-rcnn layer should we target?
   </a>
   <ul class="visible nav section-nav flex-column">
    <li class="toc-h2 nav-item toc-entry">
     <a class="reference internal nav-link" href="#problem-the-output-from-model-backbone-is-in-a-very-custom-format">
-     4.1. Problem: The output from model.backbone is in a very custom format
+     Problem: The output from model.backbone is in a very custom format
     </a>
    </li>
    <li class="toc-h2 nav-item toc-entry">
     <a class="reference internal nav-link" href="#what-target-are-the-class-activation-maps-created-for">
-     4.2. What target are the Class Activation Maps created for?
+     What target are the Class Activation Maps created for?
     </a>
     <ul class="nav section-nav flex-column">
      <li class="toc-h3 nav-item toc-entry">
       <a class="reference internal nav-link" href="#we-can-measure-how-the-detected-objects-correspond-with-the-original-detections-in-both-coordinates-and-score">
-       4.2.1. We can measure how the detected objects correspond with the original detections in both coordinates and score
+       We can measure how the detected objects correspond with the original detections in both coordinates and score
       </a>
      </li>
     </ul>
@@ -368,22 +367,22 @@ title="Print to PDF"
  </li>
  <li class="toc-h1 nav-item toc-entry">
   <a class="reference internal nav-link" href="#optional-renormalizing-the-cams-inside-every-bounding-box">
-   5. Optional: Renormalizing the CAMs inside every bounding box
+   Optional: Renormalizing the CAMs inside every bounding box
   </a>
  </li>
  <li class="toc-h1 nav-item toc-entry">
   <a class="reference internal nav-link" href="#advanced-more-class-descrimination-with-ablation-cam">
-   6. Advanced: More class descrimination with Ablation CAM
+   Advanced: More class descrimination with Ablation CAM
   </a>
  </li>
  <li class="toc-h1 nav-item toc-entry">
   <a class="reference internal nav-link" href="#defining-a-custom-ablation-layer">
-   7. Defining a custom Ablation Layer
+   Defining a custom Ablation Layer
   </a>
   <ul class="visible nav section-nav flex-column">
    <li class="toc-h2 nav-item toc-entry">
     <a class="reference internal nav-link" href="#making-it-fast-by-skipping-some-channels">
-     7.1. Making it fast by skipping some channels
+     Making it fast by skipping some channels
     </a>
    </li>
   </ul>
@@ -409,51 +408,51 @@ title="Print to PDF"
                             <ul class="visible nav section-nav flex-column">
  <li class="toc-h1 nav-item toc-entry">
   <a class="reference internal nav-link" href="#">
-   2. Tutorial: Class Activation Maps for Object Detection with Faster RCNN
+   Tutorial: Class Activation Maps for Object Detection with Faster RCNN
   </a>
   <ul class="visible nav section-nav flex-column">
    <li class="toc-h2 nav-item toc-entry">
     <a class="reference internal nav-link" href="#this-is-too-long-just-show-me-some-code">
-     2.1. This is too long, just show me some code !
+     This is too long, just show me some code !
     </a>
    </li>
   </ul>
  </li>
  <li class="toc-h1 nav-item toc-entry">
   <a class="reference internal nav-link" href="#introduction">
-   3. Introduction
+   Introduction
   </a>
   <ul class="visible nav section-nav flex-column">
    <li class="toc-h2 nav-item toc-entry">
     <a class="reference internal nav-link" href="#why-is-it-more-difficult-computing-cams-for-object-detection">
-     3.1. Why is it more difficult computing CAMs for object detection?
+     Why is it more difficult computing CAMs for object detection?
     </a>
    </li>
    <li class="toc-h2 nav-item toc-entry">
     <a class="reference internal nav-link" href="#gradient-free-methods-to-the-rescue">
-     3.2. Gradient Free Methods to the rescue!
+     Gradient Free Methods to the rescue!
     </a>
    </li>
   </ul>
  </li>
  <li class="toc-h1 nav-item toc-entry">
   <a class="reference internal nav-link" href="#what-faster-rcnn-layer-should-we-target">
-   4. What faster-rcnn layer should we target?
+   What faster-rcnn layer should we target?
   </a>
   <ul class="visible nav section-nav flex-column">
    <li class="toc-h2 nav-item toc-entry">
     <a class="reference internal nav-link" href="#problem-the-output-from-model-backbone-is-in-a-very-custom-format">
-     4.1. Problem: The output from model.backbone is in a very custom format
+     Problem: The output from model.backbone is in a very custom format
     </a>
    </li>
    <li class="toc-h2 nav-item toc-entry">
     <a class="reference internal nav-link" href="#what-target-are-the-class-activation-maps-created-for">
-     4.2. What target are the Class Activation Maps created for?
+     What target are the Class Activation Maps created for?
     </a>
     <ul class="nav section-nav flex-column">
      <li class="toc-h3 nav-item toc-entry">
       <a class="reference internal nav-link" href="#we-can-measure-how-the-detected-objects-correspond-with-the-original-detections-in-both-coordinates-and-score">
-       4.2.1. We can measure how the detected objects correspond with the original detections in both coordinates and score
+       We can measure how the detected objects correspond with the original detections in both coordinates and score
       </a>
      </li>
     </ul>
@@ -462,22 +461,22 @@ title="Print to PDF"
  </li>
  <li class="toc-h1 nav-item toc-entry">
   <a class="reference internal nav-link" href="#optional-renormalizing-the-cams-inside-every-bounding-box">
-   5. Optional: Renormalizing the CAMs inside every bounding box
+   Optional: Renormalizing the CAMs inside every bounding box
   </a>
  </li>
  <li class="toc-h1 nav-item toc-entry">
   <a class="reference internal nav-link" href="#advanced-more-class-descrimination-with-ablation-cam">
-   6. Advanced: More class descrimination with Ablation CAM
+   Advanced: More class descrimination with Ablation CAM
   </a>
  </li>
  <li class="toc-h1 nav-item toc-entry">
   <a class="reference internal nav-link" href="#defining-a-custom-ablation-layer">
-   7. Defining a custom Ablation Layer
+   Defining a custom Ablation Layer
   </a>
   <ul class="visible nav section-nav flex-column">
    <li class="toc-h2 nav-item toc-entry">
     <a class="reference internal nav-link" href="#making-it-fast-by-skipping-some-channels">
-     7.1. Making it fast by skipping some channels
+     Making it fast by skipping some channels
     </a>
    </li>
   </ul>
@@ -493,12 +492,12 @@ title="Print to PDF"
               <div>
                 
   <div class="tex2jax_ignore mathjax_ignore section" id="tutorial-class-activation-maps-for-object-detection-with-faster-rcnn">
-<h1><span class="section-number">2. </span>Tutorial: Class Activation Maps for Object Detection with Faster RCNN<a class="headerlink" href="#tutorial-class-activation-maps-for-object-detection-with-faster-rcnn" title="Permalink to this headline">#</a></h1>
+<h1>Tutorial: Class Activation Maps for Object Detection with Faster RCNN<a class="headerlink" href="#tutorial-class-activation-maps-for-object-detection-with-faster-rcnn" title="Permalink to this headline">#</a></h1>
 <p><img alt="image.png" src="https://raw.githubusercontent.com/jacobgil/pytorch-grad-cam/master/examples/both_detection.png" /></p>
 <p>In this tutorial we’re going to see how to apply CAM methods for Object Detection,
 using faster-rcnn from torchvision as an example.</p>
 <div class="section" id="this-is-too-long-just-show-me-some-code">
-<h2><span class="section-number">2.1. </span>This is too long, just show me some code !<a class="headerlink" href="#this-is-too-long-just-show-me-some-code" title="Permalink to this headline">#</a></h2>
+<h2>This is too long, just show me some code !<a class="headerlink" href="#this-is-too-long-just-show-me-some-code" title="Permalink to this headline">#</a></h2>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">pytorch_grad_cam</span> <span class="kn">import</span> <span class="n">AblationCAM</span><span class="p">,</span> <span class="n">EigenCAM</span>
 <span class="kn">from</span> <span class="nn">pytorch_grad_cam.ablation_layer</span> <span class="kn">import</span> <span class="n">AblationLayerFasterRCNN</span>
 <span class="kn">from</span> <span class="nn">pytorch_grad_cam.utils.model_targets</span> <span class="kn">import</span> <span class="n">FasterRCNNBoxScoreTarget</span>
@@ -526,9 +525,9 @@ using faster-rcnn from torchvision as an example.</p>
 </div>
 </div>
 <div class="tex2jax_ignore mathjax_ignore section" id="introduction">
-<h1><span class="section-number">3. </span>Introduction<a class="headerlink" href="#introduction" title="Permalink to this headline">#</a></h1>
+<h1>Introduction<a class="headerlink" href="#introduction" title="Permalink to this headline">#</a></h1>
 <div class="section" id="why-is-it-more-difficult-computing-cams-for-object-detection">
-<h2><span class="section-number">3.1. </span>Why is it more difficult computing CAMs for object detection?<a class="headerlink" href="#why-is-it-more-difficult-computing-cams-for-object-detection" title="Permalink to this headline">#</a></h2>
+<h2>Why is it more difficult computing CAMs for object detection?<a class="headerlink" href="#why-is-it-more-difficult-computing-cams-for-object-detection" title="Permalink to this headline">#</a></h2>
 <p>Object detection packages typically do a lot of processing on the results before they output it:
 they create dictionaries with the bounding boxes, labels and scores, do an argmax on the scores to find the highest scoring category, etc.</p>
 <p>Because of this, typically the outputs from object detection package are not differentiable
@@ -542,7 +541,7 @@ they create dictionaries with the bounding boxes, labels and scores, do an argma
 </ul>
 </div>
 <div class="section" id="gradient-free-methods-to-the-rescue">
-<h2><span class="section-number">3.2. </span>Gradient Free Methods to the rescue!<a class="headerlink" href="#gradient-free-methods-to-the-rescue" title="Permalink to this headline">#</a></h2>
+<h2>Gradient Free Methods to the rescue!<a class="headerlink" href="#gradient-free-methods-to-the-rescue" title="Permalink to this headline">#</a></h2>
 <p>Luckily, we have “Gradient Free Methods”, and we can use them for many more use cases compared to “gradient” methods.</p>
 <p>We’re going to use the next methods here for object detection:</p>
 <ul class="simple">
@@ -670,12 +669,12 @@ Nothing here is related to Class Activation Maps, yet.</p>
 </div>
 </div>
 <div class="tex2jax_ignore mathjax_ignore section" id="what-faster-rcnn-layer-should-we-target">
-<h1><span class="section-number">4. </span>What faster-rcnn layer should we target?<a class="headerlink" href="#what-faster-rcnn-layer-should-we-target" title="Permalink to this headline">#</a></h1>
+<h1>What faster-rcnn layer should we target?<a class="headerlink" href="#what-faster-rcnn-layer-should-we-target" title="Permalink to this headline">#</a></h1>
 <p>The first part of faster-rcnn, is the Feature Pyramid Network (FPN) backbone: model.backbone.
 This part is what computes the meaningful activations, and we are going to work with these.</p>
 <p>The rest of the network extract features from here and then predicts bounding boxes, but everything is based on the features computed from the FPN.</p>
 <div class="section" id="problem-the-output-from-model-backbone-is-in-a-very-custom-format">
-<h2><span class="section-number">4.1. </span>Problem: The output from model.backbone is in a very custom format<a class="headerlink" href="#problem-the-output-from-model-backbone-is-in-a-very-custom-format" title="Permalink to this headline">#</a></h2>
+<h2>Problem: The output from model.backbone is in a very custom format<a class="headerlink" href="#problem-the-output-from-model-backbone-is-in-a-very-custom-format" title="Permalink to this headline">#</a></h2>
 <p>The backbone outputs 5 different tensors with different spatial sizes, from the FPN.
 They are stored as an Ordered Dict.</p>
 <p>Our goal here is to aggregate these image tensors, assign them weights, and then aggregate everything.</p>
@@ -693,7 +692,7 @@ They are stored as an Ordered Dict.</p>
 <p>This is one way object detection differs quite a lot from the usual classification networks that have ReLU non linearities. The FPN activations are un-bounded and can have negative values as well.</p>
 </div>
 <div class="section" id="what-target-are-the-class-activation-maps-created-for">
-<h2><span class="section-number">4.2. </span>What target are the Class Activation Maps created for?<a class="headerlink" href="#what-target-are-the-class-activation-maps-created-for" title="Permalink to this headline">#</a></h2>
+<h2>What target are the Class Activation Maps created for?<a class="headerlink" href="#what-target-are-the-class-activation-maps-created-for" title="Permalink to this headline">#</a></h2>
 <p>Remember that in the case of classification, we create the CAM for a specific category.
 For example, if we want to see which activations respond to “Cat”, we could use the 281 image-net category.
 And the CAM is computed for that target, with ClassifierOutputTarget(281).</p>
@@ -707,7 +706,7 @@ Unfortunately, faster-rcnn doesn’t return us scores for all of the categories,
 <li><p>Maybe a combination of both the category and a property of the bounding box coordinates.</p></li>
 </ul>
 <div class="section" id="we-can-measure-how-the-detected-objects-correspond-with-the-original-detections-in-both-coordinates-and-score">
-<h3><span class="section-number">4.2.1. </span>We can measure how the detected objects correspond with the original detections in both coordinates and score<a class="headerlink" href="#we-can-measure-how-the-detected-objects-correspond-with-the-original-detections-in-both-coordinates-and-score" title="Permalink to this headline">#</a></h3>
+<h3>We can measure how the detected objects correspond with the original detections in both coordinates and score<a class="headerlink" href="#we-can-measure-how-the-detected-objects-correspond-with-the-original-detections-in-both-coordinates-and-score" title="Permalink to this headline">#</a></h3>
 <p>We have an output from the model.
 We need to assign it some score, so we can highlight the parts of the image that maximize that score.
 We can check how the model output corresponds with the original detections:</p>
@@ -787,7 +786,7 @@ We can check how the model output corresponds with the original detections:</p>
 </div>
 </div>
 <div class="tex2jax_ignore mathjax_ignore section" id="optional-renormalizing-the-cams-inside-every-bounding-box">
-<h1><span class="section-number">5. </span>Optional: Renormalizing the CAMs inside every bounding box<a class="headerlink" href="#optional-renormalizing-the-cams-inside-every-bounding-box" title="Permalink to this headline">#</a></h1>
+<h1>Optional: Renormalizing the CAMs inside every bounding box<a class="headerlink" href="#optional-renormalizing-the-cams-inside-every-bounding-box" title="Permalink to this headline">#</a></h1>
 <p>This shows us the CAM computed accross the entire image, normalized to be between 0 and 1, using even pixels that are outside the boxes.
 We can re-normalize the CAM inside every bounding box, and take the maximum value in the overlaps between the boxes.</p>
 <div class="cell docutils container">
@@ -818,7 +817,7 @@ We can re-normalize the CAM inside every bounding box, and take the maximum valu
 </div>
 </div>
 <div class="tex2jax_ignore mathjax_ignore section" id="advanced-more-class-descrimination-with-ablation-cam">
-<h1><span class="section-number">6. </span>Advanced: More class descrimination with Ablation CAM<a class="headerlink" href="#advanced-more-class-descrimination-with-ablation-cam" title="Permalink to this headline">#</a></h1>
+<h1>Advanced: More class descrimination with Ablation CAM<a class="headerlink" href="#advanced-more-class-descrimination-with-ablation-cam" title="Permalink to this headline">#</a></h1>
 <p>A good property of a CAM method is that it should give us class descrimination - it should be able to highlight only the parts that correspond with a specific category, and not those of other categories.</p>
 <p>In the previous section we defined the target.. but we cheated.
 EigenCAM doesn’t actually know how to use the target - the result from it will be constant regardless of the target.</p>
@@ -832,7 +831,7 @@ What happens if you have several different objects that you want to distinguish 
 <p>Ablation-CAM will “ablate” activations and measure how the output changes. If the output drops a lot, it means that activation is important and should get a higher weight.</p>
 </div>
 <div class="tex2jax_ignore mathjax_ignore section" id="defining-a-custom-ablation-layer">
-<h1><span class="section-number">7. </span>Defining a custom Ablation Layer<a class="headerlink" href="#defining-a-custom-ablation-layer" title="Permalink to this headline">#</a></h1>
+<h1>Defining a custom Ablation Layer<a class="headerlink" href="#defining-a-custom-ablation-layer" title="Permalink to this headline">#</a></h1>
 <p>For a custom use case, like we have here, we will have to define our own Ablation layer.
 We have “AblationLayerFasterRCNN” defined in pytorch_grad_cam.ablation_layer, but lets go over it.</p>
 <p>An ablation layer needs to implement two methods:</p>
@@ -906,7 +905,7 @@ So we need to be able to translate between an index, to the actual layer it corr
 </div>
 </div>
 <div class="section" id="making-it-fast-by-skipping-some-channels">
-<h2><span class="section-number">7.1. </span>Making it fast by skipping some channels<a class="headerlink" href="#making-it-fast-by-skipping-some-channels" title="Permalink to this headline">#</a></h2>
+<h2>Making it fast by skipping some channels<a class="headerlink" href="#making-it-fast-by-skipping-some-channels" title="Permalink to this headline">#</a></h2>
 <p>We’re almost done.
 AblationCAM is slow since it has to do many forward passes (in our case: 5 x 256 passes).
 However some of the channels can be skipped, for example if their empty.
@@ -992,13 +991,13 @@ and then measures the overlap of every activation with that binary mask.</p>
         <i class="fas fa-angle-left"></i>
         <div class="prev-next-info">
             <p class="prev-next-subtitle">previous</p>
-            <p class="prev-next-title"><span class="section-number">1. </span>Tutorial: Class Activation Maps for Semantic Segmentation</p>
+            <p class="prev-next-title">Tutorial: Class Activation Maps for Semantic Segmentation</p>
         </div>
     </a>
     <a class='right-next' id="next-link" href="EigenCAM%20for%20YOLO5.html" title="next page">
     <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title"><span class="section-number">8. </span>EigenCAM for YOLO5</p>
+        <p class="prev-next-title">EigenCAM for YOLO5</p>
     </div>
     <i class="fas fa-angle-right"></i>
     </a>
