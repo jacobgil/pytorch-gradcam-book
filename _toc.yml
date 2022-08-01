@@ -1,0 +1,10 @@
+format: jb-book
+root: "intro"
+chapters:
+- file: "Class Activation Maps for Semantic Segmentation"
+- file: "Class Activation Maps for Object Detection With Faster RCNN"
+- file: "EigenCAM for YOLO5"
+- file: "Pixel Attribution for embeddings"
+- file: "CAM Metrics And Tuning Tutorial"
+- file: "vision_transformers"
+- file: "Deep Feature Factorizations"

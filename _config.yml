@@ -1,0 +1,6 @@
+# In _config.yml
+title: Advanced AI explainability with pytorch-gradcam
+author: Jacob Gildenblat
+logo: "dff1.png"
+execute:
+  execute_notebooks: false
