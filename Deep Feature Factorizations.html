@@ -134,10 +134,7 @@ const thebe_selector_output = ".output, .cell_output"
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="CAM%20Metrics%20And%20Tuning%20Tutorial.html">
-   <em>
-    May the best explanation win
-   </em>
-   :
+   A tutorial on benchmarking and tuning model explanations
   </a>
  </li>
  <li class="toctree-l1">
@@ -397,7 +394,7 @@ title="Print to PDF"
 The pytorch-gradcam package provides an implementation of this method and some additions that make this a very useful tool.</p>
 <p>Usually explainability methods answer questions like “Where does the model see a cat in the image” ?</p>
 <p>Here instead we will get a much more detailed glimpse into the model, and ask it:
-“Show me all the different concepts you found inside the image, and how they are classified”.</p>
+“Show me all the different concepts you found inside the image, and how are they classified”.</p>
 <p>We will go over the motivations for this, problems with previous methods, and hopefully get a tool that solves these problems.</p>
 <div class="section" id="just-show-me-some-code">
 <h2>Just show me some code<a class="headerlink" href="#just-show-me-some-code" title="Permalink to this headline">#</a></h2>
@@ -419,7 +416,7 @@ In the case of classification, the target function is usually the score of one o
 <p>You tell the explainability method: “I want to get a heatmap of the model internal activations that corresponds with the cat category”</p>
 <p>In return you get this:</p>
 <p><img alt="" src="https://github.com/jacobgil/pytorch-grad-cam/blob/master/examples/cat.jpg?raw=true" /></p>
-<p>The different methods use the internal feature representations from the network, so they “open up the black box” and give as a glimpse inside the mechanics of the model. This is great.</p>
+<p>The different methods use the internal feature representations from the network, so they “open up the black box” and give us a glimpse inside the mechanics of the model. This is great.</p>
 <p>But this visualization still leaves some things to be desired:</p>
 <ul class="simple">
 <li><p><strong>What are the internal concepts the model finds, if any:</strong></p></li>
@@ -430,7 +427,7 @@ But we’re never actually able to see this in the model explanations.</p>
 <ul class="simple">
 <li><p><strong>Could it be that the body of the cat also pulls the output towards other categories as well?</strong></p></li>
 </ul>
-<p>Just because it contributes to a higher output for one category, doesn’t mean it doesn’t contribute to other categories as well.
+<p>Just because it contributes to a higher output for one category, it doesn’t mean it doesn’t contribute to other categories as well.
 For example, there are many different types of cats.
 To take this into account when we’re interpreting the heatmaps, we would have to carefully look at all the heatmaps and keep track of them.</p>
 <ul class="simple">
@@ -472,10 +469,10 @@ This gives us a way of automatically discovering concepts in a dataset, and perf
 <div class="section" id="how-do-we-connect-these-concepts-with-the-output-of-the-network">
 <h2>How do we connect these concepts with the output of the network ?<a class="headerlink" href="#how-do-we-connect-these-concepts-with-the-output-of-the-network" title="Permalink to this headline">#</a></h2>
 <p>If we use the activations from the last convolutional layer, just before they are transformerd to a 1D vector (for example by averaging) in a network like Resnet50 for example,
-we could just run the remaining of the network on the concepts and classify each concept.
+we could just run the remaining part of the network on the concepts and classify each concept.
 In resnet50 this would mean just running the fully connected layer, model.fc, on the concepts, which is quite simple.</p>
 <p>If we’re using the activations from an earlier layer, it’s a bit less trivial.
-One way could be potentially to unpack the concepts to 2D tensors by weighting them in every pixel according to the heatmap.
+One way could be potentially to unpack the concepts to 2D tensors by duplicating them every pixel.
 Another way would be to use only the concept heatmaps but the not the concept embeddings: we could follow the approach of <a class="reference external" href="https://github.com/jacobgil/pytorch-grad-cam/blob/master/tutorials/CAM%20Metrics%20And%20Tuning%20Tutorial.ipynb">this tutorial</a>, ablate the pixels in the heatmap for example by blurring them, and see how the network output chagnes.
 If one of the concept heatmap causes a large drop in the cat category score when we blur it - it means it’s connected with the cat category.</p>
 <p>But we’re in luck here - using the last CNN layer is the most common way for creating the model explanations.</p>
@@ -552,7 +549,8 @@ The strategy we will use here will be just to keep the concept that got a higher
 <span class="k">def</span> <span class="nf">visualize_image</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">img_url</span><span class="p">,</span> <span class="n">n_components</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">top_k</span><span class="o">=</span><span class="mi">2</span><span class="p">):</span>
     <span class="n">img</span><span class="p">,</span> <span class="n">rgb_img_float</span><span class="p">,</span> <span class="n">input_tensor</span> <span class="o">=</span> <span class="n">get_image_from_url</span><span class="p">(</span><span class="n">img_url</span><span class="p">)</span>
     <span class="n">classifier</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">fc</span>
-    <span class="n">dff</span> <span class="o">=</span> <span class="n">DeepFeatureFactorization</span><span class="p">(</span><span class="n">model</span><span class="o">=</span><span class="n">model</span><span class="p">,</span> <span class="n">target_layer</span><span class="o">=</span><span class="n">model</span><span class="o">.</span><span class="n">layer4</span><span class="p">,</span> <span class="n">computation_on_concepts</span><span class="o">=</span><span class="n">classifier</span><span class="p">)</span>
+    <span class="n">dff</span> <span class="o">=</span> <span class="n">DeepFeatureFactorization</span><span class="p">(</span><span class="n">model</span><span class="o">=</span><span class="n">model</span><span class="p">,</span> <span class="n">target_layer</span><span class="o">=</span><span class="n">model</span><span class="o">.</span><span class="n">layer4</span><span class="p">,</span> 
+                                   <span class="n">computation_on_concepts</span><span class="o">=</span><span class="n">classifier</span><span class="p">)</span>
     <span class="n">concepts</span><span class="p">,</span> <span class="n">batch_explanations</span><span class="p">,</span> <span class="n">concept_outputs</span> <span class="o">=</span> <span class="n">dff</span><span class="p">(</span><span class="n">input_tensor</span><span class="p">,</span> <span class="n">n_components</span><span class="p">)</span>
     
     <span class="n">concept_outputs</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">softmax</span><span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">from_numpy</span><span class="p">(</span><span class="n">concept_outputs</span><span class="p">),</span> <span class="n">axis</span><span class="o">=-</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">numpy</span><span class="p">()</span>    
@@ -561,7 +559,14 @@ The strategy we will use here will be just to keep the concept that got a higher
                                                 <span class="n">batch_explanations</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span>
                                                 <span class="n">image_weight</span><span class="o">=</span><span class="mf">0.3</span><span class="p">,</span>
                                                 <span class="n">concept_labels</span><span class="o">=</span><span class="n">concept_label_strings</span><span class="p">)</span>
-    <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">hstack</span><span class="p">((</span><span class="n">img</span><span class="p">,</span> <span class="n">visualization</span><span class="p">))</span>
+    
+    <span class="n">result</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">hstack</span><span class="p">((</span><span class="n">img</span><span class="p">,</span> <span class="n">visualization</span><span class="p">))</span>
+    
+    <span class="c1"># Just for the jupyter notebook, so the large images won&#39;t weight a lot:</span>
+    <span class="k">if</span> <span class="n">result</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">&gt;</span> <span class="mi">500</span><span class="p">:</span>
+        <span class="n">result</span> <span class="o">=</span> <span class="n">cv2</span><span class="o">.</span><span class="n">resize</span><span class="p">(</span><span class="n">result</span><span class="p">,</span> <span class="p">(</span><span class="n">result</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">//</span><span class="mi">4</span><span class="p">,</span> <span class="n">result</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">//</span><span class="mi">4</span><span class="p">))</span>
+    
+    <span class="k">return</span> <span class="n">result</span>
 </pre></div>
 </div>
 </div>
@@ -571,7 +576,7 @@ The strategy we will use here will be just to keep the concept that got a higher
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">display</span><span class="p">(</span><span class="n">Image</span><span class="o">.</span><span class="n">fromarray</span><span class="p">(</span><span class="n">visualize_image</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> 
                                         <span class="s2">&quot;https://github.com/jacobgil/pytorch-grad-cam/blob/master/examples/both.png?raw=true&quot;</span><span class="p">)))</span>
 <span class="n">display</span><span class="p">(</span><span class="n">Image</span><span class="o">.</span><span class="n">fromarray</span><span class="p">(</span><span class="n">visualize_image</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> 
-                                        <span class="s2">&quot;https://upload.wikimedia.org/wikipedia/commons/f/f1/Puppies_</span><span class="si">%284984818141%</span><span class="s2">29.jpg&quot;</span><span class="p">)))</span>
+                                        <span class="s2">&quot;https://raw.githubusercontent.com/jacobgil/pytorch-grad-cam/master/tutorials/puppies.jpg&quot;</span><span class="p">)))</span>
 <span class="n">display</span><span class="p">(</span><span class="n">Image</span><span class="o">.</span><span class="n">fromarray</span><span class="p">(</span><span class="n">visualize_image</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> 
                                         <span class="s2">&quot;https://th.bing.com/th/id/R.94b33a074b9ceeb27b1c7fba0f66db74?rik=wN27mvigyFlXGg&amp;riu=http</span><span class="si">%3a%2f%2f</span><span class="s2">images5.fanpop.com</span><span class="si">%2f</span><span class="s2">image</span><span class="si">%2f</span><span class="s2">photos</span><span class="si">%2f</span><span class="s2">31400000</span><span class="si">%2f</span><span class="s2">Bear-Wallpaper-bears-31446777-1600-1200.jpg&amp;ehk=oD0JPpRVTZZ6yizZtGQtnsBGK2pAap2xv3sU3A4bIMc</span><span class="si">%3d</span><span class="s2">&amp;risl=&amp;pid=ImgRaw&amp;r=0&quot;</span><span class="p">)))</span>
 </pre></div>
@@ -600,7 +605,7 @@ The strategy we will use here will be just to keep the concept that got a higher
 <img alt="_images/Deep Feature Factorizations_6_0.png" src="_images/Deep Feature Factorizations_6_0.png" />
 </div>
 </div>
-<p>If we chose it to be too large, we will get an over-segmentation, with too many isoteric concepts, making it difficult to folow.</p>
+<p>If we chose it to be too large, we will get an over-segmentation, with too many esoteric concepts, making it difficult to follow.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">display</span><span class="p">(</span><span class="n">Image</span><span class="o">.</span><span class="n">fromarray</span><span class="p">(</span><span class="n">visualize_image</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> 
