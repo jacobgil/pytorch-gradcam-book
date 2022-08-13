@@ -444,7 +444,7 @@ In terms of the visualization itself, if we have 10 heatmaps for 10 categories, 
 And some of the pixels could get high values in several heatmaps, for example different categories of cats.
 This is a lot of information to unpack and not very effecient.</p></li>
 </ul>
-<p>Could we think of a way to create just one visualization that summerizes what the model does for an image ?</p>
+<p>Could we think of a way to create just one visualization that summarizes what the model does for an image ?</p>
 </div>
 <div class="section" id="deep-feature-factorization-for-concept-discovery">
 <h2>Deep Feature Factorization For Concept Discovery<a class="headerlink" href="#deep-feature-factorization-for-concept-discovery" title="Permalink to this headline">#</a></h2>
@@ -462,7 +462,7 @@ to a tensor with the shape Channels x (Batch x Height x Width)
 <li><p>W can be thought of as the feature representations of the detected concepts.</p></li>
 <li><p>H (after reshaping it back to 2D activations) contains how the pixels corresponds with the different concepts.</p></li>
 </ul>
-<p>If we input a batch of several images, concepts that repeat accross the images will be computed.
+<p>If we input a batch of several images, concepts that repeat across the images will be computed.
 This gives us a way of automatically discovering concepts in a dataset, and performing tasks like co-localization, further detailed in the paper.</p>
 <p>However for our purposes now we will use a batch size of 1: we just want to detect the concepts detected in a single image.</p>
 </div>
@@ -483,8 +483,8 @@ If one of the concept heatmap causes a large drop in the cat category score when
 Then since we have unique colors, we can combine all the masks back into a single image.
 But we have a problem - the same pixel can have non zero values from different concepts.
 The strategy we will use here will be just to keep the concept that got a higher value in the normalized heatmap, meaning it’s more important for it.</p>
-<p>For every concept we will also show a legend with informative properties of these concepts: the categories that they score highest for.</p>
-<p>To get started, lets load are model, and prepare input tensors.</p>
+<p>For every concept we will also show a legend with informative properties of that concept: the categories that they score highest for.</p>
+<p>To get started, let’s load our model, and prepare input tensors.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">warnings</span>
