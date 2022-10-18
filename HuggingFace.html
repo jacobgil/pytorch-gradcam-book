@@ -1,0 +1,1194 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>XAI Recepies for the HuggingFace 🤗 Image Classification Models &#8212; Advanced AI explainability with pytorch-gradcam</title>
+    
+  <!-- Loaded before other Sphinx assets -->
+  <link href="_static/styles/theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
+<link href="_static/styles/pydata-sphinx-theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
+
+    
+  <link rel="stylesheet"
+    href="_static/vendor/fontawesome/5.13.0/css/all.min.css">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
+    <link rel="stylesheet" href="_static/styles/sphinx-book-theme.css?digest=5115cc725059bd94278eecd172e13a965bf8f5a9" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="_static/mystnb.css" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="_static/design-style.b7bb847fb20b106c3d81b95245e65545.min.css" />
+    
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=1999514e3f237ded88cf">
+
+    <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/doctools.js"></script>
+    <script src="_static/clipboard.min.js"></script>
+    <script src="_static/copybutton.js"></script>
+    <script src="_static/scripts/sphinx-book-theme.js?digest=9c920249402e914e316237a7dbc6769907cce411"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="_static/togglebutton.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
+    <script src="_static/design-tabs.js"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
+const thebe_selector = ".thebe,.cell"
+const thebe_selector_input = "pre"
+const thebe_selector_output = ".output, .cell_output"
+</script>
+    <script async="async" src="_static/sphinx-thebe.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="prev" title="Deep Feature Factorizations for better model explainability" href="Deep%20Feature%20Factorizations.html" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="docsearch:language" content="None">
+    
+
+    <!-- Google Analytics -->
+    
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="60">
+<!-- Checkboxes to toggle the left sidebar -->
+<input type="checkbox" class="sidebar-toggle" name="__navigation" id="__navigation" aria-label="Toggle navigation sidebar">
+<label class="overlay overlay-navbar" for="__navigation">
+    <div class="visually-hidden">Toggle navigation sidebar</div>
+</label>
+<!-- Checkboxes to toggle the in-page toc -->
+<input type="checkbox" class="sidebar-toggle" name="__page-toc" id="__page-toc" aria-label="Toggle in-page Table of Contents">
+<label class="overlay overlay-pagetoc" for="__page-toc">
+    <div class="visually-hidden">Toggle in-page Table of Contents</div>
+</label>
+<!-- Headers at the top -->
+<div class="announcement header-item noprint"></div>
+<div class="header header-item noprint"></div>
+
+    
+    <div class="container-fluid" id="banner"></div>
+
+    
+
+    <div class="container-xl">
+      <div class="row">
+          
+<!-- Sidebar -->
+<div class="bd-sidebar noprint" id="site-navigation">
+    <div class="bd-sidebar__content">
+        <div class="bd-sidebar__top"><div class="navbar-brand-box">
+    <a class="navbar-brand text-wrap" href="index.html">
+      
+        <!-- `logo` is deprecated in Sphinx 4.0, so remove this when we stop supporting 3 -->
+        
+      
+      
+      <img src="_static/dff1.jpg" class="logo" alt="logo">
+      
+      
+      <h1 class="site-logo" id="site-title">Advanced AI explainability with pytorch-gradcam</h1>
+      
+    </a>
+</div><form class="bd-search d-flex align-items-center" action="search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" >
+</form><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="introduction.html">
+                    Introduction: Advanced Explainable AI for computer vision
+                </a>
+            </li>
+        </ul>
+        <ul class="current nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="Class%20Activation%20Maps%20for%20Semantic%20Segmentation.html">
+   Tutorial: Class Activation Maps for Semantic Segmentation
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="Class%20Activation%20Maps%20for%20Object%20Detection%20With%20Faster%20RCNN.html">
+   Tutorial: Class Activation Maps for Object Detection with Faster RCNN
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="EigenCAM%20for%20YOLO5.html">
+   EigenCAM for YOLO5
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="Pixel%20Attribution%20for%20embeddings.html">
+   Tutorial: Concept Activation Maps
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="CAM%20Metrics%20And%20Tuning%20Tutorial.html">
+   A tutorial on benchmarking and tuning model explanations
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="vision_transformers.html">
+   How does it work with Vision Transformers
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="Deep%20Feature%20Factorizations.html">
+   Deep Feature Factorizations for better model explainability
+  </a>
+ </li>
+ <li class="toctree-l1 current active">
+  <a class="current reference internal" href="#">
+   XAI Recepies for the HuggingFace 🤗 Image Classification Models
+  </a>
+ </li>
+</ul>
+
+    </div>
+</nav></div>
+        <div class="bd-sidebar__bottom">
+             <!-- To handle the deprecated key -->
+            
+            <div class="navbar_extra_footer">
+            Powered by <a href="https://jupyterbook.org">Jupyter Book</a>
+            </div>
+            
+        </div>
+    </div>
+    <div id="rtd-footer-container"></div>
+</div>
+
+
+          
+
+
+          
+<!-- A tiny helper pixel to detect if we've scrolled -->
+<div class="sbt-scroll-pixel-helper"></div>
+<!-- Main content -->
+<div class="col py-0 content-container">
+    
+    <div class="header-article row sticky-top noprint">
+        
+
+
+
+<div class="col py-1 d-flex header-article-main">
+    <div class="header-article__left">
+        
+        <label for="__navigation"
+  class="headerbtn"
+  data-toggle="tooltip"
+data-placement="right"
+title="Toggle navigation"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-bars"></i>
+  </span>
+
+</label>
+
+        
+    </div>
+    <div class="header-article__right">
+<div class="menu-dropdown menu-dropdown-launch-buttons">
+  <button class="headerbtn menu-dropdown__trigger"
+      aria-label="Launch interactive content">
+      <i class="fas fa-rocket"></i>
+  </button>
+  <div class="menu-dropdown__content">
+    <ul>
+      <li>
+        <a href="https://mybinder.org/v2/gh/executablebooks/jupyter-book/master?urlpath=tree/HuggingFace.ipynb"
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Launch on Binder"
+>
+  
+
+<span class="headerbtn__icon-container">
+  
+    <img src="_static/images/logo_binder.svg">
+  </span>
+<span class="headerbtn__text-container">Binder</span>
+</a>
+
+      </li>
+      
+    </ul>
+  </div>
+</div>
+
+<button onclick="toggleFullScreen()"
+  class="headerbtn"
+  data-toggle="tooltip"
+data-placement="bottom"
+title="Fullscreen mode"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+<div class="menu-dropdown menu-dropdown-download-buttons">
+  <button class="headerbtn menu-dropdown__trigger"
+      aria-label="Download this page">
+      <i class="fas fa-download"></i>
+  </button>
+  <div class="menu-dropdown__content">
+    <ul>
+      <li>
+        <a href="_sources/HuggingFace.ipynb"
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Download source file"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="headerbtn__text-container">.ipynb</span>
+</a>
+
+      </li>
+      
+      <li>
+        
+<button onclick="printPdf(this)"
+  class="headerbtn"
+  data-toggle="tooltip"
+data-placement="left"
+title="Print to PDF"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="headerbtn__text-container">.pdf</span>
+</button>
+
+      </li>
+      
+    </ul>
+  </div>
+</div>
+<label for="__page-toc"
+  class="headerbtn headerbtn-page-toc"
+  
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-list"></i>
+  </span>
+
+</label>
+
+    </div>
+</div>
+
+<!-- Table of contents -->
+<div class="col-md-3 bd-toc show noprint">
+    <div class="tocsection onthispage pt-5 pb-3">
+        <i class="fas fa-list"></i> Contents
+    </div>
+    <nav id="bd-toc-nav" aria-label="Page">
+        <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#goal">
+   Goal
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#targets-and-reshapes-are-all-you-need">
+   Targets and Reshapes are all you need
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#target-functions">
+   Target Functions
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#reshapes">
+   Reshapes
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#handling-reshapes-with-varying-input-image-sizes">
+   Handling Reshapes with varying input image sizes
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#what-different-xai-methods-need">
+   What different XAI methods need
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#deep-feature-factorization-and-those-sneaky-layernorm-layers">
+     Deep Feature Factorization, and those sneaky LayerNorm layers
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#gradcam-that-forces-us-to-carefully-choose-layers-that-output-tensors-so-we-can-get-gradients">
+     GradCAM, that forces us to carefully choose layers that output Tensors, so we can get gradients
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#how-do-we-know-which-target-layer-to-chose">
+   How do we know which target layer to chose?
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#wrap-your-models-so-they-output-tensors-and-not-dataclasses-or-dictionaries">
+   Wrap your models so they output tensors and not dataclasses or dictionaries
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#lets-go">
+   Lets Go!
+  </a>
+ </li>
+</ul>
+
+    </nav>
+</div>
+    </div>
+    <div class="article row">
+        <div class="col pl-md-3 pl-lg-5 content-container">
+            <!-- Table of contents that is only displayed when printing the page -->
+            <div id="jb-print-docs-body" class="onlyprint">
+                <h1>XAI Recepies for the HuggingFace 🤗 Image Classification Models</h1>
+                <!-- Table of contents -->
+                <div id="print-main-content">
+                    <div id="jb-print-toc">
+                        
+                        <div>
+                            <h2> Contents </h2>
+                        </div>
+                        <nav aria-label="Page">
+                            <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#goal">
+   Goal
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#targets-and-reshapes-are-all-you-need">
+   Targets and Reshapes are all you need
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#target-functions">
+   Target Functions
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#reshapes">
+   Reshapes
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#handling-reshapes-with-varying-input-image-sizes">
+   Handling Reshapes with varying input image sizes
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#what-different-xai-methods-need">
+   What different XAI methods need
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#deep-feature-factorization-and-those-sneaky-layernorm-layers">
+     Deep Feature Factorization, and those sneaky LayerNorm layers
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#gradcam-that-forces-us-to-carefully-choose-layers-that-output-tensors-so-we-can-get-gradients">
+     GradCAM, that forces us to carefully choose layers that output Tensors, so we can get gradients
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#how-do-we-know-which-target-layer-to-chose">
+   How do we know which target layer to chose?
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#wrap-your-models-so-they-output-tensors-and-not-dataclasses-or-dictionaries">
+   Wrap your models so they output tensors and not dataclasses or dictionaries
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#lets-go">
+   Lets Go!
+  </a>
+ </li>
+</ul>
+
+                        </nav>
+                    </div>
+                </div>
+            </div>
+            <main id="main-content" role="main">
+                
+              <div>
+                
+  <div class="tex2jax_ignore mathjax_ignore section" id="xai-recepies-for-the-huggingface-image-classification-models">
+<h1>XAI Recepies for the HuggingFace 🤗 Image Classification Models<a class="headerlink" href="#xai-recepies-for-the-huggingface-image-classification-models" title="Permalink to this headline">#</a></h1>
+<div class="section" id="goal">
+<h2>Goal<a class="headerlink" href="#goal" title="Permalink to this headline">#</a></h2>
+<p>In this tutorial we will go over all (or most of?) the vision classification model families in the HuggingFace collection, and apply the pytorch gradcam package on each of them.</p>
+<p>One of the top repeating questions by users in this package is “How do I apply XAI on model X” ?
+The purpose of this tutorial is to cover that completely for existing models, and show enough examples to help users apply this on new even quirkier new models if they need to.</p>
+<p>To make XAI a real world practice, we need to be able to work with new (often complex) models that are appearing in lightening speed, and not just simpler CNNs like Resnet or VGG.
+With the pytorch_grad_cam package, you have the tools to do that.</p>
+<p>Besides, this also gives us a good oppertunity to look into the latest and greatest models from HuggingFace💕.</p>
+<p>We will go over Resnet, Swin Transformers, ViT, RegNet, ConvNext, SegFormer, CvT and Mobile-ViT.</p>
+</div>
+<div class="section" id="targets-and-reshapes-are-all-you-need">
+<h2>Targets and Reshapes are all you need<a class="headerlink" href="#targets-and-reshapes-are-all-you-need" title="Permalink to this headline">#</a></h2>
+<p>The Class Activation Map family of algorithms get as an input:</p>
+<ul class="simple">
+<li><p>A model</p></li>
+<li><p>An image</p></li>
+<li><p>A target function that you want to explain.
+e.g: “Where does the model see a Remote Control in this image?”</p></li>
+<li><p>A target layer (or layers).
+The internal Activations from this layer will be used.
+Let’s correct the previous bullet:
+It’s actually - “Where does the model see a Remote Control in these activations from our target layer”.</p></li>
+<li><p>A reshape function that tells how to to trasnlate the activations, to featuer maps of (typically small) 2D images.</p></li>
+</ul>
+</div>
+<div class="section" id="target-functions">
+<h2>Target Functions<a class="headerlink" href="#target-functions" title="Permalink to this headline">#</a></h2>
+<p>A target function takes the output from the model, and returns the goal we care about.
+For multi-class classification it can be: “The logit output for category 761”.
+That’s so common we have a wrapper for it: <code class="docutils literal notranslate"><span class="pre">ClassifierOutputTarget(761)</span></code>, but you can also implement that yourself.</p>
+<p>It’s really this simple:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">ClassifierOutputTarget</span><span class="p">:</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">category</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">category</span> <span class="o">=</span> <span class="n">category</span>
+
+    <span class="k">def</span> <span class="fm">__call__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">model_output</span><span class="p">):</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">model_output</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">model_output</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">category</span><span class="p">]</span>
+        <span class="k">return</span> <span class="n">model_output</span><span class="p">[:,</span> <span class="bp">self</span><span class="o">.</span><span class="n">category</span><span class="p">]</span>
+</pre></div>
+</div>
+<p>For classification, usually, the logits, before Softmax, are used.
+Softmax makes the categories compete with each other.
+The rational is that with the logits you’re looking only for positive evidence of a Remote-Control, and not for evidence of what makes it not look like a “Cat”.
+In some cases it might make sense to use the score after softmax - then you can use ClassifierOutputSoftmaxTarget.</p>
+<p>Some other notable implemented targets (in utils.model_targets) are:
+SemanticSegmentationTarget, BinaryClassifierOutputTarget, FasterRCNNBoxScoreTarget.</p>
+<p><strong>Important</strong>: In case you have a batch with several images, you need 1 target for each of the images.
+This gives us a pattern as you will see below, to apply multiple XAI targets on the same image: just replicate the image and pass a list with several targets.</p>
+</div>
+<div class="section" id="reshapes">
+<h2>Reshapes<a class="headerlink" href="#reshapes" title="Permalink to this headline">#</a></h2>
+<p>For CNNS, the ativations are already 2D feature maps with the shape <code class="docutils literal notranslate"><span class="pre">batch</span> <span class="pre">x</span> <span class="pre">features</span> <span class="pre">x</span> <span class="pre">height</span> <span class="pre">x</span> <span class="pre">width</span></code>.
+That’s what we need, so for them we can just pass <code class="docutils literal notranslate"><span class="pre">reshape_function=None</span></code>.</p>
+<p>For transformer variations it often gets a bit more involved.
+Several things we need to care about:</p>
+<ul class="simple">
+<li><p>Is there a class token?
+Typically the class token will be the first token, followed by the other tokens that correspond with the 2D input patches.
+If it exists, we need to get rid of it, to keep only the tokens with the spatial data, i.e those that we can visualize as 2D images.
+For example in the Visition Transformer (ViT) reshape function below, that’s why we do</p></li>
+</ul>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span>activations = x[:, 1:, :]`
+</pre></div>
+</div>
+<ul class="simple">
+<li><p>Reshaping to features with the format <code class="docutils literal notranslate"><span class="pre">batch</span> <span class="pre">x</span> <span class="pre">features</span> <span class="pre">x</span> <span class="pre">height</span> <span class="pre">x</span> <span class="pre">width</span></code></p></li>
+</ul>
+<p>Transformers will sometimes have an internal shape that looks like this: (batch=10 x (tokens = 145) x (features=384).
+The 145 tokens mean 1 CLS token + 144 spatial tokens.
+These 144 spatial tokens actually represent a 12x12 2D image.</p>
+<p>And the feautres here are last.. so we need to transpose them to be the second coordinate.</p>
+<p>All in all, now we can write our reshape transform:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">reshape_transform_vit_huggingface</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+    <span class="c1"># Remove the CLS token:</span>
+    <span class="n">activations</span> <span class="o">=</span> <span class="n">x</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">:,</span> <span class="p">:]</span>
+    <span class="c1"># Reshape to a 12 x 12 spatial image:</span>
+    <span class="n">activations</span> <span class="o">=</span> <span class="n">activations</span><span class="o">.</span><span class="n">view</span><span class="p">(</span><span class="n">activations</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="mi">12</span><span class="p">,</span> <span class="mi">12</span><span class="p">,</span> <span class="n">activations</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">2</span><span class="p">])</span>
+    <span class="c1"># Transpose the features to be in the second coordinate:</span>
+    <span class="n">activations</span> <span class="o">=</span> <span class="n">activations</span><span class="o">.</span><span class="n">transpose</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span><span class="o">.</span><span class="n">transpose</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">activations</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="handling-reshapes-with-varying-input-image-sizes">
+<h2>Handling Reshapes with varying input image sizes<a class="headerlink" href="#handling-reshapes-with-varying-input-image-sizes" title="Permalink to this headline">#</a></h2>
+<p>The vanilla Vision Transformer supports only input images with a fixed size, but some transformers, like the SegFormer, support a dynamic input size.
+For example in the case of the SegFormer, the outputs from the last layer will be x32 smaller than the input image
+(How can we know that? Add prints in our reshape functions !).
+To account for that, we need to create a reshape transform for our image that tells it how to be resized.
+You could create a class for that (probably a better idea..), or if you’re a bit lazy like me, wrap it with functools.partial, like this:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">segformer_reshape_transform_huggingface</span><span class="p">(</span><span class="n">tensor</span><span class="p">,</span> <span class="n">width</span><span class="p">,</span> <span class="n">height</span><span class="p">):</span>
+    <span class="n">result</span> <span class="o">=</span> <span class="n">tensor</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">tensor</span><span class="o">.</span><span class="n">size</span><span class="p">(</span><span class="mi">0</span><span class="p">),</span>
+                            <span class="n">height</span><span class="p">,</span>
+                            <span class="n">width</span><span class="p">,</span>
+                            <span class="n">tensor</span><span class="o">.</span><span class="n">size</span><span class="p">(</span><span class="mi">2</span><span class="p">))</span>
+    <span class="n">result</span> <span class="o">=</span> <span class="n">result</span><span class="o">.</span><span class="n">transpose</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span><span class="o">.</span><span class="n">transpose</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">result</span>
+
+<span class="n">reshape_transform</span> <span class="o">=</span> <span class="n">partial</span><span class="p">(</span><span class="n">segformer_reshape_transform_huggingface</span><span class="p">,</span>
+                            <span class="n">width</span><span class="o">=</span><span class="n">img_tensor</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="o">//</span><span class="mi">32</span><span class="p">,</span>
+                            <span class="n">height</span><span class="o">=</span><span class="n">img_tensor</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">//</span><span class="mi">32</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Notice how reshape_transform here creates a reshape transform suited for our specific image size.</p>
+</div>
+<div class="section" id="what-different-xai-methods-need">
+<h2>What different XAI methods need<a class="headerlink" href="#what-different-xai-methods-need" title="Permalink to this headline">#</a></h2>
+<p>We’re going to use two methods here <code class="docutils literal notranslate"><span class="pre">Deep</span> <span class="pre">Feature</span> <span class="pre">Factorization</span></code> and <code class="docutils literal notranslate"><span class="pre">GradCAM</span></code>.</p>
+<div class="section" id="deep-feature-factorization-and-those-sneaky-layernorm-layers">
+<h3>Deep Feature Factorization, and those sneaky LayerNorm layers<a class="headerlink" href="#deep-feature-factorization-and-those-sneaky-layernorm-layers" title="Permalink to this headline">#</a></h3>
+<ul class="simple">
+<li><p>Deep Feature Factorization, that does Non Negative Matrix Factorization on the features to cluster them into several feature concepts.
+Every concept then gets a feature representation.
+We can associate every concept with the categories, by running the classifier on each of these representations, and displaying that in a legend next to the image <a class="reference external" href="https://jacobgil.github.io/pytorch-gradcam-book/Deep%20Feature%20Factorizations.html">Tutorial</a></p></li>
+</ul>
+<p>But, as explained more in depth in the tutorial above, we’re constrained to these features being just before the classifier.</p>
+<p>So let’s say we’re in one of the Transformer models, like CvT, and we target on of the layers</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">target_layer_dff</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">cvt</span><span class="o">.</span><span class="n">encoder</span><span class="o">.</span><span class="n">stages</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">layers</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+</pre></div>
+</div>
+<p>This seems like the last layer from the encoder, and we’re happy.</p>
+<p>But not so fast…</p>
+<p><a class="reference external" href="https://github.com/huggingface/transformers/blob/a2c90a7f7b1f8a2a8217c962a04a1a65638121d5/src/transformers/models/cvt/modeling_cvt.py#L699">https://github.com/huggingface/transformers/blob/a2c90a7f7b1f8a2a8217c962a04a1a65638121d5/src/transformers/models/cvt/modeling_cvt.py#L699</a></p>
+<p>Here we can see that the output is passed through an extra layer norm, in the forward pass custom code of the next layer.
+That means that we can’t just run the classifier on the features we get from the last encoder layer.
+We have to pass it through layer-norm first for DFF:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">reshape_transform_cvt_huggingface</span><span class="p">(</span><span class="n">tensor</span><span class="p">,</span> <span class="n">model</span><span class="p">,</span> <span class="n">width</span><span class="p">,</span> <span class="n">height</span><span class="p">):</span>
+    <span class="n">tensor</span> <span class="o">=</span> <span class="n">tensor</span><span class="p">[:,</span> <span class="mi">1</span> <span class="p">:,</span> <span class="p">:]</span>
+    <span class="n">tensor</span> <span class="o">=</span> <span class="n">tensor</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">tensor</span><span class="o">.</span><span class="n">size</span><span class="p">(</span><span class="mi">0</span><span class="p">),</span>
+                            <span class="n">height</span><span class="p">,</span>
+                            <span class="n">width</span><span class="p">,</span>
+                            <span class="n">tensor</span><span class="o">.</span><span class="n">size</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">))</span>    
+    <span class="n">norm</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">layernorm</span><span class="p">(</span><span class="n">tensor</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">norm</span><span class="o">.</span><span class="n">transpose</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span><span class="o">.</span><span class="n">transpose</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+</pre></div>
+</div>
+<ul class="simple">
+<li><p>GradCAM
+If you set target_layer = model.vit.</p></li>
+</ul>
+</div>
+<div class="section" id="gradcam-that-forces-us-to-carefully-choose-layers-that-output-tensors-so-we-can-get-gradients">
+<h3>GradCAM, that forces us to carefully choose layers that output Tensors, so we can get gradients<a class="headerlink" href="#gradcam-that-forces-us-to-carefully-choose-layers-that-output-tensors-so-we-can-get-gradients" title="Permalink to this headline">#</a></h3>
+<p>Long story short, prefer target layers that output tensors, e.g:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">model</span><span class="o">.</span><span class="n">cvt</span><span class="o">.</span><span class="n">encoder</span><span class="o">.</span><span class="n">stages</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">layers</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+</pre></div>
+</div>
+<p>and not</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">model</span><span class="o">.</span><span class="n">vit</span><span class="o">.</span><span class="n">encoder</span>
+</pre></div>
+</div>
+<p>that outputs specific HuggingFace wrappers that inherit from ModelOutput</p>
+<p>If we would set target_layer=model.vit.encoder we wouldn’t get gradients.
+I’m not sure yet why, so if you know why, please open an issue.
+I think it could be related to how in HuggingFace the block outputs are typically wrapped with wrappers like <code class="docutils literal notranslate"><span class="pre">ModelOutput</span></code> witch reshape the data into a dictionary. But I tried also tried passing return_dict=False, and got the same.</p>
+</div>
+</div>
+<div class="section" id="how-do-we-know-which-target-layer-to-chose">
+<h2>How do we know which target layer to chose?<a class="headerlink" href="#how-do-we-know-which-target-layer-to-chose" title="Permalink to this headline">#</a></h2>
+<p>print, print and print the model.
+And then if you’re still not sure, read the source code of the model you’re interested in.
+You want the latest layer that’s used in the code, just before the pooling / classifier is applied.</p>
+<p>And besides, this tutorial + the repository Readme, covers most of the existing Vision Model families, so chances are it has what you need.</p>
+</div>
+<div class="section" id="wrap-your-models-so-they-output-tensors-and-not-dataclasses-or-dictionaries">
+<h2>Wrap your models so they output tensors and not dataclasses or dictionaries<a class="headerlink" href="#wrap-your-models-so-they-output-tensors-and-not-dataclasses-or-dictionaries" title="Permalink to this headline">#</a></h2>
+<p>We want to re-use ClassifierOutputTarget, that expects a tensor.
+However the hugging face models often output a dataclass that contains a <code class="docutils literal notranslate"><span class="pre">logits</span></code> property.
+ClassifierOutputTarget would then break since it expects a tensor..</p>
+<p>This is a recurring theme and happens so much that this deserves it’s own section. For example object detection models return dictionaries with bounding boxes and categories.</p>
+<p>No problem, let’s wrap the model:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">HuggingfaceToTensorModelWrapper</span><span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">Module</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">model</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">HuggingfaceToTensorModelWrapper</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">model</span> <span class="o">=</span> <span class="n">model</span>
+
+    <span class="k">def</span> <span class="nf">forward</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="p">(</span><span class="n">x</span><span class="p">)</span><span class="o">.</span><span class="n">logits</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="lets-go">
+<h2>Lets Go!<a class="headerlink" href="#lets-go" title="Permalink to this headline">#</a></h2>
+<p>We’re going to take one of the sample images in HuggingFace,
+and show how to create:</p>
+<ul class="simple">
+<li><p>Deep Feature Factorization (DFF)</p></li>
+<li><p>GradCAM, for two different categories (the Remote-Control, and the Egyptial Cat category).</p></li>
+</ul>
+<p>I’m quite excited about using DFF in practice so that’s why I’m including it here.
+However there are cases where one method works better than the other, so we will show both !</p>
+<p>For every model we will get a recepie, with it’s own target_layer and reshape_transform.
+In every recepie section you can see the custom reshape_function, and the target_layers.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">warnings</span>
+<span class="n">warnings</span><span class="o">.</span><span class="n">filterwarnings</span><span class="p">(</span><span class="s1">&#39;ignore&#39;</span><span class="p">)</span>
+<span class="kn">from</span> <span class="nn">torchvision</span> <span class="kn">import</span> <span class="n">transforms</span>
+<span class="kn">from</span> <span class="nn">datasets</span> <span class="kn">import</span> <span class="n">load_dataset</span>
+<span class="kn">from</span> <span class="nn">pytorch_grad_cam</span> <span class="kn">import</span> <span class="n">run_dff_on_image</span><span class="p">,</span> <span class="n">GradCAM</span>
+<span class="kn">from</span> <span class="nn">pytorch_grad_cam.utils.model_targets</span> <span class="kn">import</span> <span class="n">ClassifierOutputTarget</span>
+<span class="kn">from</span> <span class="nn">pytorch_grad_cam.utils.image</span> <span class="kn">import</span> <span class="n">show_cam_on_image</span>
+<span class="kn">from</span> <span class="nn">PIL</span> <span class="kn">import</span> <span class="n">Image</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">cv2</span>
+<span class="kn">import</span> <span class="nn">torch</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">List</span><span class="p">,</span> <span class="n">Callable</span><span class="p">,</span> <span class="n">Optional</span>
+<span class="n">dataset</span> <span class="o">=</span> <span class="n">load_dataset</span><span class="p">(</span><span class="s2">&quot;huggingface/cats-image&quot;</span><span class="p">)</span>
+<span class="n">image</span> <span class="o">=</span> <span class="n">dataset</span><span class="p">[</span><span class="s2">&quot;test&quot;</span><span class="p">][</span><span class="s2">&quot;image&quot;</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span>
+<span class="n">img_tensor</span> <span class="o">=</span> <span class="n">transforms</span><span class="o">.</span><span class="n">ToTensor</span><span class="p">()(</span><span class="n">image</span><span class="p">)</span>
+
+<span class="sd">&quot;&quot;&quot; Model wrapper to return a tensor&quot;&quot;&quot;</span>
+<span class="k">class</span> <span class="nc">HuggingfaceToTensorModelWrapper</span><span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">Module</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">model</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">HuggingfaceToTensorModelWrapper</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">model</span> <span class="o">=</span> <span class="n">model</span>
+
+    <span class="k">def</span> <span class="nf">forward</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="p">(</span><span class="n">x</span><span class="p">)</span><span class="o">.</span><span class="n">logits</span>
+
+<span class="sd">&quot;&quot;&quot; Translate the category name to the category index.</span>
+<span class="sd">    Some models aren&#39;t trained on Imagenet but on even larger datasets,</span>
+<span class="sd">    so we can&#39;t just assume that 761 will always be remote-control.</span>
+
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="k">def</span> <span class="nf">category_name_to_index</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">category_name</span><span class="p">):</span>
+    <span class="n">name_to_index</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">((</span><span class="n">v</span><span class="p">,</span> <span class="n">k</span><span class="p">)</span> <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">model</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">id2label</span><span class="o">.</span><span class="n">items</span><span class="p">())</span>
+    <span class="k">return</span> <span class="n">name_to_index</span><span class="p">[</span><span class="n">category_name</span><span class="p">]</span>
+    
+<span class="sd">&quot;&quot;&quot; Helper function to run GradCAM on an image and create a visualization.</span>
+<span class="sd">    (note to myself: this is probably useful enough to move into the package)</span>
+<span class="sd">    If several targets are passed in targets_for_gradcam,</span>
+<span class="sd">    e.g different categories,</span>
+<span class="sd">    a visualization for each of them will be created.</span>
+<span class="sd">    </span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="k">def</span> <span class="nf">run_grad_cam_on_image</span><span class="p">(</span><span class="n">model</span><span class="p">:</span> <span class="n">torch</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">Module</span><span class="p">,</span>
+                          <span class="n">target_layer</span><span class="p">:</span> <span class="n">torch</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">Module</span><span class="p">,</span>
+                          <span class="n">targets_for_gradcam</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">Callable</span><span class="p">],</span>
+                          <span class="n">reshape_transform</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Callable</span><span class="p">],</span>
+                          <span class="n">input_tensor</span><span class="p">:</span> <span class="n">torch</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">Module</span><span class="o">=</span><span class="n">img_tensor</span><span class="p">,</span>
+                          <span class="n">input_image</span><span class="p">:</span> <span class="n">Image</span><span class="o">=</span><span class="n">image</span><span class="p">,</span>
+                          <span class="n">method</span><span class="p">:</span> <span class="n">Callable</span><span class="o">=</span><span class="n">GradCAM</span><span class="p">):</span>
+    <span class="k">with</span> <span class="n">method</span><span class="p">(</span><span class="n">model</span><span class="o">=</span><span class="n">HuggingfaceToTensorModelWrapper</span><span class="p">(</span><span class="n">model</span><span class="p">),</span>
+                 <span class="n">target_layers</span><span class="o">=</span><span class="p">[</span><span class="n">target_layer</span><span class="p">],</span>
+                 <span class="n">reshape_transform</span><span class="o">=</span><span class="n">reshape_transform</span><span class="p">)</span> <span class="k">as</span> <span class="n">cam</span><span class="p">:</span>
+
+        <span class="c1"># Replicate the tensor for each of the categories we want to create Grad-CAM for:</span>
+        <span class="n">repeated_tensor</span> <span class="o">=</span> <span class="n">input_tensor</span><span class="p">[</span><span class="kc">None</span><span class="p">,</span> <span class="p">:]</span><span class="o">.</span><span class="n">repeat</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">targets_for_gradcam</span><span class="p">),</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+
+        <span class="n">batch_results</span> <span class="o">=</span> <span class="n">cam</span><span class="p">(</span><span class="n">input_tensor</span><span class="o">=</span><span class="n">repeated_tensor</span><span class="p">,</span>
+                            <span class="n">targets</span><span class="o">=</span><span class="n">targets_for_gradcam</span><span class="p">)</span>
+        <span class="n">results</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">grayscale_cam</span> <span class="ow">in</span> <span class="n">batch_results</span><span class="p">:</span>
+            <span class="n">visualization</span> <span class="o">=</span> <span class="n">show_cam_on_image</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">float32</span><span class="p">(</span><span class="n">input_image</span><span class="p">)</span><span class="o">/</span><span class="mi">255</span><span class="p">,</span>
+                                              <span class="n">grayscale_cam</span><span class="p">,</span>
+                                              <span class="n">use_rgb</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+            <span class="c1"># Make it weight less in the notebook:</span>
+            <span class="n">visualization</span> <span class="o">=</span> <span class="n">cv2</span><span class="o">.</span><span class="n">resize</span><span class="p">(</span><span class="n">visualization</span><span class="p">,</span>
+                                       <span class="p">(</span><span class="n">visualization</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">//</span><span class="mi">2</span><span class="p">,</span> <span class="n">visualization</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">//</span><span class="mi">2</span><span class="p">))</span>
+            <span class="n">results</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">visualization</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">hstack</span><span class="p">(</span><span class="n">results</span><span class="p">)</span>
+    
+    
+<span class="k">def</span> <span class="nf">print_top_categories</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">img_tensor</span><span class="p">,</span> <span class="n">top_k</span><span class="o">=</span><span class="mi">5</span><span class="p">):</span>
+    <span class="n">logits</span> <span class="o">=</span> <span class="n">model</span><span class="p">(</span><span class="n">img_tensor</span><span class="o">.</span><span class="n">unsqueeze</span><span class="p">(</span><span class="mi">0</span><span class="p">))</span><span class="o">.</span><span class="n">logits</span>
+    <span class="n">indices</span> <span class="o">=</span> <span class="n">logits</span><span class="o">.</span><span class="n">cpu</span><span class="p">()[</span><span class="mi">0</span><span class="p">,</span> <span class="p">:]</span><span class="o">.</span><span class="n">detach</span><span class="p">()</span><span class="o">.</span><span class="n">numpy</span><span class="p">()</span><span class="o">.</span><span class="n">argsort</span><span class="p">()[</span><span class="o">-</span><span class="n">top_k</span> <span class="p">:][::</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">indices</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Predicted class </span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s2">: </span><span class="si">{</span><span class="n">model</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">id2label</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>No config specified, defaulting to: cats-image/image
+Found cached dataset cats-image (C:/Users/Jacob Gildenblat/.cache/huggingface/datasets/huggingface___cats-image/image/1.9.0/68fbc793fb10cd165e490867f5d61fa366086ea40c73e549a020103dcb4f597e)
+</pre></div>
+</div>
+<script type="application/vnd.jupyter.widget-view+json">
+{"model_id": "a926e31a12494160ba87e7f841394beb", "version_major": 2, "version_minor": 0}
+</script></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">transformers</span> <span class="kn">import</span> <span class="n">ResNetForImageClassification</span>
+<span class="n">model</span> <span class="o">=</span> <span class="n">ResNetForImageClassification</span><span class="o">.</span><span class="n">from_pretrained</span><span class="p">(</span><span class="s2">&quot;microsoft/resnet-50&quot;</span><span class="p">)</span>
+
+<span class="c1"># We will show GradCAM for the &quot;Egyptian Cat&quot; and the &#39;Remote Control&quot; categories:</span>
+<span class="n">targets_for_gradcam</span> <span class="o">=</span> <span class="p">[</span><span class="n">ClassifierOutputTarget</span><span class="p">(</span><span class="n">category_name_to_index</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="s2">&quot;Egyptian cat&quot;</span><span class="p">)),</span>
+                       <span class="n">ClassifierOutputTarget</span><span class="p">(</span><span class="n">category_name_to_index</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="s2">&quot;remote control, remote&quot;</span><span class="p">))]</span>
+
+<span class="c1"># The last layer in the Resnet Encoder:</span>
+<span class="n">target_layer</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">resnet</span><span class="o">.</span><span class="n">encoder</span><span class="o">.</span><span class="n">stages</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">layers</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+
+<span class="n">display</span><span class="p">(</span><span class="n">Image</span><span class="o">.</span><span class="n">fromarray</span><span class="p">(</span><span class="n">run_dff_on_image</span><span class="p">(</span><span class="n">model</span><span class="o">=</span><span class="n">model</span><span class="p">,</span>
+                          <span class="n">target_layer</span><span class="o">=</span><span class="n">target_layer</span><span class="p">,</span>
+                          <span class="n">classifier</span><span class="o">=</span><span class="n">model</span><span class="o">.</span><span class="n">classifier</span><span class="p">,</span>
+                          <span class="n">img_pil</span><span class="o">=</span><span class="n">image</span><span class="p">,</span>
+                          <span class="n">img_tensor</span><span class="o">=</span><span class="n">img_tensor</span><span class="p">,</span>
+                          <span class="n">reshape_transform</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                          <span class="n">n_components</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span>
+                          <span class="n">top_k</span><span class="o">=</span><span class="mi">2</span><span class="p">)))</span>
+<span class="n">display</span><span class="p">(</span><span class="n">Image</span><span class="o">.</span><span class="n">fromarray</span><span class="p">(</span><span class="n">run_grad_cam_on_image</span><span class="p">(</span><span class="n">model</span><span class="o">=</span><span class="n">model</span><span class="p">,</span>
+                      <span class="n">target_layer</span><span class="o">=</span><span class="n">target_layer</span><span class="p">,</span>
+                      <span class="n">targets_for_gradcam</span><span class="o">=</span><span class="n">targets_for_gradcam</span><span class="p">,</span>
+                      <span class="n">reshape_transform</span><span class="o">=</span><span class="kc">None</span><span class="p">)))</span>
+<span class="n">print_top_categories</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">img_tensor</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/HuggingFace_2_0.png" src="_images/HuggingFace_2_0.png" />
+<img alt="_images/HuggingFace_2_1.png" src="_images/HuggingFace_2_1.png" />
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Predicted class 761: remote control, remote
+Predicted class 282: tiger cat
+Predicted class 285: Egyptian cat
+Predicted class 281: tabby, tabby cat
+Predicted class 721: pillow
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">transformers</span> <span class="kn">import</span> <span class="n">SwinForImageClassification</span>
+<span class="kn">from</span> <span class="nn">functools</span> <span class="kn">import</span> <span class="n">partial</span>
+<span class="k">def</span> <span class="nf">swinT_reshape_transform_huggingface</span><span class="p">(</span><span class="n">tensor</span><span class="p">,</span> <span class="n">width</span><span class="p">,</span> <span class="n">height</span><span class="p">):</span>
+    <span class="n">result</span> <span class="o">=</span> <span class="n">tensor</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">tensor</span><span class="o">.</span><span class="n">size</span><span class="p">(</span><span class="mi">0</span><span class="p">),</span>
+                            <span class="n">height</span><span class="p">,</span>
+                            <span class="n">width</span><span class="p">,</span>
+                            <span class="n">tensor</span><span class="o">.</span><span class="n">size</span><span class="p">(</span><span class="mi">2</span><span class="p">))</span>
+    <span class="n">result</span> <span class="o">=</span> <span class="n">result</span><span class="o">.</span><span class="n">transpose</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span><span class="o">.</span><span class="n">transpose</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">result</span>
+
+<span class="n">model</span> <span class="o">=</span> <span class="n">SwinForImageClassification</span><span class="o">.</span><span class="n">from_pretrained</span><span class="p">(</span><span class="s2">&quot;microsoft/swin-large-patch4-window12-384-in22k&quot;</span><span class="p">)</span>
+<span class="n">target_layer</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">swin</span><span class="o">.</span><span class="n">layernorm</span>
+<span class="n">targets_for_gradcam</span> <span class="o">=</span> <span class="p">[</span><span class="n">ClassifierOutputTarget</span><span class="p">(</span><span class="n">category_name_to_index</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="s2">&quot;Egyptian_cat&quot;</span><span class="p">)),</span>
+                       <span class="n">ClassifierOutputTarget</span><span class="p">(</span><span class="n">category_name_to_index</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="s2">&quot;remote_control, remote&quot;</span><span class="p">))]</span>
+<span class="n">reshape_transform</span> <span class="o">=</span> <span class="n">partial</span><span class="p">(</span><span class="n">swinT_reshape_transform_huggingface</span><span class="p">,</span>
+                            <span class="n">width</span><span class="o">=</span><span class="n">img_tensor</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="o">//</span><span class="mi">32</span><span class="p">,</span>
+                            <span class="n">height</span><span class="o">=</span><span class="n">img_tensor</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">//</span><span class="mi">32</span><span class="p">)</span>
+
+<span class="n">display</span><span class="p">(</span><span class="n">Image</span><span class="o">.</span><span class="n">fromarray</span><span class="p">(</span><span class="n">run_dff_on_image</span><span class="p">(</span><span class="n">model</span><span class="o">=</span><span class="n">model</span><span class="p">,</span>
+                          <span class="n">target_layer</span><span class="o">=</span><span class="n">target_layer</span><span class="p">,</span>
+                          <span class="n">classifier</span><span class="o">=</span><span class="n">model</span><span class="o">.</span><span class="n">classifier</span><span class="p">,</span>
+                          <span class="n">img_pil</span><span class="o">=</span><span class="n">image</span><span class="p">,</span>
+                          <span class="n">img_tensor</span><span class="o">=</span><span class="n">img_tensor</span><span class="p">,</span>
+                          <span class="n">reshape_transform</span><span class="o">=</span><span class="n">reshape_transform</span><span class="p">,</span>
+                          <span class="n">n_components</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span>
+                          <span class="n">top_k</span><span class="o">=</span><span class="mi">2</span><span class="p">)))</span>
+<span class="n">display</span><span class="p">(</span><span class="n">Image</span><span class="o">.</span><span class="n">fromarray</span><span class="p">(</span><span class="n">run_grad_cam_on_image</span><span class="p">(</span><span class="n">model</span><span class="o">=</span><span class="n">model</span><span class="p">,</span>
+                      <span class="n">target_layer</span><span class="o">=</span><span class="n">target_layer</span><span class="p">,</span>
+                      <span class="n">targets_for_gradcam</span><span class="o">=</span><span class="n">targets_for_gradcam</span><span class="p">,</span>
+                      <span class="n">reshape_transform</span><span class="o">=</span><span class="n">reshape_transform</span><span class="p">)))</span>
+<span class="n">print_top_categories</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">img_tensor</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/HuggingFace_3_0.png" src="_images/HuggingFace_3_0.png" />
+<img alt="_images/HuggingFace_3_1.png" src="_images/HuggingFace_3_1.png" />
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Predicted class 2397: tabby, tabby_cat
+Predicted class 2395: tabby, queen
+Predicted class 2398: tiger_cat
+Predicted class 2388: domestic_cat, house_cat, Felis_domesticus, Felis_catus
+Predicted class 2405: Egyptian_cat
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">transformers</span> <span class="kn">import</span> <span class="n">SegformerForImageClassification</span>
+<span class="kn">from</span> <span class="nn">functools</span> <span class="kn">import</span> <span class="n">partial</span>
+<span class="k">def</span> <span class="nf">segformer_reshape_transform_huggingface</span><span class="p">(</span><span class="n">tensor</span><span class="p">,</span> <span class="n">width</span><span class="p">,</span> <span class="n">height</span><span class="p">):</span>
+    <span class="n">result</span> <span class="o">=</span> <span class="n">tensor</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">tensor</span><span class="o">.</span><span class="n">size</span><span class="p">(</span><span class="mi">0</span><span class="p">),</span>
+                            <span class="n">height</span><span class="p">,</span>
+                            <span class="n">width</span><span class="p">,</span>
+                            <span class="n">tensor</span><span class="o">.</span><span class="n">size</span><span class="p">(</span><span class="mi">2</span><span class="p">))</span>
+    <span class="c1"># Bring the channels to the first dimension,</span>
+    <span class="c1"># like in CNNs.</span>
+    <span class="n">result</span> <span class="o">=</span> <span class="n">result</span><span class="o">.</span><span class="n">transpose</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span><span class="o">.</span><span class="n">transpose</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">result</span>
+<span class="n">reshape_transform</span> <span class="o">=</span> <span class="n">partial</span><span class="p">(</span><span class="n">segformer_reshape_transform_huggingface</span><span class="p">,</span>
+                            <span class="n">width</span><span class="o">=</span><span class="n">img_tensor</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="o">//</span><span class="mi">32</span><span class="p">,</span>
+                            <span class="n">height</span><span class="o">=</span><span class="n">img_tensor</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">//</span><span class="mi">32</span><span class="p">)</span>
+
+<span class="n">model</span> <span class="o">=</span> <span class="n">SegformerForImageClassification</span><span class="o">.</span><span class="n">from_pretrained</span><span class="p">(</span><span class="s2">&quot;nvidia/mit-b0&quot;</span><span class="p">)</span>
+<span class="n">targets_for_gradcam</span> <span class="o">=</span> <span class="p">[</span><span class="n">ClassifierOutputTarget</span><span class="p">(</span><span class="n">category_name_to_index</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="s2">&quot;Egyptian cat&quot;</span><span class="p">)),</span>
+                       <span class="n">ClassifierOutputTarget</span><span class="p">(</span><span class="n">category_name_to_index</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="s2">&quot;remote control, remote&quot;</span><span class="p">))]</span>
+<span class="n">target_layer</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">segformer</span><span class="o">.</span><span class="n">encoder</span><span class="o">.</span><span class="n">layer_norm</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+
+<span class="n">display</span><span class="p">(</span><span class="n">Image</span><span class="o">.</span><span class="n">fromarray</span><span class="p">(</span><span class="n">run_dff_on_image</span><span class="p">(</span><span class="n">model</span><span class="o">=</span><span class="n">model</span><span class="p">,</span>
+                          <span class="n">target_layer</span><span class="o">=</span><span class="n">target_layer</span><span class="p">,</span>
+                          <span class="n">classifier</span><span class="o">=</span><span class="n">model</span><span class="o">.</span><span class="n">classifier</span><span class="p">,</span>
+                          <span class="n">img_pil</span><span class="o">=</span><span class="n">image</span><span class="p">,</span>
+                          <span class="n">img_tensor</span><span class="o">=</span><span class="n">img_tensor</span><span class="p">,</span>
+                          <span class="n">reshape_transform</span><span class="o">=</span><span class="n">reshape_transform</span><span class="p">,</span>
+                          <span class="n">n_components</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span>
+                          <span class="n">top_k</span><span class="o">=</span><span class="mi">2</span><span class="p">)))</span>
+<span class="n">display</span><span class="p">(</span><span class="n">Image</span><span class="o">.</span><span class="n">fromarray</span><span class="p">(</span><span class="n">run_grad_cam_on_image</span><span class="p">(</span><span class="n">model</span><span class="o">=</span><span class="n">model</span><span class="p">,</span>
+                      <span class="n">target_layer</span><span class="o">=</span><span class="n">target_layer</span><span class="p">,</span>
+                      <span class="n">targets_for_gradcam</span><span class="o">=</span><span class="n">targets_for_gradcam</span><span class="p">,</span>
+                      <span class="n">reshape_transform</span><span class="o">=</span><span class="n">reshape_transform</span><span class="p">)))</span>
+<span class="n">print_top_categories</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">img_tensor</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/HuggingFace_4_0.png" src="_images/HuggingFace_4_0.png" />
+<img alt="_images/HuggingFace_4_1.png" src="_images/HuggingFace_4_1.png" />
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Predicted class 285: Egyptian cat
+Predicted class 281: tabby, tabby cat
+Predicted class 282: tiger cat
+Predicted class 287: lynx, catamount
+Predicted class 283: Persian cat
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">transformers</span> <span class="kn">import</span> <span class="n">ConvNextForImageClassification</span>
+<span class="kn">import</span> <span class="nn">torch</span>
+
+<span class="k">def</span> <span class="nf">reshape_transform_convnext_huggingface</span><span class="p">(</span><span class="n">tensor</span><span class="p">,</span> <span class="n">model</span><span class="p">):</span>
+    <span class="n">batch</span><span class="p">,</span> <span class="n">features</span><span class="p">,</span> <span class="n">height</span><span class="p">,</span> <span class="n">width</span> <span class="o">=</span> <span class="n">tensor</span><span class="o">.</span><span class="n">shape</span>
+    <span class="n">tensor</span> <span class="o">=</span> <span class="n">tensor</span><span class="o">.</span><span class="n">transpose</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span><span class="o">.</span><span class="n">transpose</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
+    <span class="n">norm</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">convnext</span><span class="o">.</span><span class="n">layernorm</span><span class="p">(</span><span class="n">tensor</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">norm</span><span class="o">.</span><span class="n">transpose</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span><span class="o">.</span><span class="n">transpose</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+
+<span class="k">def</span> <span class="nf">reshape_gradcam_transform_convnext_huggingface</span><span class="p">(</span><span class="n">tensor</span><span class="p">,</span> <span class="n">model</span><span class="p">):</span>
+    <span class="n">batch</span><span class="p">,</span> <span class="n">features</span><span class="p">,</span> <span class="n">height</span><span class="p">,</span> <span class="n">width</span> <span class="o">=</span> <span class="n">tensor</span><span class="o">.</span><span class="n">shape</span>
+    <span class="n">tensor</span> <span class="o">=</span> <span class="n">tensor</span><span class="o">.</span><span class="n">transpose</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span><span class="o">.</span><span class="n">transpose</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">tensor</span><span class="o">.</span><span class="n">transpose</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span><span class="o">.</span><span class="n">transpose</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+
+<span class="n">model</span> <span class="o">=</span> <span class="n">ConvNextForImageClassification</span><span class="o">.</span><span class="n">from_pretrained</span><span class="p">(</span><span class="s2">&quot;facebook/convnext-tiny-224&quot;</span><span class="p">)</span>
+<span class="n">targets_for_gradcam</span> <span class="o">=</span> <span class="p">[</span><span class="n">ClassifierOutputTarget</span><span class="p">(</span><span class="n">category_name_to_index</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="s2">&quot;Egyptian cat&quot;</span><span class="p">)),</span>
+                       <span class="n">ClassifierOutputTarget</span><span class="p">(</span><span class="n">category_name_to_index</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="s2">&quot;remote control, remote&quot;</span><span class="p">))]</span>
+<span class="n">target_layer</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">convnext</span><span class="o">.</span><span class="n">encoder</span><span class="o">.</span><span class="n">stages</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">layers</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+
+<span class="n">display</span><span class="p">(</span><span class="n">Image</span><span class="o">.</span><span class="n">fromarray</span><span class="p">(</span><span class="n">run_dff_on_image</span><span class="p">(</span><span class="n">model</span><span class="o">=</span><span class="n">model</span><span class="p">,</span>
+                          <span class="n">target_layer</span><span class="o">=</span><span class="n">target_layer</span><span class="p">,</span>
+                          <span class="n">classifier</span><span class="o">=</span><span class="n">model</span><span class="o">.</span><span class="n">classifier</span><span class="p">,</span>
+                          <span class="n">img_pil</span><span class="o">=</span><span class="n">image</span><span class="p">,</span>
+                          <span class="n">img_tensor</span><span class="o">=</span><span class="n">img_tensor</span><span class="p">,</span>
+                          <span class="n">reshape_transform</span><span class="o">=</span><span class="n">partial</span><span class="p">(</span><span class="n">reshape_transform_convnext_huggingface</span><span class="p">,</span> <span class="n">model</span><span class="o">=</span><span class="n">model</span><span class="p">),</span>
+                          <span class="n">n_components</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span>
+                          <span class="n">top_k</span><span class="o">=</span><span class="mi">2</span><span class="p">)))</span>
+<span class="n">display</span><span class="p">(</span><span class="n">Image</span><span class="o">.</span><span class="n">fromarray</span><span class="p">(</span><span class="n">run_grad_cam_on_image</span><span class="p">(</span><span class="n">model</span><span class="o">=</span><span class="n">model</span><span class="p">,</span>
+                      <span class="n">target_layer</span><span class="o">=</span><span class="n">target_layer</span><span class="p">,</span>
+                      <span class="n">targets_for_gradcam</span><span class="o">=</span><span class="n">targets_for_gradcam</span><span class="p">,</span>
+                      <span class="n">reshape_transform</span><span class="o">=</span><span class="n">partial</span><span class="p">(</span><span class="n">reshape_gradcam_transform_convnext_huggingface</span><span class="p">,</span> <span class="n">model</span><span class="o">=</span><span class="n">model</span><span class="p">))))</span>
+<span class="n">print_top_categories</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">img_tensor</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/HuggingFace_5_0.png" src="_images/HuggingFace_5_0.png" />
+<img alt="_images/HuggingFace_5_1.png" src="_images/HuggingFace_5_1.png" />
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Predicted class 281: tabby, tabby cat
+Predicted class 282: tiger cat
+Predicted class 285: Egyptian cat
+Predicted class 78: tick
+Predicted class 107: jellyfish
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">transformers</span> <span class="kn">import</span> <span class="n">CvtForImageClassification</span>
+<span class="kn">from</span> <span class="nn">functools</span> <span class="kn">import</span> <span class="n">partial</span>
+<span class="k">def</span> <span class="nf">reshape_transform_cvt_huggingface</span><span class="p">(</span><span class="n">tensor</span><span class="p">,</span> <span class="n">model</span><span class="p">,</span> <span class="n">width</span><span class="p">,</span> <span class="n">height</span><span class="p">):</span>
+    <span class="n">tensor</span> <span class="o">=</span> <span class="n">tensor</span><span class="p">[:,</span> <span class="mi">1</span> <span class="p">:,</span> <span class="p">:]</span>
+    <span class="n">tensor</span> <span class="o">=</span> <span class="n">tensor</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">tensor</span><span class="o">.</span><span class="n">size</span><span class="p">(</span><span class="mi">0</span><span class="p">),</span>
+                            <span class="n">height</span><span class="p">,</span>
+                            <span class="n">width</span><span class="p">,</span>
+                            <span class="n">tensor</span><span class="o">.</span><span class="n">size</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">))</span>
+    
+    <span class="c1"># https://github.com/huggingface/transformers/blob/a2c90a7f7b1f8a2a8217c962a04a1a65638121d5/src/transformers/models/cvt/modeling_cvt.py#L699</span>
+    <span class="n">norm</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">layernorm</span><span class="p">(</span><span class="n">tensor</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">norm</span><span class="o">.</span><span class="n">transpose</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span><span class="o">.</span><span class="n">transpose</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+
+<span class="k">def</span> <span class="nf">reshape_gradcam_transform_cvt_huggingface</span><span class="p">(</span><span class="n">tensor</span><span class="p">,</span> <span class="n">model</span><span class="p">,</span> <span class="n">width</span><span class="p">,</span> <span class="n">height</span><span class="p">):</span>
+    <span class="n">tensor</span> <span class="o">=</span> <span class="n">tensor</span><span class="p">[:,</span> <span class="mi">1</span> <span class="p">:,</span> <span class="p">:]</span>
+    <span class="n">tensor</span> <span class="o">=</span> <span class="n">tensor</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">tensor</span><span class="o">.</span><span class="n">size</span><span class="p">(</span><span class="mi">0</span><span class="p">),</span>
+                            <span class="n">height</span><span class="p">,</span>
+                            <span class="n">width</span><span class="p">,</span>
+                            <span class="n">tensor</span><span class="o">.</span><span class="n">size</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">))</span>
+    <span class="k">return</span> <span class="n">tensor</span><span class="o">.</span><span class="n">transpose</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span><span class="o">.</span><span class="n">transpose</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+
+
+<span class="n">model</span> <span class="o">=</span> <span class="n">CvtForImageClassification</span><span class="o">.</span><span class="n">from_pretrained</span><span class="p">(</span><span class="s2">&quot;microsoft/cvt-13&quot;</span><span class="p">)</span>
+<span class="n">reshape_transform</span> <span class="o">=</span> <span class="n">partial</span><span class="p">(</span><span class="n">reshape_transform_cvt_huggingface</span><span class="p">,</span>
+                            <span class="n">model</span><span class="o">=</span><span class="n">model</span><span class="p">,</span>
+                            <span class="n">width</span><span class="o">=</span><span class="n">img_tensor</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="o">//</span><span class="mi">16</span><span class="p">,</span>
+                            <span class="n">height</span><span class="o">=</span><span class="n">img_tensor</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">//</span><span class="mi">16</span><span class="p">)</span>
+<span class="n">reshape_transform_gradcam</span> <span class="o">=</span> <span class="n">partial</span><span class="p">(</span><span class="n">reshape_gradcam_transform_cvt_huggingface</span><span class="p">,</span>
+                            <span class="n">model</span><span class="o">=</span><span class="n">model</span><span class="p">,</span>
+                            <span class="n">width</span><span class="o">=</span><span class="n">img_tensor</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="o">//</span><span class="mi">16</span><span class="p">,</span>
+                            <span class="n">height</span><span class="o">=</span><span class="n">img_tensor</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">//</span><span class="mi">16</span><span class="p">)</span>
+<span class="n">targets_for_gradcam</span> <span class="o">=</span> <span class="p">[</span><span class="n">ClassifierOutputTarget</span><span class="p">(</span><span class="n">category_name_to_index</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="s2">&quot;Egyptian cat&quot;</span><span class="p">)),</span>
+                       <span class="n">ClassifierOutputTarget</span><span class="p">(</span><span class="n">category_name_to_index</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="s2">&quot;remote control, remote&quot;</span><span class="p">))]</span>
+<span class="n">target_layer_dff</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">cvt</span><span class="o">.</span><span class="n">encoder</span><span class="o">.</span><span class="n">stages</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">layers</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+<span class="n">target_layer_gradcam</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">cvt</span><span class="o">.</span><span class="n">encoder</span><span class="o">.</span><span class="n">stages</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">layers</span><span class="p">[</span><span class="o">-</span><span class="mi">2</span><span class="p">]</span>
+
+<span class="n">display</span><span class="p">(</span><span class="n">Image</span><span class="o">.</span><span class="n">fromarray</span><span class="p">(</span><span class="n">run_dff_on_image</span><span class="p">(</span><span class="n">model</span><span class="o">=</span><span class="n">model</span><span class="p">,</span>
+                          <span class="n">target_layer</span><span class="o">=</span><span class="n">target_layer_dff</span><span class="p">,</span>
+                          <span class="n">classifier</span><span class="o">=</span><span class="n">model</span><span class="o">.</span><span class="n">classifier</span><span class="p">,</span>
+                          <span class="n">img_pil</span><span class="o">=</span><span class="n">image</span><span class="p">,</span>
+                          <span class="n">img_tensor</span><span class="o">=</span><span class="n">img_tensor</span><span class="p">,</span>
+                          <span class="n">reshape_transform</span><span class="o">=</span><span class="n">reshape_transform</span><span class="p">,</span>
+                          <span class="n">n_components</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span>
+                          <span class="n">top_k</span><span class="o">=</span><span class="mi">2</span><span class="p">)))</span>
+<span class="n">display</span><span class="p">(</span><span class="n">Image</span><span class="o">.</span><span class="n">fromarray</span><span class="p">(</span><span class="n">run_grad_cam_on_image</span><span class="p">(</span><span class="n">model</span><span class="o">=</span><span class="n">model</span><span class="p">,</span>
+                      <span class="n">target_layer</span><span class="o">=</span><span class="n">target_layer_gradcam</span><span class="p">,</span>
+                      <span class="n">targets_for_gradcam</span><span class="o">=</span><span class="n">targets_for_gradcam</span><span class="p">,</span>
+                      <span class="n">reshape_transform</span><span class="o">=</span><span class="n">reshape_transform_gradcam</span><span class="p">)))</span>
+<span class="n">print_top_categories</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">img_tensor</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/HuggingFace_6_0.png" src="_images/HuggingFace_6_0.png" />
+<img alt="_images/HuggingFace_6_1.png" src="_images/HuggingFace_6_1.png" />
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Predicted class 761: remote control, remote
+Predicted class 281: tabby, tabby cat
+Predicted class 282: tiger cat
+Predicted class 285: Egyptian cat
+Predicted class 287: lynx, catamount
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">transformers</span> <span class="kn">import</span> <span class="n">ViTFeatureExtractor</span><span class="p">,</span> <span class="n">ViTForImageClassification</span>
+<span class="k">def</span> <span class="nf">reshape_transform_vit_huggingface</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+    <span class="n">activations</span> <span class="o">=</span> <span class="n">x</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">:,</span> <span class="p">:]</span>
+    <span class="n">activations</span> <span class="o">=</span> <span class="n">activations</span><span class="o">.</span><span class="n">view</span><span class="p">(</span><span class="n">activations</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span>
+                                   <span class="mi">12</span><span class="p">,</span> <span class="mi">12</span><span class="p">,</span> <span class="n">activations</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">2</span><span class="p">])</span>
+    <span class="n">activations</span> <span class="o">=</span> <span class="n">activations</span><span class="o">.</span><span class="n">transpose</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span><span class="o">.</span><span class="n">transpose</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">activations</span>
+
+<span class="n">model</span> <span class="o">=</span> <span class="n">ViTForImageClassification</span><span class="o">.</span><span class="n">from_pretrained</span><span class="p">(</span><span class="s1">&#39;google/vit-large-patch32-384&#39;</span><span class="p">)</span>
+<span class="n">targets_for_gradcam</span> <span class="o">=</span> <span class="p">[</span><span class="n">ClassifierOutputTarget</span><span class="p">(</span><span class="n">category_name_to_index</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="s2">&quot;Egyptian cat&quot;</span><span class="p">)),</span>
+                       <span class="n">ClassifierOutputTarget</span><span class="p">(</span><span class="n">category_name_to_index</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="s2">&quot;remote control, remote&quot;</span><span class="p">))]</span>
+<span class="n">target_layer_dff</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">vit</span><span class="o">.</span><span class="n">layernorm</span>
+<span class="n">target_layer_gradcam</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">vit</span><span class="o">.</span><span class="n">encoder</span><span class="o">.</span><span class="n">layer</span><span class="p">[</span><span class="o">-</span><span class="mi">2</span><span class="p">]</span><span class="o">.</span><span class="n">output</span>
+<span class="n">image_resized</span> <span class="o">=</span> <span class="n">image</span><span class="o">.</span><span class="n">resize</span><span class="p">((</span><span class="mi">384</span><span class="p">,</span> <span class="mi">384</span><span class="p">))</span>
+<span class="n">tensor_resized</span> <span class="o">=</span> <span class="n">transforms</span><span class="o">.</span><span class="n">ToTensor</span><span class="p">()(</span><span class="n">image_resized</span><span class="p">)</span>
+
+
+<span class="n">display</span><span class="p">(</span><span class="n">Image</span><span class="o">.</span><span class="n">fromarray</span><span class="p">(</span><span class="n">run_dff_on_image</span><span class="p">(</span><span class="n">model</span><span class="o">=</span><span class="n">model</span><span class="p">,</span>
+                          <span class="n">target_layer</span><span class="o">=</span><span class="n">target_layer_dff</span><span class="p">,</span>
+                          <span class="n">classifier</span><span class="o">=</span><span class="n">model</span><span class="o">.</span><span class="n">classifier</span><span class="p">,</span>
+                          <span class="n">img_pil</span><span class="o">=</span><span class="n">image_resized</span><span class="p">,</span>
+                          <span class="n">img_tensor</span><span class="o">=</span><span class="n">tensor_resized</span><span class="p">,</span>
+                          <span class="n">reshape_transform</span><span class="o">=</span><span class="n">reshape_transform_vit_huggingface</span><span class="p">,</span>
+                          <span class="n">n_components</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span>
+                          <span class="n">top_k</span><span class="o">=</span><span class="mi">2</span><span class="p">)))</span>
+<span class="n">display</span><span class="p">(</span><span class="n">Image</span><span class="o">.</span><span class="n">fromarray</span><span class="p">(</span><span class="n">run_grad_cam_on_image</span><span class="p">(</span><span class="n">model</span><span class="o">=</span><span class="n">model</span><span class="p">,</span>
+                      <span class="n">target_layer</span><span class="o">=</span><span class="n">target_layer_gradcam</span><span class="p">,</span>
+                      <span class="n">targets_for_gradcam</span><span class="o">=</span><span class="n">targets_for_gradcam</span><span class="p">,</span>
+                      <span class="n">input_tensor</span><span class="o">=</span><span class="n">tensor_resized</span><span class="p">,</span>
+                      <span class="n">input_image</span><span class="o">=</span><span class="n">image_resized</span><span class="p">,</span>
+                      <span class="n">reshape_transform</span><span class="o">=</span><span class="n">reshape_transform_vit_huggingface</span><span class="p">)))</span>
+<span class="n">print_top_categories</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">tensor_resized</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/HuggingFace_7_0.png" src="_images/HuggingFace_7_0.png" />
+<img alt="_images/HuggingFace_7_1.png" src="_images/HuggingFace_7_1.png" />
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Predicted class 285: Egyptian cat
+Predicted class 282: tiger cat
+Predicted class 281: tabby, tabby cat
+Predicted class 761: remote control, remote
+Predicted class 287: lynx, catamount
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">transformers</span> <span class="kn">import</span> <span class="n">RegNetForImageClassification</span>
+<span class="n">model</span> <span class="o">=</span> <span class="n">RegNetForImageClassification</span><span class="o">.</span><span class="n">from_pretrained</span><span class="p">(</span><span class="s2">&quot;facebook/regnet-y-040&quot;</span><span class="p">)</span>
+<span class="n">target_layer</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">regnet</span><span class="o">.</span><span class="n">encoder</span><span class="o">.</span><span class="n">stages</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+<span class="n">targets_for_gradcam</span> <span class="o">=</span> <span class="p">[</span><span class="n">ClassifierOutputTarget</span><span class="p">(</span><span class="n">category_name_to_index</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="s2">&quot;Egyptian cat&quot;</span><span class="p">)),</span>
+                       <span class="n">ClassifierOutputTarget</span><span class="p">(</span><span class="n">category_name_to_index</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="s2">&quot;remote control, remote&quot;</span><span class="p">))]</span>
+
+<span class="n">display</span><span class="p">(</span><span class="n">Image</span><span class="o">.</span><span class="n">fromarray</span><span class="p">(</span><span class="n">run_dff_on_image</span><span class="p">(</span><span class="n">model</span><span class="o">=</span><span class="n">model</span><span class="p">,</span>
+                          <span class="n">target_layer</span><span class="o">=</span><span class="n">target_layer</span><span class="p">,</span>
+                          <span class="n">classifier</span><span class="o">=</span><span class="n">model</span><span class="o">.</span><span class="n">classifier</span><span class="p">,</span>
+                          <span class="n">img_pil</span><span class="o">=</span><span class="n">image</span><span class="p">,</span>
+                          <span class="n">img_tensor</span><span class="o">=</span><span class="n">img_tensor</span><span class="p">,</span>
+                          <span class="n">reshape_transform</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                          <span class="n">n_components</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span>
+                          <span class="n">top_k</span><span class="o">=</span><span class="mi">2</span><span class="p">)))</span>
+<span class="n">display</span><span class="p">(</span><span class="n">Image</span><span class="o">.</span><span class="n">fromarray</span><span class="p">(</span><span class="n">run_grad_cam_on_image</span><span class="p">(</span><span class="n">model</span><span class="o">=</span><span class="n">model</span><span class="p">,</span>
+                      <span class="n">target_layer</span><span class="o">=</span><span class="n">target_layer</span><span class="p">,</span>
+                      <span class="n">targets_for_gradcam</span><span class="o">=</span><span class="n">targets_for_gradcam</span><span class="p">,</span>
+                      <span class="n">reshape_transform</span><span class="o">=</span><span class="kc">None</span><span class="p">)))</span>
+<span class="n">print_top_categories</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">tensor_resized</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/HuggingFace_8_0.png" src="_images/HuggingFace_8_0.png" />
+<img alt="_images/HuggingFace_8_1.png" src="_images/HuggingFace_8_1.png" />
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Predicted class 431: bassinet
+Predicted class 282: tiger cat
+Predicted class 285: Egyptian cat
+Predicted class 281: tabby, tabby cat
+Predicted class 761: remote control, remote
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">transformers</span> <span class="kn">import</span> <span class="n">MobileViTForImageClassification</span>
+<span class="kn">from</span> <span class="nn">pytorch_grad_cam</span> <span class="kn">import</span> <span class="n">ScoreCAM</span>
+<span class="n">model</span> <span class="o">=</span> <span class="n">MobileViTForImageClassification</span><span class="o">.</span><span class="n">from_pretrained</span><span class="p">(</span><span class="s2">&quot;apple/mobilevit-small&quot;</span><span class="p">)</span>
+<span class="n">target_layer</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">mobilevit</span><span class="o">.</span><span class="n">conv_1x1_exp</span>
+<span class="n">targets_for_gradcam</span> <span class="o">=</span> <span class="p">[</span><span class="n">ClassifierOutputTarget</span><span class="p">(</span><span class="n">category_name_to_index</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="s2">&quot;Egyptian cat&quot;</span><span class="p">)),</span>
+                       <span class="n">ClassifierOutputTarget</span><span class="p">(</span><span class="n">category_name_to_index</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="s2">&quot;remote control, remote&quot;</span><span class="p">))]</span>
+
+<span class="n">display</span><span class="p">(</span><span class="n">Image</span><span class="o">.</span><span class="n">fromarray</span><span class="p">(</span><span class="n">run_dff_on_image</span><span class="p">(</span><span class="n">model</span><span class="o">=</span><span class="n">model</span><span class="p">,</span>
+                          <span class="n">target_layer</span><span class="o">=</span><span class="n">target_layer</span><span class="p">,</span>
+                          <span class="n">classifier</span><span class="o">=</span><span class="n">model</span><span class="o">.</span><span class="n">classifier</span><span class="p">,</span>
+                          <span class="n">img_pil</span><span class="o">=</span><span class="n">image</span><span class="p">,</span>
+                          <span class="n">img_tensor</span><span class="o">=</span><span class="n">img_tensor</span><span class="p">,</span>
+                          <span class="n">reshape_transform</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                          <span class="n">n_components</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span>
+                          <span class="n">top_k</span><span class="o">=</span><span class="mi">2</span><span class="p">)))</span>
+<span class="n">display</span><span class="p">(</span><span class="n">Image</span><span class="o">.</span><span class="n">fromarray</span><span class="p">(</span><span class="n">run_grad_cam_on_image</span><span class="p">(</span><span class="n">model</span><span class="o">=</span><span class="n">model</span><span class="p">,</span>
+                      <span class="n">target_layer</span><span class="o">=</span><span class="n">target_layer</span><span class="p">,</span>
+                      <span class="n">targets_for_gradcam</span><span class="o">=</span><span class="n">targets_for_gradcam</span><span class="p">,</span>
+                      <span class="n">reshape_transform</span><span class="o">=</span><span class="kc">None</span><span class="p">)))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Now with ScoreCAM instead of GradCAM:&#39;</span><span class="p">)</span>
+<span class="n">display</span><span class="p">(</span><span class="n">Image</span><span class="o">.</span><span class="n">fromarray</span><span class="p">(</span><span class="n">run_grad_cam_on_image</span><span class="p">(</span><span class="n">model</span><span class="o">=</span><span class="n">model</span><span class="p">,</span>
+                      <span class="n">target_layer</span><span class="o">=</span><span class="n">model</span><span class="o">.</span><span class="n">mobilevit</span><span class="o">.</span><span class="n">encoder</span><span class="o">.</span><span class="n">layer</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span>
+                      <span class="n">targets_for_gradcam</span><span class="o">=</span><span class="n">targets_for_gradcam</span><span class="p">,</span>
+                      <span class="n">reshape_transform</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                      <span class="n">method</span><span class="o">=</span><span class="n">ScoreCAM</span><span class="p">)))</span>
+<span class="n">print_top_categories</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">img_tensor</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/HuggingFace_9_0.png" src="_images/HuggingFace_9_0.png" />
+<img alt="_images/HuggingFace_9_1.png" src="_images/HuggingFace_9_1.png" />
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Now with ScoreCAM instead of GradCAM:
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>100%|██████████████████████████████████████████████████████████████████████████████████| 10/10 [01:29&lt;00:00,  8.99s/it]
+100%|██████████████████████████████████████████████████████████████████████████████████| 10/10 [01:27&lt;00:00,  8.76s/it]
+</pre></div>
+</div>
+<img alt="_images/HuggingFace_9_4.png" src="_images/HuggingFace_9_4.png" />
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Predicted class 281: tabby, tabby cat
+Predicted class 282: tiger cat
+Predicted class 761: remote control, remote
+Predicted class 285: Egyptian cat
+Predicted class 673: mouse, computer mouse
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            kernelName: "python3",
+            path: "./."
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+              </div>
+              
+            </main>
+            <footer class="footer-article noprint">
+                
+    <!-- Previous / next buttons -->
+<div class='prev-next-area'>
+    <a class='left-prev' id="prev-link" href="Deep%20Feature%20Factorizations.html" title="previous page">
+        <i class="fas fa-angle-left"></i>
+        <div class="prev-next-info">
+            <p class="prev-next-subtitle">previous</p>
+            <p class="prev-next-title">Deep Feature Factorizations for better model explainability</p>
+        </div>
+    </a>
+</div>
+            </footer>
+        </div>
+    </div>
+    <div class="footer-content row">
+        <footer class="col footer"><p>
+  
+    By Jacob Gildenblat<br/>
+  
+      &copy; Copyright 2022.<br/>
+</p>
+        </footer>
+    </div>
+    
+</div>
+
+
+      </div>
+    </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="_static/scripts/pydata-sphinx-theme.js?digest=1999514e3f237ded88cf"></script>
+
+
+  </body>
+</html>
